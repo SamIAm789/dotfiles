@@ -13,6 +13,7 @@
       server-profile
       server-filesystems
       server-hardware
+      syncoid
     ];
 
     system.stateVersion = "25.11";
