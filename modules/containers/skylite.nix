@@ -46,7 +46,7 @@
         ];
 
         volumes = [
-          "/tank/services/skylite/postgres:/var/lib/postgresql/data"
+          "/persist/containers/skylite/postgres:/var/lib/postgresql/data"
         ];
 
         healthCmd = "pg_isready -U skylite";
