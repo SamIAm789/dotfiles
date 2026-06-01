@@ -14,9 +14,9 @@
     ];
 
     sops.secrets.skylite = {
-      sopsFile = "{inputs.secrets}/secrets/containers.yaml;
+      sopsFile = "{inputs.secrets}/secrets/containers.yaml";
       key = "skylite";
-      owner = "containers"; # or skylite
+      owner = "containers";
     };
 
     virtualisation.quadlet.pods.skylite = {
