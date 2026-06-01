@@ -52,13 +52,14 @@
         ExecStart = lib.getExe pkgs.cloud-hypervisor + '' \
           --cpus boot=2 \
           --memory size=4096M \
-          --disk path=/persist/microvms/haos/haos.img \
-          --net tap=vm-haos,mac=${mac} \
-          --serial tty \
-          --console off \
-          --api-socket /run/haos-vm/ch.sock \
-          --fs tag=data,dir=/persist/microvms/haos/haos-data
-        '';
+  --firmware ${pkgs.OVMF.fd}/FV/OVMF.fd \
+  --disk path=/persist/microvms/haos/haos.img \
+  --net tap=vm-haos,mac=${mac} \
+  --serial tty \
+  --console off \
+  --api-socket /run/haos-vm/ch.sock \
+  --fs tag=data,dir=/persist/microvms/haos/haos-data
+'';
 
         ExecStop = ''
           if [ -S /run/haos-vm/ch.sock ]; then
