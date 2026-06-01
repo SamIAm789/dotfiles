@@ -9,6 +9,7 @@
       base
       microvm-host
       network
+      ntfy
       openssh
       preservation
       sanoid
