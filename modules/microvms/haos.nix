@@ -56,9 +56,7 @@
   --disk path=/persist/microvms/haos/haos_ova-17.3.qcow2 \
   --net tap=vm-haos,mac=${mac} \
   --serial tty \
-  --console off \
-  --api-socket /run/haos-vm/ch.sock \
-  --console off
+  --api-socket /run/haos-vm/ch.sock
 '';
 
         ExecStop = ''
