@@ -22,6 +22,7 @@
     in
      {
       environment.systemPackages = [ pkgs.qemu ];
+
       systemd.services.haos-vm = {
         description = "Home Assistant OS VM (QEMU/KVM)";
         wantedBy = [ "multi-user.target" ];
@@ -52,7 +53,6 @@
             ${pkgs.qemu}/bin/qemu-img snapshot -a stop || true
           '';
         };
-        environment.systemPackages = [ pkgs.qemu ];
       };
     };
 }
