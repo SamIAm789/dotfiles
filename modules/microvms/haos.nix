@@ -53,7 +53,7 @@
   --cpus boot=2 \
   --memory size=4096M \
   --firmware ${pkgs.OVMF.fd}/FV/OVMF_CODE.fd \
-  --disk path=/persist/microvms/haos/haos_ova-17.3.qcow2,format=qcow2 \
+  --disk path=/persist/microvms/haos/haos_ova-17.3.qcow2 \
   --net tap=vm-haos,mac=${mac} \
   --serial tty \
   --console off \
