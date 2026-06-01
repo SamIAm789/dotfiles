@@ -9,9 +9,8 @@
     in
     {
 
-
     systemd.tmpfiles.rules = [
-      "d /persist/containers/skylite/postgres 0750 quadletuser users -"
+      "d /persist/containers/skylite/postgres 0750 containers containers -"
     ];
 
     sops.secrets.skylite-env = {
