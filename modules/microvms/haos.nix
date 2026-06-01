@@ -50,15 +50,14 @@
         RuntimeDirectory = "haos-vm";
 
         ExecStart = lib.getExe pkgs.cloud-hypervisor + '' \
-          --cpus boot=2 \
-          --memory size=4096M \
+  --cpus boot=2 \
+  --memory size=4096M \
   --firmware ${pkgs.OVMF.fd}/FV/OVMF.fd \
   --disk path=/persist/microvms/haos/haos.img \
   --net tap=vm-haos,mac=${mac} \
   --serial tty \
   --console off \
-  --api-socket /run/haos-vm/ch.sock \
-  --fs tag=data,dir=/persist/microvms/haos/haos-data
+  --api-socket /run/haos-vm/ch.sock
 '';
 
         ExecStop = ''
