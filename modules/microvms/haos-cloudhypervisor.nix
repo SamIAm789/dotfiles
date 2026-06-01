@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.haos = 
+  flake.modules.nixos.haos-ch = 
   {
     lib,
     pkgs,
