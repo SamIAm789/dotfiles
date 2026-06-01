@@ -6,6 +6,7 @@
       package = null;
       portalPackage = null;
       systemd.enable = false; # conflicts with uwsm in nixos module
+      configType = "lua";
     };
 
     wayland.windowManager.hyprland = {
