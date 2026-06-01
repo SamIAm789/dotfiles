@@ -52,8 +52,8 @@
         ExecStart = lib.getExe pkgs.cloud-hypervisor + '' \
   --cpus boot=2 \
   --memory size=4096M \
-  --firmware ${pkgs.OVMF.fd}/FV/OVMF.fd \
-  --disk path=/persist/microvms/haos/haos.img \
+  --firmware ${pkgs.OVMF.fd}/FV/OVMF_CODE.fd \
+  --disk path=/persist/microvms/haos/haos.img,image_type=raw \
   --net tap=vm-haos,mac=${mac} \
   --serial tty \
   --console off \
