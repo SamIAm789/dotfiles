@@ -14,7 +14,7 @@
     ];
 
     sops.secrets.skylite = {
-      sopsFile = ./containers.yaml;
+      sopsFile = "{inputs.secrets}/secrets/containers.yaml;
       key = "skylite";
       owner = "containers"; # or skylite
     };
