@@ -21,9 +21,10 @@
   in
   {
 
-    networking.tapInterfaces."vm-haos" = {
-      user = "root";
-      group = "root";
+    networking.interfaces."vm-haos" = {
+      virtual = true;
+      virtualType = "tap";
+      virtualOwner = "root";
     };
 
    # ? networking.bridges.microbr.interfaces = [ "vm-haos" ];
@@ -55,7 +56,7 @@
           --net tap=vm-haos,mac=${mac} \
           --serial tty \
           --console off \
-          --api-socket /run/haos-vm/ch.sock
+          --api-socket /run/haos-vm/ch.sock \
           --fs tag=data,dir=/persist/microvms/haos/haos-data
         '';
 
