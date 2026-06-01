@@ -1,4 +1,8 @@
 {
+  inputs,
+  ...
+}:
+{
   flake.modules.nixos.skylite =
     {
       config,
@@ -14,7 +18,7 @@
     ];
 
     sops.secrets.skylite = {
-      sopsFile = "{inputs.secrets}/secrets/containers.yaml";
+      sopsFile = "${inputs.secrets}/secrets/containers.yaml";
       key = "skylite";
       owner = "containers";
     };
