@@ -57,7 +57,8 @@
   --net tap=vm-haos,mac=${mac} \
   --serial tty \
   --console off \
-  --api-socket /run/haos-vm/ch.sock
+  --api-socket /run/haos-vm/ch.sock \
+  --console off
 '';
 
         ExecStop = ''
