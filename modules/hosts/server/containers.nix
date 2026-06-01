@@ -5,7 +5,7 @@
 }:
 {
   flake.modules.nixos.server = {
-    imports = with self.modules.nixos; [
+    imports = with inputs.self.modules.nixos; [
       skylite
     ];
   };

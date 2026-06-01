@@ -12,6 +12,7 @@
       ntfy
       openssh
       preservation
+      quadlet
       sanoid
       zfs
     ];
