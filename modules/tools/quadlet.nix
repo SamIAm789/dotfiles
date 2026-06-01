@@ -9,7 +9,7 @@
 
   flake.modules.nixos.quadlet = {
 
-    imports = [ inputs.quadlet-nix.flakeModules.quadlet ];
+    imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
     users.users.containers = {
       isNormalUser = true;
