@@ -13,7 +13,7 @@
       "d /persist/containers/skylite/postgres 0750 containers containers -"
     ];
 
-    sops.secrets.skylite-env = {
+    sops.secrets.skylite = {
       sopsFile = ./containers.yaml;
       key = "skylite";
       owner = "containers"; # or skylite
