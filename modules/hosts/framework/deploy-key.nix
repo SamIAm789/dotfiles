@@ -6,14 +6,14 @@
   flake.modules.nixos.deploy-key-framework =
   let
 
-    keyPath = "/etc/ssh/keys/framework-dotfiles-deploy";
+    keyPath = "/etc/ssh/keys/secrets-deploy";
   in
   {
 
     systemd.tmpfiles.rules = [
       "d /etc/ssh/keys 0700 root root -"
     ];
-    sops.secrets."deploy-key" = {
+    sops.secrets."framwork-deploy-key" = {
       sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
       owner = "root";
       group = "root";
