@@ -4,15 +4,10 @@
     wayland.windowManager.hyprland = {
       enable = true;
 
-      # Hyprland upstream now expects Lua only
-      configType = "lua";
-
-      # No package override unless you want to pin
+      # No configType, no extraConfig — pure Lua only
       package = null;
       portalPackage = null;
-
-      # Avoid conflict with uwsm on NixOS
-      systemd.enable = false;
+      systemd.enable = false; # uwsm compatibility
 
       settingsLua = ''
         -- monitors
@@ -195,14 +190,6 @@
         windowrule = {
           "match:class = .*, suppress_event = maximise",
           "match:class = ^$, match:title = ^$, match:xwayland = true, match:float = true, match:fullscreen = false, match:pin = false, no_focus = true",
-        }
-      '';
-
-      extraConfig = ''
-        windowrule {
-          name = suppress-maximize-events
-          match:class = .*
-          suppress_event = maximize
         }
       '';
     };
