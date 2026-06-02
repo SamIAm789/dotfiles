@@ -8,7 +8,7 @@
     };
     networking.networkmanager = {
       enable = true;
-      wifiBackend = "iwd";
+      wifi.backend = "iwd";
     };
   };
 }
