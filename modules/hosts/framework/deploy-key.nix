@@ -6,7 +6,7 @@
   flake.modules.nixos.deploy-key-framework =
   let
 
-    keyPath = "/etc/ssh/keys/secrets-deploy";
+    keyPath = "/etc/ssh/keys/framework-dotfiles-deploy";
   in
   {
 
