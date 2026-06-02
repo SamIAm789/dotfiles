@@ -3,7 +3,9 @@
     networking.wireless.iwd = {
       enable = true;
       settings = {
-        AutoConnect = true;
+        Settings = {
+          AutoConnect = true;
+        };
       };
     };
     networking.networkmanager = {
