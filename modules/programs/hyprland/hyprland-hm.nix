@@ -9,6 +9,7 @@
       ashell
       fuzzel
       hypridle
+      hyprlock
       wpaperd
     ];
   };
