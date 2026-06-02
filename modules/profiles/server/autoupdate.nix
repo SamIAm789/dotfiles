@@ -15,7 +15,7 @@
         git pull --ff-only
       '';
       serviceConfig = {
-        WorkingDirectory = "/home/sam/.dotfiles";
+        WorkingDirectory = "/home/sam/dotfiles";
         User = "sam";
         Type = "oneshot";
       };
@@ -23,7 +23,7 @@
 
     system.autoUpgrade = {
       enable = true;
-      flake = "path:/home/sam/.dotfiles/flake-parts";
+      flake = "path:/home/sam/dotfiles/";
       allowReboot = true;
       rebootWindow = {
         lower = "02:00";
