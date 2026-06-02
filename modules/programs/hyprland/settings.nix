@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.hyprland = {
+  flake.modules.homeManager.hyprland-old = {
 
     wayland.windowManager.hyprland = {
       enable = true;
