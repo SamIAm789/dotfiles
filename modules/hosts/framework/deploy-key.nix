@@ -13,7 +13,7 @@
     systemd.tmpfiles.rules = [
       "d /etc/ssh/keys 0700 root root -"
     ];
-    sops.secrets."framwork-dotfiles-deploy" = {
+    sops.secrets."framework-dotfiles-deploy" = {
       sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
       owner = "root";
       group = "root";
