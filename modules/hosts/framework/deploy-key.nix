@@ -18,7 +18,7 @@
         path = keyPath;
       };
 
-      systemd.tmpfiles.rules += [
+      systemd.tmpfiles.rules = [
         "d /root/.ssh 0700 root root -"
       ];
 
