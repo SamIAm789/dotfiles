@@ -18,10 +18,6 @@
         path = keyPath;
       };
 
-      systemd.tmpfiles.rules = [
-        "d /root/.ssh 0700 root root -"
-      ];
-
       environment.etc."ssh/ssh_config.d/deploy-key.conf".text = ''
         Host github.com
           IdentityFile ${keyPath}
