@@ -6,6 +6,7 @@
       package = null;
       portalPackage = null;
       systemd.enable = false; # uwsm compatibility
+      configType = "lua";
     };
 
     xdg.configFile."hypr/hyprland.conf".text = ''
