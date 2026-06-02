@@ -17,6 +17,7 @@
       kdeconnect
       pipewire
       power-management
+      wifi
     ];
 
     environment.systemPackages = with pkgs; [

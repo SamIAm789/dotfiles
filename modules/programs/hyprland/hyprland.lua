@@ -108,11 +108,6 @@ hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "a
 hl.animation({ leaf = "zoomFactor",    enabled = true, speed = 7,    bezier = "quick" })
 
 hl.config({
-    dwindle = {
-        pseudotile     = true,
-        preserve_split = true,
-    },
-
     misc = {
         force_default_wallpaper = 0,
         -- disable_hyprland_logo = true,
@@ -146,7 +141,7 @@ hl.device({
 -----------------
 
 -- Note: Gestures in Lua might need different handling; test this
-hl.gesture("3, horizontal, workspace")
+-- hl.gesture("3, horizontal, workspace")
 
 ---------------------
 ---- KEYBINDINGS ----
