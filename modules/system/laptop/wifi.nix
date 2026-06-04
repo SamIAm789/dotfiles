@@ -1,16 +1,11 @@
 {
   flake.modules.nixos.wifi = {
-    networking.wireless.iwd = {
-      enable = true;
-      settings = {
-        Settings = {
-          AutoConnect = true;
-        };
+    networking = {
+      wireless.enable = true;
+      networkmanager = {
+        enable = true;
+        wifi.backend = "iwd";
       };
-    };
-    networking.networkmanager = {
-      enable = true;
-      wifi.backend = "iwd";
     };
   };
 }
