@@ -7,7 +7,7 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";   # ← Update if your filename is different (e.g. haos.qcow2)
+      diskPath = "${haosDir}/haos.qcow2";   # ← Make sure this filename is correct
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
@@ -38,13 +38,14 @@
         serviceConfig = {
           Type = "simple";
           Restart = "on-failure";
-          RestartSec = "8s";
+          RestartSec = "10s";
 
+          # + prefix = run as real root (bypasses User= restriction)
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
-            "${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
-            "${pkgs.iproute2}/bin/ip link set ${tapName} up"
+            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
+            "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
+            "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
           ExecStart = "${chv} \
