@@ -15,6 +15,7 @@
       isNormalUser = true;
       linger = true;
       autoSubUidGidRange = true;
+      uid = 1002;
     };
   };
 }
