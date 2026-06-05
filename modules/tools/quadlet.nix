@@ -11,7 +11,7 @@
 
     imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
-    uusers.users.containers = {
+    users.users.containers = {
       isNormalUser = true;
       isSystemUser = false;
       linger = true;
