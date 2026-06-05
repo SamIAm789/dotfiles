@@ -57,7 +57,8 @@
 
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link del ${tapName} 2>/dev/null || true; ${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root'"
+            "+${pkgs.iproute2}/bin/ip link del ${tapName} 2>/dev/null || true"
+            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
@@ -82,7 +83,7 @@
             socketPath
           ];
 
-          ExecStop = ":";
+          ExecStop = "${pkgs.coreutils}/bin/true";
 
           ExecStopPost =
             "${pkgs.coreutils}/bin/rm -f ${socketPath}";
