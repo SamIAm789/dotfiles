@@ -1,6 +1,11 @@
 {
 
-  flake.modules.homeManager.zed = {
+  flake.modules.homeManager.zed =
+  {
+    pkgs,
+    ...
+  }:
+  {
 
     programs.zed-editor = {
       enable = true;
@@ -11,5 +16,8 @@
         "yaml"
       ];
     };
+    home.packages = with pkgs; [
+      nil
+    ];
   };
 }

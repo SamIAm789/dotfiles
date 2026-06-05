@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.haos-ch-not-working =
+  flake.modules.nixos.haos-ch =
     { config, pkgs, lib, ... }:
 
     let
@@ -10,8 +10,7 @@
       firmwarePath = "${haosDir}/CLOUDHV.fd";
 
       tapName = "vm-${vmName}";
-      bridgeName = "microbr"; # assumes host already defines this
-
+      bridgeName = "microbr";
       socketPath = "/run/cloud-hypervisor-${vmName}.sock";
 
       mkMac = name:
@@ -27,28 +26,50 @@
 
       macAddress = mkMac vmName;
 
+      # download cloud-hypervisor firmware
+      # wget https://github.com/cloud-hypervisor/edk2/releases/latest/download/CLOUDHV.fd
+
+      # to migrate to another server
+      # zfs snapshot -r pool/persist/microvms/haos@send1
+      # zfs send -R pool/persist/microvms/haos@send1 | ssh user@newhost zfs recv -F pool/persist/microvms/haos
+
     in
     {
-      ####################################################################
-      # VM runtime tools only
-      ####################################################################
-      environment.systemPackages = with pkgs; [
-        cloud-hypervisor
-      ];
 
-      boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
+      systemd.network.enable = true;
 
-      ####################################################################
-      # VM service (no networking logic inside)
-      ####################################################################
+      systemd.network.netdevs = {
+        "20-${tapName}" = {
+          netdevConfig = {
+            Name = tapName;
+            Kind = "tap";
+          };
+        };
+      };
+
+      systemd.network.networks = {
+        "30-${tapName}" = {
+          matchConfig.Name = tapName;
+
+          networkConfig = {
+            Bridge = bridgeName;
+          };
+
+          linkConfig.RequiredForOnline = "no";
+        };
+      };
+
+      #####################################################################
+      # VM runtime
+      #####################################################################
       systemd.services."${vmName}-vm" = {
         description = "Home Assistant OS VM (Cloud Hypervisor)";
-
         wantedBy = [ "multi-user.target" ];
 
         after = [
           "systemd-networkd-wait-online.service"
         ];
+
         wants = [
           "systemd-networkd-wait-online.service"
         ];
@@ -58,28 +79,19 @@
           Restart = "on-failure";
           RestartSec = "5s";
 
-          ExecStartPre = [
-            "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-
-            "+${pkgs.iproute2}/bin/ip link show ${tapName} >/dev/null 2>&1 || true"
-
-            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
-
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
-
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
-          ];
-
           ExecStart = lib.concatStringsSep " " [
             "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
 
             "--firmware" firmwarePath
+
             "--disk" "path=${diskPath},image_type=qcow2"
 
             "--cpus" "boot=2"
+
             "--memory" "size=4G"
 
             "--console" "tty"
+
             "--serial" "tty"
 
             "--net" "tap=${tapName},mac=${macAddress}"
@@ -92,13 +104,17 @@
           ExecStopPost =
             "${pkgs.coreutils}/bin/rm -f ${socketPath}";
 
+
           User = "root";
+          Group = "root";
+
+          PrivateDevices = false;
+          DevicePolicy = "auto";
 
           DeviceAllow = [
             "/dev/kvm rw"
+            "/dev/net/tun rw"
           ];
-
-          PrivateDevices = false;
 
           AmbientCapabilities = [
             "CAP_NET_ADMIN"
@@ -110,13 +126,7 @@
             "CAP_SYS_ADMIN"
           ];
 
-          RestrictAddressFamilies = [
-            "AF_UNIX"
-            "AF_INET"
-            "AF_INET6"
-            "AF_NETLINK"
-          ];
-          DevicePolicy = "auto";
+          NoNewPrivileges = false;
         };
       };
     };
