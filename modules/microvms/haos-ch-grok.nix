@@ -6,7 +6,7 @@
       ...
     }:
     let
-      haosDir = "/var/lib/haos";
+      haosDir = "/persist/microvms/haos";
       diskPath = "${haosDir}/haos_ova.qcow2";
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
