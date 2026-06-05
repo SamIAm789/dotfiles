@@ -14,6 +14,7 @@
       server-filesystems
       server-hardware
       syncoid
+      skylite
     ];
 
     system.stateVersion = "25.11";
