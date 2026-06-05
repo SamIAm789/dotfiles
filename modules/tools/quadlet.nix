@@ -17,7 +17,9 @@
       linger = true;
       autoSubUidGidRange = true;
       uid = 1002;
+      group = "containers";
     };
+    users.groups.containers = {};
     systemd.user.services.dbus.enable = true;
   };
 }
