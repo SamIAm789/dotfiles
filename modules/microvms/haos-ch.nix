@@ -39,37 +39,6 @@
       boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
 
       ####################################################################
-      # systemd-networkd: VM-side only
-      ####################################################################
-      systemd.network.enable = true;
-
-      systemd.network.netdevs = {
-
-        # TAP device owned by systemd-networkd (no iproute2 needed)
-        "20-${tapName}" = {
-          netdevConfig = {
-            Name = tapName;
-            Kind = "tap";
-          };
-        };
-      };
-
-      systemd.network.networks = {
-
-        # Attach TAP to existing host bridge (microbr)
-        "30-${tapName}" = {
-          matchConfig.Name = tapName;
-
-          networkConfig = {
-            Bridge = bridgeName;
-          };
-
-          # VM networking does NOT affect host online state
-          linkConfig.RequiredForOnline = "no";
-        };
-      };
-
-      ####################################################################
       # VM service (no networking logic inside)
       ####################################################################
       systemd.services."${vmName}-vm" = {
@@ -88,6 +57,14 @@
           Type = "simple";
           Restart = "on-failure";
           RestartSec = "5s";
+
+          ExecStartPre = [
+            "${pkgs.coreutils}/bin/sleep 1"
+            "${pkgs.runtimeShell} -c 'ip link show ${tapName} &>/dev/null && ip link delete ${tapName} || true'"
+            "${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
+            "${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
+            "${pkgs.iproute2}/bin/ip link set ${tapName} up"
+          ];
 
           ExecStart = lib.concatStringsSep " " [
             "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
@@ -118,6 +95,20 @@
           ];
 
           PrivateDevices = false;
+
+          AmbientCapabilities = [
+            "CAP_NET_ADMIN"
+            "CAP_SYS_ADMIN"
+          ];
+
+          CapabilityBoundingSet = [
+            "CAP_NET_ADMIN"
+            "CAP_SYS_ADMIN"
+          ];
+
+          RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" "AF_NETLINK" ];
+
+          DevicePolicy = "auto";
         };
       };
     };
