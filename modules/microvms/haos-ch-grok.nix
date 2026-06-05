@@ -1,9 +1,10 @@
 {
   flake.modules.nixos.haos-ch =
-    { config
-    , pkgs
-    , lib
-    , ...
+    {
+      config,
+      pkgs,
+      lib,
+      ...
     }:
     let
       haosDir = "/persist/microvms/haos";
@@ -56,7 +57,7 @@
 
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "+${pkgs.runtimeShell} -c 'ip link show ${tapName} >/dev/null 2>&1 || ip tuntap add dev ${tapName} mode tap user root'"
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link del ${tapName} 2>/dev/null || true; ${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root'"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
@@ -81,8 +82,7 @@
             socketPath
           ];
 
-          ExecStop =
-            "${pkgs.iproute2}/bin/ip link delete ${tapName}";
+          ExecStop = ":";
 
           ExecStopPost =
             "${pkgs.coreutils}/bin/rm -f ${socketPath}";
