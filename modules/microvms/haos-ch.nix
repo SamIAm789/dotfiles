@@ -78,11 +78,11 @@
         wantedBy = [ "multi-user.target" ];
 
         after = [
-          "network-online.target"
-          "systemd-networkd.service"
+          "systemd-networkd-wait-online.service"
         ];
-
-        wants = [ "network-online.target" ];
+        wants = [
+          "systemd-networkd-wait-online.service"
+        ];
 
         serviceConfig = {
           Type = "simple";
