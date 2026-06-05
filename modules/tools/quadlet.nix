@@ -13,7 +13,7 @@
 
     users.users.containers = {
       isNormalUser = false;
-      isSystemUser = true
+      isSystemUser = true;
       linger = true;
       autoSubUidGidRange = true;
       uid = 1002;
