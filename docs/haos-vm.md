@@ -299,3 +299,16 @@ Because the VM state is stored entirely in the ZFS dataset, a migration or backu
 - Matching NixOS configuration
 
 No additional Home Assistant export/import process is required.
+
+## To do
+
+Investigate whether the vm can run without CAP_SYS_ADMIN and DevicePolicy = "closed"
+
+`AmbientCapabilities = [ "CAP_NET_ADMIN" ];
+CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];`
+
+`DevicePolicy = "closed";`
+
+
+
+
