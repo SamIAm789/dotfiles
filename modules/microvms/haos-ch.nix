@@ -59,11 +59,15 @@
           RestartSec = "5s";
 
           ExecStartPre = [
-            "${pkgs.coreutils}/bin/sleep 1"
-            "${pkgs.runtimeShell} -c 'ip link show ${tapName} &>/dev/null && ip link delete ${tapName} || true'"
-            "${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
-            "${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
-            "${pkgs.iproute2}/bin/ip link set ${tapName} up"
+            "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
+
+            "+${pkgs.iproute2}/bin/ip link show ${tapName} >/dev/null 2>&1 || true"
+
+            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
+
+            "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
+
+            "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
           ExecStart = lib.concatStringsSep " " [
@@ -106,8 +110,12 @@
             "CAP_SYS_ADMIN"
           ];
 
-          RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" "AF_NETLINK" ];
-
+          RestrictAddressFamilies = [
+            "AF_UNIX"
+            "AF_INET"
+            "AF_INET6"
+            "AF_NETLINK"
+          ];
           DevicePolicy = "auto";
         };
       };
