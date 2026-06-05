@@ -13,8 +13,8 @@
         tapName = "vm-haos";
         macAddress = "52:54:00:12:34:56";
 
-        # Wrapper path (this is the correct attribute)
-        cloudHypervisorWrapped = config.security.wrappers.cloud-hypervisor.storePath;
+        # Path to the wrapped cloud-hypervisor binary
+        chv = "/run/wrappers/bin/cloud-hypervisor";
       in
       {
         config = {
@@ -47,7 +47,7 @@
                 "${pkgs.iproute2}/bin/ip link set ${tapName} up"
               ];
 
-              ExecStart = "${cloudHypervisorWrapped} \
+              ExecStart = "${chv} \
                 --firmware ${firmwarePath} \
                 --disk path=${diskPath},format=qcow2 \
                 --cpus boot=2 \
@@ -63,7 +63,7 @@
               AmbientCapabilities = "CAP_NET_ADMIN";
               CapabilityBoundingSet = "CAP_NET_ADMIN";
             };
+          };
         };
-    };
-};
-}
+      };
+    }
