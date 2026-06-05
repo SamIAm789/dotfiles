@@ -7,7 +7,7 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos_ova.qcow2";   # ← make sure this matches your actual filename
+      diskPath = "${haosDir}/haos.qcow2";   # ← make sure this matches your actual filename
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
