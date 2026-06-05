@@ -7,7 +7,7 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";   # ← Change if your file is named haos.qcow2
+      diskPath = "${haosDir}/haos.qcow2";   # ← Confirm this filename!
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
@@ -40,14 +40,11 @@
           Restart = "on-failure";
           RestartSec = "10s";
 
+          # Only mkdir here — we'll create TAP manually for now
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          # Single line ExecStart - this is the most reliable way
           ExecStart = "${chv} --firmware ${firmwarePath} --disk path=${diskPath},image_type=qcow2 --cpus boot=2 --memory size=4G --console tty --serial tty --net \"tap=${tapName},mac=${macAddress}\" --api-socket ${socketPath}";
 
           ExecStop = ''
