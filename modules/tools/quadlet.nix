@@ -17,5 +17,6 @@
       autoSubUidGidRange = true;
       uid = 1002;
     };
+    systemd.user.services.dbus.enable = true;
   };
 }
