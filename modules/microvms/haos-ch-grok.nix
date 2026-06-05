@@ -76,7 +76,10 @@
           User = "root";
           AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
           CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
-          DeviceAllow = [ "/dev/kvm rw" ];
+          DeviceAllow = [
+            "/dev/kvm rw"
+            "/dev/net/tun rw"
+          ];
           PrivateDevices = false;
         };
       };
