@@ -19,7 +19,6 @@
         iproute2
       ];
 
-      # Ensure KVM is available
       boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
 
       security.wrappers.cloud-hypervisor = {
@@ -41,15 +40,22 @@
           RestartSec = "8s";
 
           ExecStartPre = [
-            # Ensure directory exists
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            # Setup TAP
             "${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
             "${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
             "${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          ExecStart = "${chv} --firmware ${firmwarePath} --disk path=${diskPath},format=qcow2 --cpus boot=2 --memory size=4G --console tty --serial tty --net \"tap=${tapName},mac=${macAddress}\" --api-socket /run/cloud-hypervisor-haos.sock";
+          # Fixed --disk syntax: use image_type=qcow2 instead of format=qcow2
+          ExecStart = "${chv} \
+            --firmware ${firmwarePath} \
+            --disk path=${diskPath},image_type=qcow2 \
+            --cpus boot=2 \
+            --memory size=4G \
+            --console tty \
+            --serial tty \
+            --net \"tap=${tapName},mac=${macAddress}\" \
+            --api-socket /run/cloud-hypervisor-haos.sock";
 
           ExecStop = "${pkgs.iproute2}/bin/ip link delete ${tapName} || true";
 
@@ -57,11 +63,9 @@
           AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
           CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
 
-          # Important for KVM access
           DeviceAllow = [ "/dev/kvm rw" ];
           PrivateDevices = false;
 
-          # Better logging
           StandardOutput = "journal";
           StandardError = "journal";
         };
