@@ -7,7 +7,7 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";   # ← Make sure this filename is correct
+      diskPath = "${haosDir}/haos.qcow2";   # ← Change if your file is named haos.qcow2
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
@@ -40,7 +40,6 @@
           Restart = "on-failure";
           RestartSec = "10s";
 
-          # + prefix = run as real root (bypasses User= restriction)
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
             "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
@@ -48,15 +47,8 @@
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          ExecStart = "${chv} \
-            --firmware ${firmwarePath} \
-            --disk path=${diskPath},image_type=qcow2 \
-            --cpus boot=2 \
-            --memory size=4G \
-            --console tty \
-            --serial tty \
-            --net \"tap=${tapName},mac=${macAddress}\" \
-            --api-socket ${socketPath}";
+          # Single line ExecStart - this is the most reliable way
+          ExecStart = "${chv} --firmware ${firmwarePath} --disk path=${diskPath},image_type=qcow2 --cpus boot=2 --memory size=4G --console tty --serial tty --net \"tap=${tapName},mac=${macAddress}\" --api-socket ${socketPath}";
 
           ExecStop = ''
             ${pkgs.iproute2}/bin/ip link delete ${tapName} || true
