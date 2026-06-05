@@ -1,17 +1,32 @@
 {
   flake.modules.nixos.haos-ch =
-    { config,
-      pkgs,
-      lib,
-      ...
+    { config
+    , pkgs
+    , lib
+    , ...
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";           # confirmed from your earlier run
+      diskPath = "${haosDir}/haos.qcow2";
       firmwarePath = "${haosDir}/CLOUDHV.fd";
-      tapName = "vm-haos";
-      macAddress = "52:54:00:12:34:56";
-      socketPath = "/run/cloud-hypervisor-haos.sock";
+
+      vmName = "haos";
+      tapName = "vm-${vmName}";
+
+      mkMac = vmName:
+        let
+          hash = builtins.hashString "sha256" vmName;
+        in
+          "02:"
+          + builtins.substring 0 2 hash + ":"
+          + builtins.substring 2 2 hash + ":"
+          + builtins.substring 4 2 hash + ":"
+          + builtins.substring 6 2 hash + ":"
+          + builtins.substring 8 2 hash;
+
+      macAddress = mkMac vmName;
+
+      socketPath = "/run/cloud-hypervisor-${vmName}.sock";
     in
     {
       environment.systemPackages = with pkgs; [
@@ -21,7 +36,6 @@
 
       boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
 
-      # Wrapper still useful for manual runs
       security.wrappers.cloud-hypervisor = {
         source = "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor";
         capabilities = "cap_net_admin+ep";
@@ -47,7 +61,6 @@
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          # Use direct Nix store path (bypasses wrapper issues)
           ExecStart = lib.concatStringsSep " " [
             "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
             "--firmware"
@@ -70,16 +83,27 @@
 
           ExecStop =
             "${pkgs.iproute2}/bin/ip link delete ${tapName}";
+
           ExecStopPost =
             "${pkgs.coreutils}/bin/rm -f ${socketPath}";
 
           User = "root";
-          AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
-          CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
+
+          AmbientCapabilities = [
+            "CAP_NET_ADMIN"
+            "CAP_SYS_ADMIN"
+          ];
+
+          CapabilityBoundingSet = [
+            "CAP_NET_ADMIN"
+            "CAP_SYS_ADMIN"
+          ];
+
           DeviceAllow = [
             "/dev/kvm rw"
             "/dev/net/tun rw"
           ];
+
           PrivateDevices = false;
         };
       };
