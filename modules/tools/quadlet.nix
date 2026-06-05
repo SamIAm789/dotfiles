@@ -12,7 +12,8 @@
     imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
     users.users.containers = {
-      isNormalUser = true;
+      isNormalUser = false;
+      isSystemUser = true
       linger = true;
       autoSubUidGidRange = true;
       uid = 1002;
