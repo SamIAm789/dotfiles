@@ -7,7 +7,12 @@
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
   };
 
-  flake.modules.nixos.quadlet = {
+  flake.modules.nixos.quadlet =
+    {
+      pkgs,
+      ...
+    }:
+    {
 
     imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
@@ -18,7 +23,7 @@
       autoSubUidGidRange = true;
       uid = 1002;
       group = "containers";
-      useDefaultShell = true;
+      shell = pkgs.bashInteractive;
     };
     users.groups.containers = {};
   };
