@@ -77,31 +77,24 @@
           ###################################################################
           # Fully declarative ExecStart (NO SHELL, NO PRE-STEPS)
           ###################################################################
-          ExecStart = [
+          ExecStart = lib.concatStringsSep " " [
             "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
 
             "--firmware" firmwarePath
 
-            "--disk"
-            "path=${diskPath},image_type=qcow2"
+            "--disk" "path=${diskPath},image_type=qcow2"
 
-            "--cpus"
-            "boot=2"
+            "--cpus" "boot=2"
 
-            "--memory"
-            "size=4G"
+            "--memory" "size=4G"
 
-            "--console"
-            "tty"
+            "--console" "tty"
 
-            "--serial"
-            "tty"
+            "--serial" "tty"
 
-            "--net"
-            "tap=${tapName},mac=${macAddress}"
+            "--net" "tap=${tapName},mac=${macAddress}"
 
-            "--api-socket"
-            socketPath
+            "--api-socket" socketPath
           ];
 
           ExecStop = "${pkgs.coreutils}/bin/true";
