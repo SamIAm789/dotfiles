@@ -11,15 +11,15 @@
 
     imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
-    users.users.containers = {
-      isNormalUser = false;
-      isSystemUser = true;
+    uusers.users.containers = {
+      isNormalUser = true;
+      isSystemUser = false;
       linger = true;
       autoSubUidGidRange = true;
       uid = 1002;
       group = "containers";
+      useDefaultShell = true;
     };
     users.groups.containers = {};
-    systemd.user.services.dbus.enable = true;
   };
 }
