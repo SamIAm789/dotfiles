@@ -113,6 +113,7 @@
 
           DeviceAllow = [
             "/dev/kvm rw"
+            "/dev/net/tun rw"
           ];
 
           AmbientCapabilities = [
