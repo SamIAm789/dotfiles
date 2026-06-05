@@ -57,10 +57,14 @@
 
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "+${pkgs.iproute2}/bin/ip link del ${tapName} 2>/dev/null || true"
-            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
-            "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
+
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link del ${tapName} 2>/dev/null || true'"
+
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root'"
+
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link set ${tapName} master microbr'"
+
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link set ${tapName} up'"
           ];
 
           ExecStart = lib.concatStringsSep " " [
