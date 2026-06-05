@@ -48,20 +48,30 @@
           ];
 
           # Use direct Nix store path (bypasses wrapper issues)
-          ExecStart = "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor \
-            --firmware ${firmwarePath} \
-            --disk path=${diskPath},image_type=qcow2 \
-            --cpus boot=2 \
-            --memory size=4G \
-            --console tty \
-            --serial tty \
-            --net \"tap=${tapName},mac=${macAddress}\" \
-            --api-socket ${socketPath}";
+          ExecStart = lib.concatStringsSep " " [
+            "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
+            "--firmware"
+            firmwarePath
+            "--disk"
+            "path=${diskPath},image_type=qcow2"
+            "--cpus"
+            "boot=2"
+            "--memory"
+            "size=4G"
+            "--console"
+            "tty"
+            "--serial"
+            "tty"
+            "--net"
+            "tap=${tapName},mac=${macAddress}"
+            "--api-socket"
+            socketPath
+          ];
 
-          ExecStop = ''
-            ${pkgs.iproute2}/bin/ip link delete ${tapName} || true
-            ${pkgs.coreutils}/bin/rm -f ${socketPath}
-          '';
+          ExecStop =
+            "${pkgs.iproute2}/bin/ip link delete ${tapName}";
+          ExecStopPost =
+            "${pkgs.coreutils}/bin/rm -f ${socketPath}";
 
           User = "root";
           AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
