@@ -23,7 +23,7 @@
           + builtins.substring 2 2 hash + ":"
           + builtins.substring 4 2 hash + ":"
           + builtins.substring 6 2 hash + ":"
-          + builtins.substring 8 2 hash + ":";
+          + builtins.substring 8 2 hash;
 
       macAddress = mkMac vmName;
 
