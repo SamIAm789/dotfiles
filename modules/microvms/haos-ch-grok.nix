@@ -46,24 +46,26 @@
             "${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          ExecStart = ''
-            ${config.security.wrappers.cloud-hypervisor.path} \
-            --firmware ${firmwarePath} \
-            --disk path=${diskPath},format=qcow2 \
-            --cpus boot=2 \
-            --memory size=4G \
-            --console tty \
-            --serial tty \
-            --net "tap=${tapName},mac=${macAddress}" \
-            --api-socket /run/cloud-hypervisor-haos.sock
-          '';
+          ExecStart =
+            let
+              chv = config.security.wrappers.cloud-hypervisor.path;
+            in
+            "${chv} \
+              --firmware ${firmwarePath} \
+              --disk path=${diskPath},format=qcow2 \
+              --cpus boot=2 \
+              --memory size=4G \
+              --console tty \
+              --serial tty \
+              --net \"tap=${tapName},mac=${macAddress}\" \
+              --api-socket /run/cloud-hypervisor-haos.sock";
 
-          ExecStop = "${pkgs.iproute2}/bin/ip link delete ${tapName} || true";
+            ExecStop = "${pkgs.iproute2}/bin/ip link delete ${tapName} || true";
 
-          User = "root";
-          AmbientCapabilities = "CAP_NET_ADMIN";
-          CapabilityBoundingSet = "CAP_NET_ADMIN";
+            User = "root";
+            AmbientCapabilities = "CAP_NET_ADMIN";
+            CapabilityBoundingSet = "CAP_NET_ADMIN";
+          };
         };
-      };
     };
 }
