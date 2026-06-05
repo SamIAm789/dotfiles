@@ -7,16 +7,18 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";
+      diskPath = "${haosDir}/haos_ova.qcow2";   # ← make sure this matches your actual filename
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
       chv = "/run/wrappers/bin/cloud-hypervisor";
+      socketPath = "/run/cloud-hypervisor-haos.sock";
     in
     {
       environment.systemPackages = with pkgs; [
         cloud-hypervisor
         iproute2
+        killall          # for easy killing if needed
       ];
 
       boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
@@ -46,7 +48,6 @@
             "${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          # Fixed --disk syntax: use image_type=qcow2 instead of format=qcow2
           ExecStart = "${chv} \
             --firmware ${firmwarePath} \
             --disk path=${diskPath},image_type=qcow2 \
@@ -55,19 +56,18 @@
             --console tty \
             --serial tty \
             --net \"tap=${tapName},mac=${macAddress}\" \
-            --api-socket /run/cloud-hypervisor-haos.sock";
+            --api-socket ${socketPath}";
 
-          ExecStop = "${pkgs.iproute2}/bin/ip link delete ${tapName} || true";
+          ExecStop = ''
+            ${pkgs.iproute2}/bin/ip link delete ${tapName} || true
+            ${pkgs.coreutils}/bin/rm -f ${socketPath}
+          '';
 
           User = "root";
           AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
           CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
-
           DeviceAllow = [ "/dev/kvm rw" ];
           PrivateDevices = false;
-
-          StandardOutput = "journal";
-          StandardError = "journal";
         };
       };
     };
