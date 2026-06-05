@@ -7,11 +7,10 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";        # ← You are using haos.qcow2
+      diskPath = "${haosDir}/haos.qcow2";           # confirmed from your earlier run
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
-      chv = "/run/wrappers/bin/cloud-hypervisor";
       socketPath = "/run/cloud-hypervisor-haos.sock";
     in
     {
@@ -22,6 +21,7 @@
 
       boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
 
+      # Wrapper still useful for manual runs
       security.wrappers.cloud-hypervisor = {
         source = "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor";
         capabilities = "cap_net_admin+ep";
@@ -47,7 +47,16 @@
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
-          ExecStart = "${chv} --firmware ${firmwarePath} --disk path=${diskPath},image_type=qcow2 --cpus boot=2 --memory size=4G --console tty --serial tty --net \"tap=${tapName},mac=${macAddress}\" --api-socket ${socketPath}";
+          # Use direct Nix store path (bypasses wrapper issues)
+          ExecStart = "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor \
+            --firmware ${firmwarePath} \
+            --disk path=${diskPath},image_type=qcow2 \
+            --cpus boot=2 \
+            --memory size=4G \
+            --console tty \
+            --serial tty \
+            --net \"tap=${tapName},mac=${macAddress}\" \
+            --api-socket ${socketPath}";
 
           ExecStop = ''
             ${pkgs.iproute2}/bin/ip link delete ${tapName} || true
@@ -55,8 +64,8 @@
           '';
 
           User = "root";
-          AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" "CAP_SYS_RAWIO" ];
-          CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" "CAP_SYS_RAWIO" ];
+          AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
+          CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
           DeviceAllow = [ "/dev/kvm rw" ];
           PrivateDevices = false;
         };
