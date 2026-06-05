@@ -42,7 +42,7 @@
 
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "+${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
+            "+${pkgs.runtimeShell} -c '${pkgs.iproute2}/bin/ip link show ${tapName} >/dev/null 2>&1 || ${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root'"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
             "+${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
