@@ -7,7 +7,7 @@
     }:
     let
       haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";     # ← change if your filename is different
+      diskPath = "${haosDir}/haos.qcow2";   # ← Update if your filename is different (e.g. haos.qcow2)
       firmwarePath = "${haosDir}/CLOUDHV.fd";
       tapName = "vm-haos";
       macAddress = "52:54:00:12:34:56";
@@ -29,14 +29,6 @@
         group = "root";
       };
 
-      # Wrapper for ip commands too (helps with systemd)
-      security.wrappers.ip = {
-        source = "${pkgs.iproute2}/bin/ip";
-        capabilities = "cap_net_admin+ep";
-        owner = "root";
-        group = "root";
-      };
-
       systemd.services.haos-vm = {
         description = "Home Assistant OS VM (Cloud Hypervisor)";
         wantedBy = [ "multi-user.target" ];
@@ -50,9 +42,9 @@
 
           ExecStartPre = [
             "${pkgs.coreutils}/bin/mkdir -p ${haosDir}"
-            "/run/wrappers/bin/ip tuntap add dev ${tapName} mode tap user root"
-            "/run/wrappers/bin/ip link set ${tapName} master microbr"
-            "/run/wrappers/bin/ip link set ${tapName} up"
+            "${pkgs.iproute2}/bin/ip tuntap add dev ${tapName} mode tap user root"
+            "${pkgs.iproute2}/bin/ip link set ${tapName} master microbr"
+            "${pkgs.iproute2}/bin/ip link set ${tapName} up"
           ];
 
           ExecStart = "${chv} \
@@ -66,7 +58,7 @@
             --api-socket ${socketPath}";
 
           ExecStop = ''
-            /run/wrappers/bin/ip link delete ${tapName} || true
+            ${pkgs.iproute2}/bin/ip link delete ${tapName} || true
             ${pkgs.coreutils}/bin/rm -f ${socketPath}
           '';
 
