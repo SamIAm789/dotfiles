@@ -26,10 +26,12 @@
     sops.secrets.github-personal = {
       sopsFile = deployKeySopsFile;
       key = "server-github-personal";
-      mode = "0400";
+
+      path = "/etc/ssh/keys/github-personal";
+
       owner = "root";
       group = "root";
-      path = "/etc/ssh/keys/github-personal";
+      mode = "0400";
     };
 
     programs.ssh.extraConfig = ''
