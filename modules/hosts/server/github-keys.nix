@@ -24,9 +24,9 @@
     sops.secrets.github-personal = {
       sopsFile = deployKeySopsFile;
       key = "server-github-personal";
-      owner = "root";
-      group = "root";
-      mode = "0600";
+      owner = "sam";
+      group = "users";
+      mode = "0400";
       path = "/etc/ssh/keys/github-personal";
     };
 
