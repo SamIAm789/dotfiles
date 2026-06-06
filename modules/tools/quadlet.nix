@@ -18,12 +18,9 @@
 
     users.users.containers = {
       isNormalUser = true;
-      isSystemUser = false;
       linger = true;
       autoSubUidGidRange = true;
-      uid = 1002;
       group = "containers";
-      shell = pkgs.bashInteractive;
     };
     users.groups.containers = {};
   };
