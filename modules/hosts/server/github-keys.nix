@@ -9,13 +9,12 @@
   in
   {
 
-    # Ensure key directory exists
     systemd.tmpfiles.rules = [
       "d /etc/ssh/keys 0700 root root -"
     ];
 
     # --- DEPLOY KEY (secrets repo) ---
-    sops.secrets."github-secrets" = {
+    sops.secrets.github-secrets = {
       sopsFile = deployKeySopsFile;
       key = "server-config-deploy";
       owner = "root";
@@ -25,7 +24,7 @@
     };
 
     # --- PERSONAL GITHUB KEY ---
-    sops.secrets."github-personal" = {
+    sops.secrets.github-personal = {
       sopsFile = deployKeySopsFile;
       key = "server-github-personal";
       owner = "root";
@@ -35,7 +34,7 @@
     };
 
     # --- SSH CONFIG ---
-    programs.ssh.extraConfig = ''
+    environment.etc."ssh/ssh_config.d/10-github.conf".text = ''
       Host github-secrets
         HostName github.com
         User git
@@ -49,7 +48,6 @@
         IdentitiesOnly yes
     '';
 
-    # Keep known hosts (good)
     programs.ssh.knownHosts.github = {
       hostNames = [ "github.com" ];
       publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjv8L5XpTuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU";
