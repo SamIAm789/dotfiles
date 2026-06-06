@@ -18,6 +18,7 @@
       in {
         pods.norish = {
           autoStart = true;
+          rootlessConfig.uid = uid;   # ← Add this
           podConfig = {
             name = "norish";
             publishPorts = ["7000:3000" ];
