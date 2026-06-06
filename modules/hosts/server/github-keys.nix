@@ -8,43 +8,27 @@
     deployKeySopsFile = "${inputs.secrets}/secrets/secrets.yaml";
   in {
 
-    systemd.tmpfiles.rules = [
-      "d /etc/ssh/keys 0700 root root -"
-    ];
-
-    # --- DEPLOY KEY ---
-    sops.secrets.github-secrets = {
-      sopsFile = deployKeySopsFile;
-      key = "server-config-deploy";
-      mode = "0400";
-      owner = "root";
-      group = "root";
-      path = "/etc/ssh/keys/github-secrets";
-    };
-
-    # --- PERSONAL KEY ---
+    # sops-managed SSH key (user-owned, not system-owned)
     sops.secrets.github-personal = {
       sopsFile = deployKeySopsFile;
       key = "server-github-personal";
 
-      path = "/etc/ssh/keys/github-personal";
+      path = "/home/sam/.ssh/github-personal";
 
-      owner = "root";
-      group = "root";
-      mode = "0400";
+      owner = "sam";
+      group = "users";
+      mode = "0600";
     };
 
-    programs.ssh.extraConfig = ''
-      Host github-secrets
-        HostName github.com
-        User git
-        IdentityFile /etc/ssh/keys/github-secrets
-        IdentitiesOnly yes
+    systemd.tmpfiles.rules = [
+      "d /home/sam/.ssh 0700 sam users -"
+    ];
 
+    programs.ssh.extraConfig = ''
       Host github-personal
         HostName github.com
         User git
-        IdentityFile /etc/ssh/keys/github-personal
+        IdentityFile /home/sam/.ssh/github-personal
         IdentitiesOnly yes
     '';
 
