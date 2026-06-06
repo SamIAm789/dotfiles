@@ -34,7 +34,7 @@
     };
 
     # --- SSH CONFIG ---
-    environment.etc."ssh/ssh_config.d/10-github.conf".text = ''
+    programs.ssh.extraConfig = ''
       Host github-secrets
         HostName github.com
         User git
