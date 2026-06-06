@@ -134,11 +134,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780593650,
-        "narHash": "sha256-CHo7k65YTL3HY+WQVedDTupji+LMgNlKCdrtRHZFAK4=",
+        "lastModified": 1780679734,
+        "narHash": "sha256-KmRNvpNOb7QEORa06bVgjW9kITcx0VhsI7w0vhmZyD8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "447fd9ff62501dae7206dfe180ee89f8de27b7d5",
+        "rev": "b2b7db486e06e098711dc291bb25db82850e1d16",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1780658045,
-        "narHash": "sha256-7vV7Dikk+rJVWOH7y3VBevFBsIeKg0G7672ZgfHNpEM=",
+        "lastModified": 1780694402,
+        "narHash": "sha256-gAnq7tsOsLnu/rR0tKxI5pMCjMps5CYaHU6rUdXHXyE=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "ef9b62356dd01579ee0ea9921afe471fbcb9aa0a",
+        "rev": "fcbbd6d4d80033c40e3b702518e1a2ba3f479452",
         "type": "github"
       },
       "original": {
@@ -663,11 +663,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1780644688,
-        "narHash": "sha256-LAhoJclxm8beLh99FINXO6cqADQ18f+JRILQj0vNmyo=",
+        "lastModified": 1780744718,
+        "narHash": "sha256-4QmG4Jtjm3XW0qdqa8kzuit255KjbaZEwoZFRaDMZwM=",
         "ref": "refs/heads/main",
-        "rev": "ab243855a9aaefa21281011b6fb30ade71c8c413",
-        "revCount": 19,
+        "rev": "260330628d8144fd5c80a81cae07958f85135bd0",
+        "revCount": 20,
         "type": "git",
         "url": "ssh://git@github.com/SamIAm789/secrets"
       },
