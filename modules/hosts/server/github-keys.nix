@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.module.nixos.server =
+  flake.modules.nixos.server =
   let
     deployKeySopsFile = "${inputs.secrets}/secrets/secrets.yaml";
   in
