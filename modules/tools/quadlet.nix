@@ -23,5 +23,10 @@
       group = "containers";
     };
     users.groups.containers = {};
+
+    virtualisation = {
+      quadlet.enable = true;
+      podman.enable = true;
+    };
   };
 }

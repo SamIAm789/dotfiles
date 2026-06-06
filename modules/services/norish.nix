@@ -1,14 +1,21 @@
 {
 
-  flake.modules.homeManager.norish = { inputs, ... }: {
+  flake.modules.nixos.norish =
+    {
+      config,
+      ...
+    }:
+    let
+    containerUser = "containers";
+    uid = config.users.users.${containerUser}.uid;
+    in
+    {
 
-    networking.firewall.allowedTCPPorts = [ 7000 ];
+      networking.firewall.allowedTCPPorts = [ 7000 ];
 
-    home-manager.users.sam = { pkgs, config, ... }: {
-
-      imports = [ inputs.quadlet-nix.homeManagerModules.quadlet ];
-
-      virtualisation.quadlet = {
+      virtualisation.quadlet = let
+        inherit (config.virtualisation.quadlet) pods;
+      in {
         pods.norish = {
           autoStart = true;
           podConfig = {
@@ -19,6 +26,7 @@
         containers = {
           norish-app = {
             autoStart = true;
+            rootlessConfig.uid = uid;
             serviceConfig = {
               RestartSec = "10";
               Restart = "always";
@@ -31,10 +39,9 @@
             };
             containerConfig = {
               image = "docker.io/norishapp/norish:latest";
-              pod = "norish.pod";
+              pod = "pods.norish.ref";
               # userns = "keep-id";
-              user = "1000";
-              group = "1000";
+              user = "1000:1000";
               environments = {
                 #  AUTH_URL =  "http://10.25.0.24:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
@@ -45,17 +52,17 @@
                 REDIS_URL = "redis://localhost:6379";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
-              healthCmd = ''=node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1)'';
-              healthInterval = "1m";
+              healthCmd = ''node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1))"'';              healthInterval = "1m";
               healthRetries = 3;
               healthStartPeriod = "1m";
               healthTimeout = "15s";
             };
           };
-          db = {
+          norish-db = {
+            rootlessConfig.uid = uid;
             containerConfig = {
               name = "norish-db";
-              pod = "norish.pod";
+              pod = "pods.norish.ref";
               #userns = "keep-id";
               environments = {
                 POSTGRES_USER = "postgres";
@@ -70,22 +77,22 @@
             };
           };
           chrome-headless = {
+            rootlessConfig.uid = uid;
             containerConfig = {
               name = "chrome-headless";
-              pod = "norish.pod";
+              pod = "pods.norish.ref";
               #userns = "keep-id";
-              exec = "--no-sandbox --disable-gpu --disable-dev-shm-usage '--remote-debugging-address=0.0.0.0' '--remote-debugging-port=3001' --headless";
+              exec = "--no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=3001 --headless";
               image = "docker.io/zenika/alpine-chrome:latest";
             };
             serviceConfig = {
               Restart = "always";
             };
           };
-          redis = {
+          norish-redis = {
+            rootlessConfig.uid = uid;
             containerConfig = {
-              pod = "norish.pod";
-              name = "norish-redis";
-              #userns = "keep-id";
+              pod = pods.norish.ref;          # ← Fixed              name = "norish-redis";
               image = "docker.io/redis:8.6.0";
               volumes = [ "/persist/containers/norish/redis:/data" ];
             };
@@ -95,5 +102,4 @@
         };
       };
     };
-  };
 }
