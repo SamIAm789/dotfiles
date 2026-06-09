@@ -663,14 +663,18 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "path": "git+ssh:/git@github-secrets:SamIAm789/secrets",
-        "type": "path"
+        "lastModified": 1780981477,
+        "narHash": "sha256-ekMhf2DbA7ZvDYDPiOH+0lEwHtIxpZI5DPORL6Gtgyw=",
+        "ref": "refs/heads/main",
+        "rev": "19fc00601555bc8df4e411e529faea7c91a361df",
+        "revCount": 22,
+        "type": "git",
+        "url": "ssh://git@github.com/SamIAm789/secrets"
       },
       "original": {
-        "path": "git+ssh:/git@github-secrets:SamIAm789/secrets",
-        "type": "path"
-      },
-      "parent": []
+        "type": "git",
+        "url": "ssh://git@github.com/SamIAm789/secrets"
+      }
     },
     "sops-nix": {
       "inputs": {

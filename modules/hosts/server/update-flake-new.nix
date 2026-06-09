@@ -33,15 +33,14 @@
 
       script = ''
         set -euo pipefail
-        export HOME=${deployHome}
+        export HOME=/var/lib/deploy
 
-        # Force use of deploy user's SSH config
-        export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config -o StrictHostKeyChecking=accept-new"
-        export NIX_SSHOPTS="-F ${deployHome}/.ssh/config"
+        # Default for normal git operations (bot key)
+        export GIT_SSH_COMMAND="ssh -F /var/lib/deploy/.ssh/config"
 
-        # Bootstrap if needed
+        # Bootstrap
         if [ ! -d ${repoPath}/.git ]; then
-          echo "Cloning main repository..."
+          echo "Cloning dotfiles repo..."
           rm -rf ${repoPath}
           git clone git@github-config:SamIAm789/dotfiles.git ${repoPath}
         fi
@@ -51,18 +50,20 @@
         git config user.name "homelab-bot"
         git config user.email "bot@local"
 
-        echo "Pulling latest changes..."
         git pull --rebase origin main
 
-        echo "Updating flake inputs (including secrets repo)..."
-        nix flake update --commit-lock-file-inputs || true
+        # Update flake with explicit secrets key
+        echo "Updating flake inputs..."
+        GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key \
+                         -o StrictHostKeyChecking=accept-new \
+                         -o IdentitiesOnly=yes" \
+          nix flake update --commit-lock-file-inputs || true
 
         if git diff --quiet flake.lock; then
-          echo "No changes to flake.lock"
+          echo "No changes"
           exit 0
         fi
 
-        echo "Committing and pushing..."
         git add flake.lock
         git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
         git push origin main
