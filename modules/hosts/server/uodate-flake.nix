@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.server =
+  flake.modules.nixos.update-flake-old =
   {
     pkgs,
     ...

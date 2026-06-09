@@ -25,6 +25,7 @@
     environment.systemPackages = with pkgs; [
       scrcpy
       vlc
+      bottles
     ];
 
     system.stateVersion = "25.05";

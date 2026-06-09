@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.autoupdate =
+  flake.modules.nixos.autoupdate-old =
   {
     pkgs,
     ...
