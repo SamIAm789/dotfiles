@@ -28,7 +28,6 @@
         Restart = "on-failure";
         RestartSec = "30s";
 
-        # Looser security for initial setup
         ProtectSystem = "full";
         ProtectHome = "read-only";
         PrivateTmp = true;
@@ -41,13 +40,13 @@
       export HOME=${deployHome}
         export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config"
 
-      echo "=== Starting flake update ==="
+      echo "=== Flake Update Service Starting ==="
 
-      # Ensure repo directory is ready
+      # Ensure directories exist
       mkdir -p ${repoPath}
-        chown deploy:deploy ${repoPath} 2>/dev/null || true
+        chown deploy:deploy ${deployHome} ${repoPath}
 
-      # Bootstrap if needed
+        # Bootstrap repo
       if [ ! -d ${repoPath}/.git ]; then
         echo "Cloning repository for the first time..."
         rm -rf ${repoPath}
@@ -77,10 +76,10 @@
       git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
       git push origin main
 
-      echo "✅ Successfully updated and pushed flake.lock"
+      echo "✅ Flake successfully updated and pushed"
     '';
 
-      after = [ "network-online.target" ];
+      after = [ "network-online.target" "tmp.mount" ];
       wants = [ "network-online.target" ];
     };
 
