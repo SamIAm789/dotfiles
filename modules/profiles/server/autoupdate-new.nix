@@ -9,7 +9,6 @@
     repoPath = "${deployHome}/dotfiles";
   in
   {
-    imports = [ ./git-access.nix ];
 
     systemd.services.pull-updates = {
       description = "Pulls changes to system config";
