@@ -669,11 +669,11 @@
         "rev": "19fc00601555bc8df4e411e529faea7c91a361df",
         "revCount": 22,
         "type": "git",
-        "url": "ssh://git@github.com/SamIAm789/secrets"
+        "url": "ssh://git@github-secrets/SamIAm789/secrets"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/SamIAm789/secrets"
+        "url": "ssh://git@github-secrets/SamIAm789/secrets"
       }
     },
     "sops-nix": {
