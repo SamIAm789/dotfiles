@@ -11,7 +11,7 @@
   in
   {
 
-    systemd.tmpf iles.rules = [
+    systemd.tmpfiles.rules = [
         "d ${deployHome}           0750 deploy deploy -"
         "d ${deployHome}/.ssh      0700 deploy deploy -"
         "d ${repoPath}             0750 deploy deploy -"
@@ -24,7 +24,7 @@
       serviceConfig = {
         Type = "oneshot";
         User = "deploy";
-        WorkingDirectory = repoPath;
+        WorkingDirectory = deployHome;
         Restart = "on-failure";
         RestartSec = "30s";
 
