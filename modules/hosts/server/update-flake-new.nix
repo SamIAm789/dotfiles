@@ -11,7 +11,7 @@
   in
   {
 
-    systemd.tmpfiles.rules = [
+    systemd.tmpf iles.rules = [
         "d ${deployHome}           0750 deploy deploy -"
         "d ${deployHome}/.ssh      0700 deploy deploy -"
         "d ${repoPath}             0750 deploy deploy -"
