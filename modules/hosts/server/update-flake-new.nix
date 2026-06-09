@@ -64,7 +64,7 @@
 
       echo "Updating flake inputs..."
       GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
-        nix flake update --commit-lock-file-inputs || true
+        nix flake update
 
       if git diff --quiet flake.lock; then
         echo "No changes to flake.lock"
