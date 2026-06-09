@@ -5,6 +5,7 @@
 {
   flake.modules.nixos.github-keys =
     {
+      config,
       pkgs,
       ...
     }:
