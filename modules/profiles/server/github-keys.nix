@@ -55,29 +55,30 @@
 
       environment.etc."deploy-ssh-config".text = ''
         Host github-config
-        HostName github.com
-        User git
-        IdentityFile ${config.sops.secrets.github-bot-key.path}
-        IdentitiesOnly yes
-        StrictHostKeyChecking accept-new
+          HostName github.com
+          User git
+          IdentityFile ${config.sops.secrets.github-bot-key.path}
+          IdentitiesOnly yes
+          StrictHostKeyChecking accept-new
 
         Host github-secrets
-        HostName github.com
-        User git
-        IdentityFile ${config.sops.secrets.github-secrets-key.path}
-        IdentitiesOnly yes
-        StrictHostKeyChecking accept-new
+          HostName github.com
+          User git
+          IdentityFile ${config.sops.secrets.github-secrets-key.path}
+          IdentitiesOnly yes
+          StrictHostKeyChecking accept-new
       '';
 
       systemd.tmpfiles.rules = [
-        "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
-        "L+ ${deployHome}/.ssh/config - - - - /etc/deploy-ssh-config"
+        "d /var/lib/deploy/.ssh 0700 deploy deploy -"
+        "L+ /var/lib/deploy/.ssh/config - - - - /etc/deploy-ssh-config"
       ];
 
+        # Personal user config
       programs.ssh.extraConfig = ''
         Match User ${personalUser} Host github.com
-        IdentityFile ${config.sops.secrets.github-personal-key.path}
-        IdentitiesOnly yes
+          IdentityFile ${config.sops.secrets.github-personal-key.path}
+          IdentitiesOnly yes
       '';
     };
 }
