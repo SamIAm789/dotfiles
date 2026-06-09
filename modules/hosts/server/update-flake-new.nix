@@ -12,8 +12,9 @@
   {
 
     systemd.tmpfiles.rules = [
-        "d ${deployHome} 0750 deploy deploy -"
-        "d ${repoPath} 0750 deploy deploy -"
+        "d ${deployHome}           0750 deploy deploy -"
+        "d ${deployHome}/.ssh      0700 deploy deploy -"
+        "d ${repoPath}             0750 deploy deploy -"
       ];
 
     systemd.services.flake-update = {
@@ -27,11 +28,10 @@
         Restart = "on-failure";
         RestartSec = "30s";
 
-        # Softened security settings to allow directory creation
+        # Looser security for initial setup
         ProtectSystem = "full";
         ProtectHome = "read-only";
         PrivateTmp = true;
-        PrivateDevices = true;
         NoNewPrivileges = true;
         ReadWritePaths = [ deployHome ];
       };
@@ -41,11 +41,15 @@
       export HOME=${deployHome}
         export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config"
 
-      echo "Working directory: ${repoPath}"
+      echo "=== Starting flake update ==="
+
+      # Ensure repo directory is ready
+      mkdir -p ${repoPath}
+        chown deploy:deploy ${repoPath} 2>/dev/null || true
 
       # Bootstrap if needed
       if [ ! -d ${repoPath}/.git ]; then
-        echo "Cloning configuration repository for the first time..."
+        echo "Cloning repository for the first time..."
         rm -rf ${repoPath}
           git clone git@github-config:SamIAm789/dotfiles.git ${repoPath}
           chown -R deploy:deploy ${repoPath}
@@ -59,7 +63,7 @@
       echo "Pulling latest changes..."
       git pull --rebase origin main
 
-      echo "Updating flake inputs (including secrets)..."
+      echo "Updating flake inputs..."
       GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
         nix flake update --commit-lock-file-inputs || true
 
@@ -73,7 +77,7 @@
       git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
       git push origin main
 
-      echo "✅ Flake update completed successfully"
+      echo "✅ Successfully updated and pushed flake.lock"
     '';
 
       after = [ "network-online.target" ];
