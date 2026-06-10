@@ -17,6 +17,10 @@
       "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
     ];
 
+    users.users.${deployUser} = {
+        extraGroups = [ "wheel" ];   # ← Important for sudo
+      };
+
     environment.etc."gitconfig-root".text = ''
       [safe]
         directory = ${repoPath}
@@ -24,6 +28,18 @@
         name = "homelab-bot"
         email = "bot@local"
     '';
+
+    security.sudo = {
+        enable = true;
+        extraRules = [{
+          users = [ deployUser ];
+          commands = [
+            { command = "${pkgs.nh}/bin/nh"; options = [ "NOPASSWD" ]; }
+            { command = "/run/current-system/sw/bin/nix"; options = [ "NOPASSWD" ]; }
+            { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
+          ];
+        }];
+      };
 
     systemd.services.pull-updates = {
       description = "Pulls changes to system config";
