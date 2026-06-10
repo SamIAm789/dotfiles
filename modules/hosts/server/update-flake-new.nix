@@ -23,11 +23,10 @@
 
       serviceConfig = {
         Type = "oneshot";
-        User = "deploy";
+        User = deployUser;
         WorkingDirectory = deployHome;
         Restart = "on-failure";
         RestartSec = "30s";
-
         ProtectSystem = "full";
         ProtectHome = "read-only";
         PrivateTmp = true;
@@ -37,58 +36,56 @@
 
       script = ''
         set -euo pipefail
-      export HOME=${deployHome}
+        export HOME=${deployHome}
         export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config"
 
-      echo "=== Flake Update Service Starting ==="
+        echo "=== Flake Update Service Starting ==="
 
-      # Ensure directories exist
-      mkdir -p ${repoPath}
+        # Ensure directories exist
+        mkdir -p ${repoPath}
         chown deploy:deploy ${deployHome} ${repoPath}
 
-        # Bootstrap repo
-      if [ ! -d ${repoPath}/.git ]; then
-        echo "Cloning repository for the first time..."
-        rm -rf ${repoPath}
-          git clone git@github-config:SamIAm789/dotfiles.git ${repoPath}
+           # Bootstrap repo (updated to HTTPS fallback)
+        if [ ! -d ${repoPath}/.git ]; then
+          echo "Cloning repository for the first time..."
+          rm -rf ${repoPath}
+          git clone https://github.com/SamIAm789/dotfiles.git ${repoPath}
           chown -R deploy:deploy ${repoPath}
-        fi
+         fi
 
-      cd ${repoPath}
+         cd ${repoPath}
 
-        git config user.name "homelab-bot"
-      git config user.email "bot@local"
+         git config user.name "homelab-bot"
+         git config user.email "bot@local"
 
-      echo "Pulling latest changes..."
-      git pull --rebase origin main
+         echo "Pulling latest changes..."
+         git pull --rebase origin main
 
-      echo "Updating flake inputs..."
-      GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
-        nix flake update
+         echo "Updating flake inputs..."
+         nix flake update
 
-      if git diff --quiet flake.lock; then
-        echo "No changes to flake.lock"
-        exit 0
-      fi
+         if git diff --quiet flake.lock; then
+           echo "No changes to flake.lock"
+           exit 0
+         fi
 
-      echo "Committing and pushing..."
-      git add flake.lock
-      git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
-      git push origin main
+         echo "Committing and pushing..."
+         git add flake.lock
+         git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
+         git push origin main
 
-      echo "✅ Flake successfully updated and pushed"
-    '';
+         echo "✅ Flake successfully updated and pushed"
+      '';
 
-      after = [ "network-online.target" "tmp.mount" ];
+      after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     };
 
     systemd.timers.flake-update = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "hourly";
+        OnCalendar = "*-*-* 00:00:00";
         Persistent = true;
-        RandomizedDelaySec = "15min";
       };
     };
   };
