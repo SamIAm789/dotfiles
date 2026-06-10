@@ -32,49 +32,49 @@
         PrivateTmp = true;
         NoNewPrivileges = true;
         ReadWritePaths = [ deployHome ];
+        Environment = "HOME=${deployHome}";
       };
 
       script = ''
         set -euo pipefail
-        export HOME=${deployHome}
-        export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config"
 
         echo "=== Flake Update Service Starting ==="
 
-        # Ensure directories exist
         mkdir -p ${repoPath}
-        chown deploy:deploy ${deployHome} ${repoPath}
+        chown -R ${deployUser}:${deployUser} ${deployHome}
 
-           # Bootstrap repo (updated to HTTPS fallback)
+        # Bootstrap if needed
         if [ ! -d ${repoPath}/.git ]; then
-          echo "Cloning repository for the first time..."
+          echo "Cloning repository..."
           rm -rf ${repoPath}
           git clone https://github.com/SamIAm789/dotfiles.git ${repoPath}
-          chown -R deploy:deploy ${repoPath}
-         fi
+          chown -R ${deployUser}:${deployUser} ${repoPath}
+          fi
 
-         cd ${repoPath}
+          cd ${repoPath}
 
-         git config user.name "homelab-bot"
-         git config user.email "bot@local"
+          git config user.name "homelab-bot"
+          git config user.email "bot@local"
 
-         echo "Pulling latest changes..."
-         git pull --rebase origin main
+          echo "Pulling latest changes..."
+          git pull --rebase origin main
 
-         echo "Updating flake inputs..."
-         nix flake update
+          echo "Updating flake inputs..."
+          # Use the proper SSH key for secrets repo
+          GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
+          nix flake update
 
-         if git diff --quiet flake.lock; then
+        if git diff --quiet flake.lock; then
            echo "No changes to flake.lock"
            exit 0
-         fi
+        fi
 
-         echo "Committing and pushing..."
-         git add flake.lock
-         git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
-         git push origin main
+        echo "Committing and pushing..."
+        git add flake.lock
+        git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
+        git push origin main
 
-         echo "✅ Flake successfully updated and pushed"
+        echo "✅ Flake successfully updated and pushed"
       '';
 
       after = [ "network-online.target" ];
