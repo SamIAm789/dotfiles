@@ -23,9 +23,10 @@
     services.fprintd.enable = true;
 
     environment.systemPackages = with pkgs; [
+      bottles
+      esphome
       scrcpy
       vlc
-      bottles
     ];
 
     system.stateVersion = "25.05";
