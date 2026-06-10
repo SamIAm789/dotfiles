@@ -36,7 +36,7 @@ in
     description = "Pull changes to system config";
     restartIfChanged = false;
     startAt = "01:00";
-    path = [ pkgs.git ];   # No openssh needed for public HTTPS
+    path = [ pkgs.git ];                    # ← only git, no openssh
     serviceConfig = {
       Type = "oneshot";
       User = deployUser;
