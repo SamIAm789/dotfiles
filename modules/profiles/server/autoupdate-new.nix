@@ -32,12 +32,11 @@ in
       directory = ${repoPath}
   '';
 
-  # === Daily pull from public repo ===
   systemd.services.pull-updates = {
     description = "Pull changes to system config";
     restartIfChanged = false;
     startAt = "01:00";
-    path = [ pkgs.git ];
+    path = [ pkgs.git ];   # No openssh needed for public HTTPS
     serviceConfig = {
       Type = "oneshot";
       User = deployUser;
