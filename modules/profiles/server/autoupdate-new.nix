@@ -52,15 +52,14 @@
     system.autoUpgrade = {
       enable = true;
       flake = "git+file://${repoPath}";
-      flags = [ "--update-inputs" ];
 
       allowReboot = true;
       rebootWindow = {
         lower = "02:00";
-        upper = "04:00";
+        upper = "05:00";
       };
 
-      dates = "01:30";
+      dates = "02:00";
     };
   };
 }
