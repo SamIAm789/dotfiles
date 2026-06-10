@@ -89,7 +89,7 @@
       path = [ pkgs.nh pkgs.git pkgs.openssh config.nix.package ];
       serviceConfig = {
         Type = "oneshot";
-        User = "root";              # nh os switch needs root
+        User = deployUser;              # nh os switch needs root
         WorkingDirectory = repoPath;
         Restart = "on-failure";
         RestartSec = "30s";
