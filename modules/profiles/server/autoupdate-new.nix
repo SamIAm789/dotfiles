@@ -82,10 +82,10 @@
     };
 
     systemd.services.nixos-upgrade = {
-      description = "NixOS Upgrade with nh";
+      description = "NixOS Upgrade";
       restartIfChanged = false;
       startAt = "02:00";
-      path = [ pkgs.git pkgs.openssh config.nix.package ];
+      path = [ pkgs.git pkgs.openssh config.nix.package pkgs.nixos-rebuild ];
       serviceConfig = {
         Type = "oneshot";
         User = deployUser;              # nh os switch needs root
@@ -99,7 +99,7 @@
       };
       script = ''
         set -euo pipefail
-        echo "=== Starting NixOS upgrade with nh ==="
+        echo "=== Starting NixOS upgrade ==="
 
         nixos-rebuild switch \
           --flake ${repoPath}#${config.networking.hostName}
