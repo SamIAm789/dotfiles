@@ -17,6 +17,14 @@ in
     "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
     "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
   ];
+  
+  programs.git = {
+  enable = true;
+  config = {
+    safe.directory = [ "${repoPath}" ];
+    # Optional: also set bot identity for root
+  };
+};
 
   # === Git safe.directory for root (fixes your original error) ===
   environment.etc."gitconfig-root".text = ''
