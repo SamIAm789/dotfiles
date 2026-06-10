@@ -93,8 +93,10 @@
         WorkingDirectory = repoPath;
         Restart = "on-failure";
         RestartSec = "30s";
-        ProtectSystem = "strict";
+        ProtectSystem = "full";
+        PrivateTmp = true;
         ReadWritePaths = [ "/nix" "/boot" "${repoPath}" ];
+        NoNewPrivileges = true;
       };
       script = ''
         set -euo pipefail
