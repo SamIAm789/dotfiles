@@ -18,6 +18,7 @@
       base
       laptop
       sam
+      esphome
     ];
 
     services.fprintd.enable = true;
