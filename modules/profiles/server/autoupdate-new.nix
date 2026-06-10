@@ -1,12 +1,14 @@
 {
   flake.modules.nixos.autoupdate =
   {
+    config,
     pkgs,
     ...
   }:
   let
     deployHome = "/var/lib/deploy";
     repoPath = "${deployHome}/dotfiles";
+    deployUser = "deploy";
   in
   {
     systemd.tmpfiles.rules = [
@@ -14,6 +16,14 @@
       "d ${deployHome}/.ssh 0700 deploy deploy -"
       "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
     ];
+
+    environment.etc."gitconfig-root".text = ''
+      [safe]
+        directory = ${repoPath}
+      [user]
+        name = "homelab-bot"
+        email = "bot@local"
+    '';
 
     systemd.services.pull-updates = {
       description = "Pulls changes to system config";
@@ -25,6 +35,7 @@
         User = "deploy";
         WorkingDirectory = repoPath;
         Restart = "on-failure";
+        ProtectSystem = "strict";
         ReadWritePaths = [ deployHome ];
         PrivateTmp = true;
         NoNewPrivileges = true;
@@ -54,14 +65,6 @@
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     };
-
-    environment.etc."gitconfig-root".text = ''
-      [safe]
-        directory = ${repoPath}
-      [user]
-        name = "homelab-bot"
-        email = "bot@local"
-    '';
 
     systemd.services.nixos-upgrade = {
       description = "NixOS Upgrade with nh";
