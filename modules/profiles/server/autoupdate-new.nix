@@ -51,7 +51,7 @@
 
     system.autoUpgrade = {
       enable = true;
-      flake = "git+file://${repoPath}";
+      flake = "${repoPath}";
 
       allowReboot = true;
       rebootWindow = {
