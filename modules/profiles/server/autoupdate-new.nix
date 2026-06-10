@@ -5,109 +5,69 @@
     pkgs,
     ...
   }:
-  let
-    deployHome = "/var/lib/deploy";
-    repoPath = "${deployHome}/dotfiles";
-    deployUser = "deploy";
-  in
-  {
-    systemd.tmpfiles.rules = [
-      "d ${deployHome}      0750 deploy deploy -"
-      "d ${deployHome}/.ssh 0700 deploy deploy -"
-      "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
-    ];
+let
+  deployUser = "deploy";
+  deployHome = "/var/lib/deploy";
+  repoPath = "${deployHome}/dotfiles";
+in
+{
+  
+  systemd.tmpfiles.rules = [
+    "d ${deployHome} 0750 ${deployUser} ${deployUser} -"
+    "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
+    "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
+  ];
 
-    users.users.${deployUser} = {
-        extraGroups = [ "wheel" ];   # ← Important for sudo
-      };
+  # === Git safe.directory for root (fixes your original error) ===
+  environment.etc."gitconfig-root".text = ''
+    [safe]
+      directory = ${repoPath}
+  '';
 
-    environment.etc."gitconfig-root".text = ''
-      [safe]
-        directory = ${repoPath}
-      [user]
-        name = "homelab-bot"
-        email = "bot@local"
+  # === Daily pull from public repo ===
+  systemd.services.pull-updates = {
+    description = "Pull changes to system config";
+    restartIfChanged = false;
+    startAt = "01:00";
+    path = [ pkgs.git ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = deployUser;
+      WorkingDirectory = repoPath;
+      Restart = "on-failure";
+      RestartSec = "30s";
+    };
+    script = ''
+      set -euo pipefail
+      export HOME=${deployHome}
+
+      # Bootstrap if needed
+      if [ ! -d ${repoPath}/.git ]; then
+        echo "Cloning repository..."
+        rm -rf ${repoPath}
+        git clone --depth 1 https://github.com/SamIAm789/dotfiles.git ${repoPath}
+      fi
+
+      cd ${repoPath}
+      git config user.name "homelab-bot"
+      git config user.email "bot@local"
+
+      echo "Pulling latest changes..."
+      git pull --ff-only origin main
     '';
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
 
-    security.sudo = {
-        enable = true;
-        extraRules = [{
-          users = [ deployUser ];
-          commands = [
-            { command = "/run/current-system/sw/bin/nix"; options = [ "NOPASSWD" ]; }
-            { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
-          ];
-        }];
-      };
-
-    systemd.services.pull-updates = {
-      description = "Pulls changes to system config";
-      restartIfChanged = false;
-      startAt = "01:00";
-      path = [ pkgs.git pkgs.openssh ];
-      serviceConfig = {
-        Type = "oneshot";
-        User = "deploy";
-        WorkingDirectory = repoPath;
-        Restart = "on-failure";
-        ProtectSystem = "strict";
-        ReadWritePaths = [ deployHome ];
-        PrivateTmp = true;
-        NoNewPrivileges = true;
-      };
-      script = ''
-        set -euo pipefail
-        export HOME=${deployHome}
-        export GIT_SSH_COMMAND="ssh -F ${deployHome}/.ssh/config"
-
-        echo "=== pull-updates starting ==="
-
-        # Bootstrap if needed (public repo → HTTPS recommended)
-        if [ ! -d ${repoPath}/.git ]; then
-          echo "Cloning repository for the first time..."
-          rm -rf ${repoPath}
-          git clone --depth 1 https://github.com/SamIAm789/dotfiles.git ${repoPath}
-        fi
-
-        cd ${repoPath}
-        git config user.name "homelab-bot"
-        git config user.email "bot@local"
-
-        echo "Pulling latest changes..."
-        git pull --ff-only origin main
-        echo "=== pull-updates complete ==="
-      '';
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
+  # === Official auto-upgrade (runs after pull) ===
+  system.autoUpgrade = {
+    enable = true;
+    flake = "${repoPath}";
+    allowReboot = true;
+    rebootWindow = {
+      lower = "02:00";
+      upper = "05:00";
     };
-
-    systemd.services.nixos-upgrade = {
-      description = "NixOS Upgrade";
-      restartIfChanged = false;
-      startAt = "02:00";
-      path = [ pkgs.git pkgs.openssh config.nix.package pkgs.nixos-rebuild ];
-      serviceConfig = {
-        Type = "oneshot";
-        User = deployUser;              # nh os switch needs root
-        WorkingDirectory = repoPath;
-        Restart = "on-failure";
-        RestartSec = "30s";
-        ProtectSystem = "full";
-        PrivateTmp = true;
-        ReadWritePaths = [ "/nix" "/boot" "${repoPath}" ];
-        NoNewPrivileges = true;
-      };
-      script = ''
-        set -euo pipefail
-        echo "=== Starting NixOS upgrade ==="
-
-        nixos-rebuild switch \
-          --flake ${repoPath}#${config.networking.hostName}
-
-        echo "✅ Upgrade completed successfully"
-      '';
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-    };
+    dates = "02:00";
   };
 }
