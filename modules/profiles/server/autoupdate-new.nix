@@ -34,7 +34,6 @@
         extraRules = [{
           users = [ deployUser ];
           commands = [
-            { command = "${pkgs.nh}/bin/nh"; options = [ "NOPASSWD" ]; }
             { command = "/run/current-system/sw/bin/nix"; options = [ "NOPASSWD" ]; }
             { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
           ];
@@ -86,7 +85,7 @@
       description = "NixOS Upgrade with nh";
       restartIfChanged = false;
       startAt = "02:00";
-      path = [ pkgs.nh pkgs.git pkgs.openssh config.nix.package ];
+      path = [ pkgs.git pkgs.openssh config.nix.package ];
       serviceConfig = {
         Type = "oneshot";
         User = deployUser;              # nh os switch needs root
@@ -102,7 +101,8 @@
         set -euo pipefail
         echo "=== Starting NixOS upgrade with nh ==="
 
-        nh os switch ${repoPath}
+        nixos-rebuild switch \
+          --flake ${repoPath}#${config.networking.hostName}
 
         echo "✅ Upgrade completed successfully"
       '';
