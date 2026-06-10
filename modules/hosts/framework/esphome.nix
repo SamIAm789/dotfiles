@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.esphome = {
-    service.esphome = {
+    services.esphome = {
       enable = true;
       allowedDevices = [
         "char-ttyUSB"
