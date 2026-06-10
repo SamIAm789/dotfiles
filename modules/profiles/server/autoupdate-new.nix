@@ -11,13 +11,13 @@ let
   repoPath = "${deployHome}/dotfiles";
 in
 {
-  
+
   systemd.tmpfiles.rules = [
     "d ${deployHome} 0750 ${deployUser} ${deployUser} -"
     "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
     "d ${repoPath} 0750 ${deployUser} ${deployUser} -"
   ];
-  
+
   programs.git = {
   enable = true;
   config = {
@@ -36,7 +36,7 @@ in
     description = "Pull changes to system config";
     restartIfChanged = false;
     startAt = "01:00";
-    path = [ pkgs.git ];                    # ← only git, no openssh
+    path = [ pkgs.git pkgs.openssh ];
     serviceConfig = {
       Type = "oneshot";
       User = deployUser;
@@ -48,11 +48,18 @@ in
       set -euo pipefail
       export HOME=${deployHome}
 
-      # Bootstrap if needed
+      # Bootstrap or fix remote if needed
       if [ ! -d ${repoPath}/.git ]; then
-        echo "Cloning repository..."
+        echo "Cloning repository (HTTPS)..."
         rm -rf ${repoPath}
         git clone --depth 1 https://github.com/SamIAm789/dotfiles.git ${repoPath}
+      else
+        cd ${repoPath}
+        # Force HTTPS remote if it's still SSH
+        if git remote get-url origin | grep -q "github-config"; then
+          echo "Switching origin to HTTPS..."
+          git remote set-url origin https://github.com/SamIAm789/dotfiles.git
+        fi
       fi
 
       cd ${repoPath}
