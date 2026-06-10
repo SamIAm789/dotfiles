@@ -7,5 +7,8 @@
         "char-ttyS"
       ];
     };
+    users.users.sam = {
+      extraGroups = [ "dialout" ];
+    };
   };
 }
