@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.norish = {
+  flake.modules.nixos.norish-hm = {
 
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
