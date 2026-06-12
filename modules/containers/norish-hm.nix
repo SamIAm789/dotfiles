@@ -17,7 +17,7 @@
 
     sops.secrets."gemini-api-key-samblack" = {
       sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
-      key = "gemini-api-key-samblack";
+     # key = "gemini-api-key-samblack";
       owner = config.users.users.sam.name;
       group = "users";
       mode = "0400";
