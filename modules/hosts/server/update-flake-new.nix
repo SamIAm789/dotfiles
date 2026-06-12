@@ -45,7 +45,7 @@
                   echo "Cloning repository..."
                   rm -rf ${repoPath}
                   git clone https://github.com/SamIAm789/dotfiles.git ${repoPath}
-                  chown -R ${depoloyUser}:${deployUser} ${repoPath}
+                  chown -R ${deployUser}:${deployUser} ${repoPath}
                 fi
 
                 cd ${repoPath}
