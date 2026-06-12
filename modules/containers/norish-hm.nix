@@ -3,9 +3,21 @@
   ...
 }:
 {
-  flake.modules.nixos.norish-hm = {
-
+  flake.modules.nixos.norish-hm =
+  {
+    config,
+    ...
+  }:
+  {
     networking.firewall.allowedTCPPorts = [ 7000 ];
+
+    sops.secrets."gemini-api-key-samblack" = {
+      sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
+      key = "gemini-api-key-samblack";
+      owner = config.users.users.sam.name;
+      group = "users";
+      mode = "0400";
+    }
 
     home-manager.users.sam = { pkgs, config, ... }: {
 
@@ -46,9 +58,10 @@
                 RECIPES_DISK_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
-                AI_PROVIDER: google
-                AI_API_KEY: 
-                AI_MODEL: Gemini 2.5 pro
+                AI_ENABLED = true;
+                AI_PROVIDER = "google";
+                AI_API_KEY = config.sops.secrets."gemini-api-key-samblack".path;
+                AI_MODEL = "Gemini 2.5 pro";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               healthCmd = ''=node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1)'';
