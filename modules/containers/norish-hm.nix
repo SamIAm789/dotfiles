@@ -96,16 +96,14 @@
             containerConfig = {
               name = "chrome-headless";
               pod = "norish.pod";
-              exec = [
-                "chromium"
-                "--headless"
-                "--no-sandbox"
-                "--disable-gpu"
-                "--disable-dev-shm-usage"
-                "--remote-debugging-address=0.0.0.0"
-                "--remote-debugging-port=3001"
-                "--remote-allow-origins=*"
-              ];
+              environment = {
+                DEBUG = "browserless:*";
+                DEFAULT_LAUNCH_ARGS =
+                  "--no-sandbox "
+                  + "--disable-gpu "
+                  + "--disable-dev-shm-usage "
+                  + "--remote-allow-origins=*";
+              };
               image = "ghcr.io/browserless/chromium:latest";
             };
             serviceConfig = {
