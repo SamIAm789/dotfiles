@@ -17,7 +17,7 @@
       owner = config.users.users.sam.name;
       group = "users";
       mode = "0400";
-    }
+    };
 
     home-manager.users.sam = { pkgs, config, ... }: {
 
