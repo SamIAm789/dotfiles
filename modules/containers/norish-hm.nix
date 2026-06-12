@@ -62,7 +62,7 @@
                 RECIPES_DISK_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
-                AI_ENABLED = true;
+                AI_ENABLED = "true";
                 AI_PROVIDER = "google";
                 AI_API_KEY = geminiKeyPath;
                 AI_MODEL = "Gemini 2.5 pro";
