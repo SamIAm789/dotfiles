@@ -17,7 +17,7 @@
         "d ${repoPath}             0750 deploy deploy -"
       ];
 
-    ssystemd.services.flake-update = {
+    systemd.services.flake-update = {
       description = "Update flake inputs and push to GitHub";
 
       path = [ pkgs.git pkgs.nix pkgs.openssh pkgs.coreutils ];
