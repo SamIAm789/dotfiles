@@ -96,7 +96,7 @@
             containerConfig = {
               name = "chrome-headless";
               pod = "norish.pod";
-              command = [
+              exec = [
                 "--no-sandbox"
                 "--disable-gpu"
                 "--disable-dev-shm-usage"
