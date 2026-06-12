@@ -24,14 +24,14 @@
       serviceConfig = {
         Type = "oneshot";
         User = deployUser;
-        WorkingDirectory = deployHome;
+        WorkingDirectory = repoPath;
         Restart = "on-failure";
         RestartSec = "30s";
         ProtectSystem = "full";
         ProtectHome = "read-only";
         PrivateTmp = true;
         NoNewPrivileges = true;
-        ReadWritePaths = [ deployHome ];
+        ReadWritePaths = [ deployHome repoPath ];
         Environment = "HOME=${deployHome}";
       };
 
@@ -45,9 +45,12 @@
                   echo "Cloning repository..."
                   rm -rf ${repoPath}
                   git clone https://github.com/SamIAm789/dotfiles.git ${repoPath}
+                  chown -R ${depoloyUser}:${deployUser} ${repoPath}
                 fi
 
                 cd ${repoPath}
+
+                git remote set-url origin git@github-config:SamIAm789/dotfiles.git
 
                 git config user.name "homelab-bot"
                 git config user.email "bot@local"
@@ -68,6 +71,7 @@
                 echo "Committing and pushing..."
                 git add flake.lock
                 git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
+                GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
                 git push origin main
 
                 echo "✅ Flake successfully updated and pushed"
@@ -80,7 +84,7 @@
     systemd.timers.flake-update = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "*-*-* 00:00:00";
+        OnCalendar = "daily";
         Persistent = true;
       };
     };
