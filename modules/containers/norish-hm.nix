@@ -8,6 +8,10 @@
     config,
     ...
   }:
+  let
+    geminiKeyPath =
+      "config.sops.secrets."gemini-api-key-samblack".path";
+  in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
@@ -60,7 +64,7 @@
                 REDIS_URL = "redis://localhost:6379";
                 AI_ENABLED = true;
                 AI_PROVIDER = "google";
-                AI_API_KEY = config.sops.secrets."gemini-api-key-samblack".path;
+                AI_API_KEY = geminiKeyPath;
                 AI_MODEL = "Gemini 2.5 pro";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
