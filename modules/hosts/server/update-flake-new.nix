@@ -17,68 +17,63 @@
         "d ${repoPath}             0750 deploy deploy -"
       ];
 
-    systemd.services.flake-update = {
+    ssystemd.services.flake-update = {
       description = "Update flake inputs and push to GitHub";
+
       path = [ pkgs.git pkgs.nix pkgs.openssh pkgs.coreutils ];
 
       serviceConfig = {
         Type = "oneshot";
         User = deployUser;
         WorkingDirectory = repoPath;
-        Restart = "on-failure";
-        RestartSec = "30s";
+
         ProtectSystem = "full";
         ProtectHome = "read-only";
         PrivateTmp = true;
         NoNewPrivileges = true;
+
         ReadWritePaths = [ deployHome repoPath ];
-        Environment = "HOME=${deployHome}";
+
+        Environment = [
+          "HOME=${deployHome}"
+          "GIT_SSH_COMMAND=ssh -F /etc/deploy-ssh-config"
+        ];
       };
 
       script = ''
-          set -euo pipefail
+        set -euo pipefail
 
-                echo "=== Flake Update Service Starting ==="
+        echo "=== Flake Update ==="
 
-                # Bootstrap if needed
-                if [ ! -d ${repoPath}/.git ]; then
-                  echo "Cloning repository..."
-                  rm -rf ${repoPath}
-                  git clone https://github.com/SamIAm789/dotfiles.git ${repoPath}
-                  chown -R ${deployUser}:${deployUser} ${repoPath}
-                fi
+        # ALWAYS SSH clone (no HTTPS ever)
+        if [ ! -d ${repoPath}/.git ]; then
+          rm -rf ${repoPath}
+          git clone git@github-config:SamIAm789/dotfiles.git ${repoPath}
+        fi
 
-                cd ${repoPath}
+        cd ${repoPath}
 
-                git remote set-url origin git@github-config:SamIAm789/dotfiles.git
+        git config user.name "homelab-bot"
+        git config user.email "bot@local"
 
-                git config user.name "homelab-bot"
-                git config user.email "bot@local"
+        git pull --rebase origin main
 
-                echo "Pulling latest changes..."
-                git pull --rebase origin main
+        echo "Updating flake inputs..."
+        nix flake update
 
-                echo "Updating flake inputs..."
-                # Use SSH key specifically for the secrets repo
-                GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
-                  nix flake update
+        git add flake.lock
 
-                if git diff --quiet flake.lock; then
-                  echo "No changes to flake.lock"
-                  exit 0
-                fi
+        if git diff --cached --quiet; then
+          echo "No changes"
+          exit 0
+        fi
 
-                echo "Committing and pushing..."
-                git add flake.lock
-                git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
-                GIT_SSH_COMMAND="ssh -i /run/secrets/github-bot-key -o StrictHostKeyChecking=accept-new" \
-                git push origin main
+        git commit -m "chore(flake): update $(date +%F)"
 
-                echo "✅ Flake successfully updated and pushed"
+        git push origin main
+
+        echo "DONE"
       '';
-
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
     };
 
     systemd.timers.flake-update = {
