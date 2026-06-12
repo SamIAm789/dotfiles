@@ -47,7 +47,7 @@
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
               };
-              volumes = [ "norish_data:/app/uploads" ];
+              volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               healthCmd = ''=node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1)'';
               healthInterval = "1m";
               healthRetries = 3;
@@ -66,7 +66,7 @@
                 POSTGRES_DB = "norish";
               };
               image = "docker.io/postgres:18-alpine";
-              volumes = [ "norish_db_data:/var/lib/postgresql/data" ];
+              volumes = [ "/persist/containers/norish/postgres:/var/lib/postgresql/data" ];
             };
             serviceConfig = {
               Restart = "always";
@@ -90,7 +90,7 @@
               name = "norish-redis";
               #userns = "keep-id";
               image = "docker.io/redis:8.6.0";
-              volumes = [ "norish_redis_data:/data" ];
+              volumes = [ "/persist/containers/norish/redis:/data" ];
             };
             serviceConfig = {
               Restart = "always";
