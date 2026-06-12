@@ -104,7 +104,7 @@
                 "--remote-debugging-port=3001"
                 "--headless"
               ];
-              image = ghcr.io/browserless/chromium:latest";
+              image = "ghcr.io/browserless/chromium:latest";
             };
             serviceConfig = {
                Restart = "always";
