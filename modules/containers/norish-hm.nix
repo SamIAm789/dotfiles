@@ -65,7 +65,7 @@
                 POSTGRES_PASSWORD = "norish";
                 POSTGRES_DB = "norish";
               };
-              image = "docker.io/postgres:18-alpine";
+              image = "docker.io/postgres:17-alpine";
               volumes = [ "/persist/containers/norish/postgres:/var/lib/postgresql/data" ];
             };
             serviceConfig = {
