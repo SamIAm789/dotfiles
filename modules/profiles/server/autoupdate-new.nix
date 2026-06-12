@@ -43,13 +43,12 @@ in
     serviceConfig = {
       Type = "oneshot";
       User = deployUser;
-      WorkingDirectory = repoPath;
+     # WorkingDirectory = repoPath;
 
       ExecStartPre = [
-      "${pkgs.systemd}/bin/systemd-tmpfiles --create"
-      "${pkgs.coreutils}/bin/mkdir -p ${repoPath}"
-      "${pkgs.coreutils}/bin/chown ${deployUser}:${deployUser} ${repoPath}"
-    ];
+        "${pkgs.coreutils}/bin/mkdir -p ${repoPath}"
+        "${pkgs.coreutils}/bin/chown ${deployUser}:${deployUser} ${repoPath}"
+      ];
 
       Environment = [
         "HOME=${deployHome}"
