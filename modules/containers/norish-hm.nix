@@ -62,6 +62,7 @@
                 RECIPES_DISK_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
+                RECIPE_RENDERER= "chrome";
                 AI_ENABLED = "true";
                 AI_PROVIDER = "generic-openai";
                 AI_API_KEY = geminiKeyPath;
