@@ -58,7 +58,7 @@
                 AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
-                CHROME_WS_ENDPOINT = "ws://localhost:3000";
+                CHROME_WS_ENDPOINT = "ws://localhost:3001";
                 RECIPES_DISK_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
@@ -97,6 +97,7 @@
               name = "chrome-headless";
               pod = "norish.pod";
               environments = {
+                PORT = "3001";
                 DEBUG = "browserless:*";
                 DEFAULT_LAUNCH_ARGS =
                   "--no-sandbox "
@@ -121,9 +122,9 @@
             serviceConfig = {
               Restart = "always";
             };
-              };
-            };
+          };
         };
+      };
     };
   };
 }
