@@ -40,7 +40,7 @@
               group = "1000";
               environments = {
               #  AUTH_URL =  "http://10.25.0.24:7000";
-                DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
+                DATABASE_URL = "postgres://postgres:norish@postgres:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
                 CHROME_WS_ENDPOINT = "ws://localhost:3001";
                 RECIPES_DISK_DIR = "/app/uploads";
