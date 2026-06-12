@@ -71,7 +71,7 @@
                 echo "Committing and pushing..."
                 git add flake.lock
                 git commit -m "chore(flake): automatic update $(date +%Y-%m-%d)"
-                GIT_SSH_COMMAND="ssh -i /run/secrets/github-secrets-key -o StrictHostKeyChecking=accept-new" \
+                GIT_SSH_COMMAND="ssh -i /run/secrets/github-bot-key -o StrictHostKeyChecking=accept-new" \
                 git push origin main
 
                 echo "✅ Flake successfully updated and pushed"
