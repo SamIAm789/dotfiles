@@ -58,7 +58,7 @@
                 AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
-                CHROME_WS_ENDPOINT = "ws://localhost:3001";
+                CHROME_WS_ENDPOINT = "ws://chrome-headless:3001";
                 RECIPES_DISK_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
@@ -96,8 +96,14 @@
             containerConfig = {
               name = "chrome-headless";
               pod = "norish.pod";
-              #userns = "keep-id";
-              exec = "--no-sandbox --disable-gpu --disable-dev-shm-usage '--remote-debugging-address=0.0.0.0' '--remote-debugging-port=3001' --headless";
+              command = [
+                "--no-sandbox"
+                "--disable-gpu"
+                "--disable-dev-shm-usage"
+                "--remote-debugging-address=0.0.0.0"
+                "--remote-debugging-port=3001"
+                "--headless"
+              ];
               image = "docker.io/zenika/alpine-chrome:latest";
             };
             serviceConfig = {
