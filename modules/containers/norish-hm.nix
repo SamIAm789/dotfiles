@@ -39,7 +39,7 @@
               user = "1000";
               group = "1000";
               environments = {
-                AUTH_URL =  "http://100.100.0.7:7000";
+                AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
                 CHROME_WS_ENDPOINT = "ws://localhost:3001";
