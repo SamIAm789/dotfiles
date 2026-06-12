@@ -47,7 +47,7 @@
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
                 AI_PROVIDER: google
-                AI_API_KEY: AIzaSyAN8F6dTECM6uP2IYzgbfwAIembCeG4y_U
+                AI_API_KEY: 
                 AI_MODEL: Gemini 2.5 pro
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
