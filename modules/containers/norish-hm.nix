@@ -65,7 +65,8 @@
                 AI_ENABLED = "true";
                 AI_PROVIDER = "generic-openai";
                 AI_API_KEY = geminiKeyPath;
-                AI_MODEL = "Gemini 2.5 pro";
+                AI_MODEL = "gemini-1.5-pro";
+                AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               healthCmd = ''=node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1)'';
