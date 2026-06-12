@@ -10,7 +10,7 @@
   }:
   let
     geminiKeyPath =
-      "config.sops.secrets."gemini-api-key-samblack".path";
+      config.sops.secrets."gemini-api-key-samblack".path;
   in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
