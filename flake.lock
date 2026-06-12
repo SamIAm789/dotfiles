@@ -663,11 +663,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1781157647,
-        "narHash": "sha256-+yrj2xBL29txyS5yW881fsCBKngp18WAqLFxxYqJceI=",
+        "lastModified": 1781260100,
+        "narHash": "sha256-AR4asVUH2287YYQNdxvZRJ/OuBe1sp+JZLXlMQNDdsQ=",
         "ref": "refs/heads/main",
-        "rev": "624686dda3e88a6ad8621099f3823641f10c115b",
-        "revCount": 23,
+        "rev": "5e556befa7ab6d2447d2ee62510f94d64a09e2de",
+        "revCount": 24,
         "type": "git",
         "url": "ssh://git@github.com/SamIAm789/secrets"
       },
