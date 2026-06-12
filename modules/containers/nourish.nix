@@ -1,9 +1,15 @@
 {
+  inputs,
+  ...
+}:
+{
   flake.modules.nixos.norish-hm = {
 
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
     home-manager.users.sam = {
+
+      imports = [ inputs.quadlet-nix.homeManagerModules.quadlet ];
 
         virtualisation.quadlet = {
           pods.norish = {

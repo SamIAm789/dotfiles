@@ -14,8 +14,7 @@
     }:
     {
 
-    imports = [
-      inputs.quadlet-nix.nixosModules.quadlet inputs.quadlet-nix.homeManagerModules.quadlet     ];
+    imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
     users.users.containers = {
       isNormalUser = true;
