@@ -16,7 +16,7 @@
       linger = true;
       autoSubUidGidRange = true;
       group = "containers";
-      createHome = "/var/lib/containers";
+      home = "/var/lib/containers";
     };
     users.groups.containers = {};
 
