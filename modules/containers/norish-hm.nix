@@ -100,6 +100,11 @@
               environments = {
                 PORT = "3001";
                 DEBUG = "browserless:*";
+                ENABLE_CORS = "true";
+                ENABLE_XVFB = "true";
+                ALLOW_FILE_PROTOCOL = "true";
+                FUNCTION_ENABLE_INCOGNITO_MODE = "true";
+                FUNCTION_EXTERNAL_NETWORK = "true";
                 DEFAULT_LAUNCH_ARGS =
                   "--no-sandbox "
                   + "--disable-gpu "
