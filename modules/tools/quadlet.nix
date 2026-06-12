@@ -11,15 +11,6 @@
 
     imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
 
-    users.users.containers = {
-      isSystemUser = true;
-      linger = true;
-      autoSubUidGidRange = true;
-      group = "containers";
-      home = "/var/lib/containers";
-    };
-    users.groups.containers = {};
-
     virtualisation = {
       quadlet.enable = true;
       podman.enable = true;
