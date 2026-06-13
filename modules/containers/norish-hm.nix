@@ -22,9 +22,6 @@
       mode = "0400";
     };
 
-    environment.etc."norish.env".sopsFile = inputs.secrets + "/secrets/secrets.yaml";
-    environment.etc."norish.env".mode = "0400";
-
     home-manager.users.sam = { pkgs, config, ... }: {
 
       _module.args.geminiKeyPath = geminiKeyPath;
