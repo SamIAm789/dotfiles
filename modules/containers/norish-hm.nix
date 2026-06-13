@@ -70,12 +70,12 @@
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
-              healthCmd = ''
-              node -e "require('http').get('http://localhost:3000/api/v1/health', r => process.exit(r.statusCode===200?0:1))"
-              '';              healthInterval = "1m";
-              healthRetries = 3;
-              healthStartPeriod = "1m";
-              healthTimeout = "15s";
+              #healthCmd = ''
+              #node -e "require('http').get('http://localhost:3000/api/v1/health', r => process.exit(r.statusCode===200?0:1))"
+              #'';              healthInterval = "1m";
+              #healthRetries = 3;
+              #healthStartPeriod = "1m";
+              #healthTimeout = "15s";
             };
           };
           norish-db = {
