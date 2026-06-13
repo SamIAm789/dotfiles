@@ -8,10 +8,6 @@
     config,
     ...
   }:
-  let
-    geminiKeyPath =
-      config.sops.secrets."gemini-api-key-samblack".path;
-  in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
@@ -64,10 +60,10 @@
                 REDIS_URL = "redis://localhost:6379";
                 RECIPE_RENDERER= "chrome";
                 AI_ENABLED = "true";
-                AI_PROVIDER = "generic-openai";
-                AI_API_KEY = geminiKeyPath;
-                AI_MODEL = "gemini-1.5-pro";
+                AI_PROVIDER = "openai";
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
+                AI_MODEL = "gemini-1.5-pro";
+                AI_API_KEY = builtins.readFile config.sops.secrets."gemini-api-key-samblack".path;
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
