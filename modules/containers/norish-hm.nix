@@ -8,20 +8,18 @@
     config,
     ...
   }:
-  let
-    geminiKeyPath =
-      config.sops.secrets."gemini-api-key-samblack".path;
-  in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
     sops.secrets."gemini-api-key-samblack" = {
       sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
-     # key = "gemini-api-key-samblack";
       owner = config.users.users.sam.name;
       group = "users";
       mode = "0400";
     };
+
+    #environment.etc."norish.env".sopsFile = inputs.secrets + "/secrets/secrets.yaml";
+    #environment.etc."norish.env".mode = "0400";
 
     home-manager.users.sam = { pkgs, config, ... }: {
 
@@ -67,7 +65,7 @@
                 AI_PROVIDER = "openai";
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
                 AI_MODEL = "gemini-1.5-pro";
-                AI_API_KEY = builtins.readFile geminiKeyPath;
+                AI_API_KEY = config.sops.placeholder."gemini-api-key-samblack";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
