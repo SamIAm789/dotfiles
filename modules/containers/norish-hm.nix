@@ -102,6 +102,7 @@
               exec = [
                 "chromium-browser"
                 "--no-sandbox"
+                "--disable-setuid-sandbox"
                 "--disable-gpu"
                 "--disable-dev-shm-usage"
                 "--remote-debugging-address=0.0.0.0"
