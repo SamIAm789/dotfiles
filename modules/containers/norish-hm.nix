@@ -9,7 +9,7 @@
     ...
   }:
   let
-    geminiKeyPath = config.sops.placeholder."gemini-api-key-samblack".path;
+    geminiKey = config.sops.placeholder."gemini-api-key-samblack";
   in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
@@ -68,7 +68,7 @@
                 AI_PROVIDER = "openai";
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
                 AI_MODEL = "gemini-1.5-pro";
-                AI_API_KEY = geminiKeyPath;
+                AI_API_KEY = geminiKey;
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
