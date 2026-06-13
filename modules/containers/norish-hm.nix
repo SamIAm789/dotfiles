@@ -58,8 +58,8 @@
                 AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
-                CHROME_WS_ENDPOINT = "ws://chrome-headless:3001/";
-                RECIPES_DISK_DIR = "/app/uploads";
+                CHROME_WS_ENDPOINT = "ws://localhost:3001/";
+                UPLOADS_DIR = "/app/uploads";
                 NEXT_PUBLIC_LOG_LEVEL = "info";
                 REDIS_URL = "redis://localhost:6379";
                 RECIPE_RENDERER= "chrome";
@@ -70,8 +70,9 @@
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
-              healthCmd = ''=node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1)'';
-              healthInterval = "1m";
+              healthCmd = ''
+              node -e "require('http').get('http://localhost:3000/api/v1/health', r => process.exit(r.statusCode===200?0:1))"
+              '';              healthInterval = "1m";
               healthRetries = 3;
               healthStartPeriod = "1m";
               healthTimeout = "15s";
@@ -98,23 +99,15 @@
             containerConfig = {
               name = "chrome-headless";
               pod = "norish.pod";
-              environments = {
-                PORT = "3001";
-                DEBUG = "browserless:*";
-                ENABLE_CORS = "true";
-                ENABLE_XVFB = "true";
-                ALLOW_FILE_PROTOCOL = "true";
-                FUNCTION_ENABLE_INCOGNITO_MODE = "true";
-                FUNCTION_EXTERNAL_NETWORK = "true";
-                FUNCTION_ENABLE_STEALTH = "true";
-                FUNCTION_ENABLE_CDP = "true";
-                DEFAULT_LAUNCH_ARGS =
-                  "--no-sandbox "
-                  + "--disable-gpu "
-                  + "--disable-dev-shm-usage "
-                  + "--remote-allow-origins=*";
-              };
-              image = "ghcr.io/browserless/chromium:latest";
+              exec = [
+                "--no-sandbox"
+                "--disable-gpu"
+                "--disable-dev-shm-usage"
+                "--remote-debugging-address=0.0.0.0"
+                "--remote-debugging-port=3001"
+                "--headless"
+              ];
+              image = "docker.io/zenika/alpine-chrome:latest";
             };
             serviceConfig = {
                Restart = "always";
