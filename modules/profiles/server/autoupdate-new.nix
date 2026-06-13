@@ -43,11 +43,16 @@ in
     serviceConfig = {
       Type = "oneshot";
       User = deployUser;
-      WorkingDirectory = repoPath;
+     # WorkingDirectory = repoPath;
+
+      ExecStartPre = [
+        "${pkgs.coreutils}/bin/mkdir -p ${repoPath}"
+        "${pkgs.coreutils}/bin/chown ${deployUser}:${deployUser} ${repoPath}"
+      ];
 
       Environment = [
         "HOME=${deployHome}"
-        "GIT_SSH_COMMAND=ssh -F /etc/deploy-ssh-config"
+        "GIT_SSH_COMMAND='ssh -F /etc/deploy-ssh-config'"
       ];
     };
 
