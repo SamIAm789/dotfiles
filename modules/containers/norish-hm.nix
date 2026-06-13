@@ -100,6 +100,7 @@
               name = "chrome-headless";
               pod = "norish.pod";
               exec = [
+                "chromium-browser"
                 "--no-sandbox"
                 "--disable-gpu"
                 "--disable-dev-shm-usage"
