@@ -8,6 +8,10 @@
     config,
     ...
   }:
+  let
+    geminiKeyPath =
+      config.sops.secrets."gemini-api-key-samblack".path;
+  in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
@@ -22,6 +26,8 @@
     environment.etc."norish.env".mode = "0400";
 
     home-manager.users.sam = { pkgs, config, ... }: {
+
+      _module.args.geminiKeyPath = geminiKeyPath;
 
       imports = [ inputs.quadlet-nix.homeManagerModules.quadlet ];
 
@@ -67,7 +73,7 @@
                 AI_MODEL = "gemini-1.5-pro";
               };
               environmentFiles = [
-                config.sops.secrets."gemini-api-key-samblack".path
+                geminiKeyPath
               ];
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
