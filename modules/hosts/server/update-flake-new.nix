@@ -36,7 +36,7 @@
 
         Environment = [
           "HOME=${deployHome}"
-          "GIT_SSH_COMMAND=ssh -F /etc/deploy-ssh-config"
+          ''GIT_SSH_COMMAND=ssh -F /etc/deploy-ssh-config''
         ];
       };
 
