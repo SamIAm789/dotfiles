@@ -1,34 +1,15 @@
 {
-  flake.modules.nixos.autoupdate-old =
-  {
-    pkgs,
-    ...
-  }:
-  {
-    systemd.services.pull-updates = {
-      description = "Pulls changes to system config";
-      restartIfChanged = false;
-      startAt = "01:00";
-      path = [ pkgs.git pkgs.openssh ];
-      script = ''
-        test "$(git branch --show-current)" = "main"
-        git pull --ff-only
-      '';
-      serviceConfig = {
-        WorkingDirectory = "/home/sam/dotfiles";
-        User = "sam";
-        Type = "oneshot";
-      };
-    };
+  flake.modules.nixos.autoupdate = {
 
     system.autoUpgrade = {
       enable = true;
-      flake = "path:/home/sam/dotfiles/";
+      flake = "github:SamIAm789/dotfiles";
       allowReboot = true;
       rebootWindow = {
         lower = "02:00";
-        upper = "04:00";
+        upper = "05:00";
       };
+      dates = "02:00";
     };
   };
 }

@@ -68,7 +68,6 @@
                 AI_PROVIDER = "openai";
                 AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
                 AI_MODEL = "gemini-1.5-pro";
-                AI_API_KEY = geminiKeyPath;
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
