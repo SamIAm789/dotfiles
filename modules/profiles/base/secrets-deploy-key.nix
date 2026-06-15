@@ -1,8 +1,4 @@
 {
-  inputs,
-  ...
-}:
-{
   flake.modules.nixos.secrets-deploy-key =
     {
       config,
@@ -17,15 +13,13 @@
 
       };
 
-      environment.etc."ssh/ssh_config.d/00-deploy.conf".text = ''
-        Match User root
-        Host github.com
-        IdentityFile ${config.sops.secrets.github-secrets-deploy-key.path}
-        IdentitiesOnly yes
+      programs.ssh.extraConfig = ''
+        Host github-secrets
+          HostName github.com
+          User git
+          IdentityFile ${config.sops.secrets.github-secrets-deploy-key.path}
+          IdentitiesOnly yes
+          StrictHostKeyChecking accept-new
       '';
-
-      systemd.tmpfiles.rules = [
-        "d /etc/ssh/keys 0700 root root -"
-      ];
     };
 }
