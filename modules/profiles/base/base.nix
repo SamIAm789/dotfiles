@@ -19,8 +19,9 @@
         nebula-secrets
         nix
         sam
+        secrets-deploy-key
         ssh-agent
-        ssh-keys
+        ssh-auth-keys
         sops
         timezone
       ];

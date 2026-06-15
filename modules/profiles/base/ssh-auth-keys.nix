@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.ssh-keys =
+  flake.modules.nixos.ssh-auth-keys =
     {
 
       users.users.sam.openssh.authorizedKeys.keys = [

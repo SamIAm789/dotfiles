@@ -11,6 +11,12 @@
   in
   {
 
+    sops.secrets.github-bot-key = {
+      owner = deployUser;
+      group = deployUser;
+      mode = "0400";
+    };
+
     systemd.tmpfiles.rules = [
         "d ${deployHome}           0750 deploy deploy -"
         "d ${deployHome}/.ssh      0700 deploy deploy -"

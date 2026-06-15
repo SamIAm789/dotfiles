@@ -29,7 +29,7 @@
     preservation.url = "github:nix-community/preservation";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     secrets = {
-      url = "git+ssh://git@github.com/SamIAm789/secrets";
+      url = "git+ssh://git@github-secrets:SamIAm789/private-secrets-repo.git";
       flake = false;
     };
     sops-nix = {

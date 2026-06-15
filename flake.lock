@@ -134,11 +134,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781365335,
-        "narHash": "sha256-zqDBhXMzfbdlO7F2bGHe7MOtB3xngd/+4ieMHDC+ZXo=",
+        "lastModified": 1781497404,
+        "narHash": "sha256-9GAF8sSsnkyCVCWkomXR0T+zdSxyUlfPt6neQidimdg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5b6f5733726a1b2ccafb5dec6ac4ca7299fad66c",
+        "rev": "1285cd3d6882a9847f2d56ed5541b3350c8a6162",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1781439204,
-        "narHash": "sha256-/9bx95faoAO2izV5QEZOLhynt7rn2jTQbTe5koOiQa0=",
+        "lastModified": 1781462409,
+        "narHash": "sha256-YJ7lWxGXD789bZFzOhwYk8bcwaiYgyq68OWs/HUuzjA=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "a23083e7a10dc57528b05af3948799c75a7a3c4c",
+        "rev": "e5c721f29ae035881aef1620b2d714da97067883",
         "type": "github"
       },
       "original": {
@@ -663,18 +663,14 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1781439012,
-        "narHash": "sha256-obwg34YozXWLbqDtrvAZZyGkUbe3im5wW+uHJcTTvkM=",
-        "ref": "refs/heads/main",
-        "rev": "5b65c73b7dd3fbe95557de701c81268c79543580",
-        "revCount": 25,
-        "type": "git",
-        "url": "ssh://git@github.com/SamIAm789/secrets"
+        "path": "git+ssh:/git@github-secrets:SamIAm789/private-secrets-repo.git",
+        "type": "path"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/SamIAm789/secrets"
-      }
+        "path": "git+ssh:/git@github-secrets:SamIAm789/private-secrets-repo.git",
+        "type": "path"
+      },
+      "parent": []
     },
     "sops-nix": {
       "inputs": {
