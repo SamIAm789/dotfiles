@@ -9,7 +9,7 @@
     deployUser = "deploy";
     deployHome = "/var/lib/deploy";
     repoPath = "${deployHome}/dotfiles";
-    githubRepo = "git@github-config:your-org/dotfiles.git";
+    githubRepo = "git@github-config:SamIAm789/dotfiles.git";
   in
   {
 
