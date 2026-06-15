@@ -11,7 +11,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets = {
-      url = "git+ssh://git@github.com/SamIAm789/secrets"; # url = "git+ssh://git@github-secrets:SamIAm789/private-secrets-repo.git";
+     # url = "git+ssh://git@github.com/SamIAm789/secrets";
+      url = "git+ssh://git@github-secrets:SamIAm789/private-secrets-repo.git";
       flake = false;
     };
   };
