@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.server99 =
+  flake.modules.nixos.server =
   {
     config,
     pkgs,
