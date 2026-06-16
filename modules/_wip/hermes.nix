@@ -5,11 +5,21 @@
     
     imports = [ hermes-agent.nixosModules.default ];
 
-    config.sops.secrets."hermes-env" = { };
+    sops = {
+      defaultSopsFile = ./secrets/hermes.yaml;
+      age.keyFile = "/home/user/.config/sops/age/keys.txt";
+      secrets."hermes-env" = { format = "yaml"; };
+     };
+
+    services.hermes-agent.environmentFiles = [
+      config.sops.secrets."hermes-env".path
+    ];
 
     services.hermes-agent = {
-    enable = true;
-    settings.model.default = "anthropic/claude-sonnet-4";
-    environmentFiles = [ config.sops.secrets."hermes-env".path ];
-    addToSystemPackages = true;
-  };
+      enable = true;
+      settings.model.default = "anthropic/claude-sonnet-4";
+      environmentFiles = [ config.sops.secrets."hermes-env".path ];
+      addToSystemPackages = true;
+    };
+  }:
+}
