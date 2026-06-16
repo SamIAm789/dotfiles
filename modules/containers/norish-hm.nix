@@ -65,9 +65,10 @@
                 REDIS_URL = "redis://localhost:6379";
                 RECIPE_RENDERER= "chrome";
                 AI_ENABLED = "true";
-                AI_PROVIDER = "openai";
-                AI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/";
-                AI_MODEL = "gemini-1.5-pro";
+                AI_PROVIDER = "generic-openai";
+                AI_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
+                AI_MODEL = "openrouter/free";
+                AI_API_KEY = "/run/secrets/openrouter-norish-key";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
