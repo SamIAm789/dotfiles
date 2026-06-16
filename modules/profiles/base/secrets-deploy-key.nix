@@ -8,7 +8,11 @@
 
       sops = {
 
-        secrets.github-secrets-deploy-key = { };
+        secrets.github-secrets-deploy-key = {
+          owner = "root";
+          group = "deploy";
+          mode = "0440";
+        };
 
 
       };

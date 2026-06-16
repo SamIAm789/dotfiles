@@ -19,12 +19,6 @@
       mode = "0400";
     };
 
-    sops.secrets.github-secrets-deploy-key-deploy = {
-      owner = "deploy";
-      group = "deploy";
-      mode = "0400";
-    };
-
     users.users.${deployUser} = {
       isSystemUser = true;
       group = deployUser;
@@ -63,7 +57,6 @@
 
       environment = {
         HOME = deployHome;
-        GIT_SSH_COMMAND = "${pkgs.openssh}/bin/ssh -F /etc/deploy-ssh-config -i ${config.sops.secrets.github-secrets-deploy-key-deploy.path}";
       };
 
       script = ''
