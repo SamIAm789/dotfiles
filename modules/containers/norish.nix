@@ -65,12 +65,13 @@
                 AI_ENABLED = "true";
                 AI_PROVIDER = "generic-openai";
                 AI_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
-                AI_MODEL = "openrouter/free";   # ← YES, this is valid
-                AI_API_KEY = config.sops.secrets."openrouter-api-key".path;
+                AI_MODEL = "openrouter/free";
+                AI_API_KEY = "${config.sops.secrets.openrouter-norish-key.path}";
 
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
-              healthCmd = ''node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1))"'';              healthInterval = "1m";
+              healthCmd = ''node -e "require('http').get('http://localhost:3000/api/health', r => process.exit(r.statusCode===200?0:1))"'';
+              healthInterval = "1m";
               healthRetries = 3;
               healthStartPeriod = "1m";
               healthTimeout = "15s";
