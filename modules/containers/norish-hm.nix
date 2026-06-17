@@ -52,9 +52,9 @@
             containerConfig = {
               image = "docker.io/norishapp/norish:latest";
               pod = "norish.pod";
-              # userns = "keep-id";
-              user = "1000";
-              group = "1000";
+              userns = "keep-id";
+             # user = "1000";
+             # group = "1000";
               environments = {
                 AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
