@@ -8,23 +8,10 @@
     config,
     ...
   }:
-  let
-    geminiKeyPath =
-      config.sops.secrets."gemini-api-key-samblack".path;
-  in
   {
     networking.firewall.allowedTCPPorts = [ 7000 ];
 
-    sops.secrets."gemini-api-key-samblack" = {
-      sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
-      owner = config.users.users.sam.name;
-      group = "users";
-      mode = "0400";
-    };
-
     home-manager.users.sam = { pkgs, config, ... }: {
-
-      _module.args.geminiKeyPath = geminiKeyPath;
 
       imports = [ inputs.quadlet-nix.homeManagerModules.quadlet ];
 
@@ -52,9 +39,6 @@
             containerConfig = {
               image = "docker.io/norishapp/norish:latest";
               pod = "norish.pod";
-              userns = "keep-id";
-              user = "1000";
-              group = "1000";
               environments = {
                 AUTH_URL =  "http://100.100.0.4:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
@@ -65,10 +49,6 @@
                 REDIS_URL = "redis://localhost:6379";
                 RECIPE_RENDERER= "chrome";
                 AI_ENABLED = "true";
-                AI_PROVIDER = "generic-openai";
-                AI_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
-                AI_MODEL = "openrouter/free";
-                AI_API_KEY = "/run/secrets/openrouter-norish-key";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
@@ -83,7 +63,6 @@
             containerConfig = {
               name = "norish-db";
               pod = "norish.pod";
-              userns = "keep-id";
               environments = {
                 POSTGRES_USER = "postgres";
                 POSTGRES_PASSWORD = "norish";
@@ -120,7 +99,6 @@
             containerConfig = {
               pod = "norish.pod";
               name = "norish-redis";
-              userns = "keep-id";
               image = "docker.io/redis:8.6.0";
               volumes = [ "/persist/containers/norish/redis:/data" ];
             };
