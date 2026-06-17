@@ -14,7 +14,7 @@
       stateDir = "/stuff/opencloud";
       environment = {
         OC_INSECURE = "true";
-        INITIAL_ADMIN_PASSWORD = "password";
+        IDM_ADMIN_PASSWORD = "password";
       };
     };
 
