@@ -2,10 +2,6 @@
 
   flake.modules.nixos.opencloud = {
 
-    environment.etc."opencloud-admin-pass".text = ''
-        IDM_ADMIN_PASSWORD=secure-password
-      '';
-
     services.opencloud = {
       enable = true;
       address = "0.0.0.0";
