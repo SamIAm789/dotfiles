@@ -52,7 +52,6 @@
             containerConfig = {
               image = "docker.io/norishapp/norish:latest";
               pod = "norish.pod";
-              userns = "keep-id";
              # user = "1000";
              # group = "1000";
               environments = {
@@ -65,10 +64,6 @@
                 REDIS_URL = "redis://localhost:6379";
                 RECIPE_RENDERER= "chrome";
                 AI_ENABLED = "true";
-                AI_PROVIDER = "generic-openai";
-                AI_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
-                AI_MODEL = "openrouter/free";
-                AI_API_KEY = "/run/secrets/openrouter-norish-key";
               };
               volumes = [ "/persist/containers/norish/data:/app/uploads" ];
               #healthCmd = ''
