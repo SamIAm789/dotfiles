@@ -52,7 +52,7 @@
             containerConfig = {
               image = "docker.io/norishapp/norish:latest";
               pod = "norish.pod";
-              # userns = "keep-id";
+              userns = "keep-id";
               user = "1000";
               group = "1000";
               environments = {
@@ -83,7 +83,7 @@
             containerConfig = {
               name = "norish-db";
               pod = "norish.pod";
-              #userns = "keep-id";
+              userns = "keep-id";
               environments = {
                 POSTGRES_USER = "postgres";
                 POSTGRES_PASSWORD = "norish";
@@ -120,7 +120,7 @@
             containerConfig = {
               pod = "norish.pod";
               name = "norish-redis";
-              #userns = "keep-id";
+              userns = "keep-id";
               image = "docker.io/redis:8.6.0";
               volumes = [ "/persist/containers/norish/redis:/data" ];
             };
