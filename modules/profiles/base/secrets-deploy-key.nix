@@ -11,7 +11,7 @@
         secrets.github-secrets-deploy-key = {
           owner = "root";
           group = "deploy";
-          mode = "0440";
+          mode = "0400";
         };
 
 
