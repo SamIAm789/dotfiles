@@ -2,12 +2,18 @@
 
   flake.modules.nixos.opencloud = {
 
+
+    fileSystems."/persist/data/opencloud" = {
+      device = "stuff/opencloud";
+      fsType = "zfs";
+    };
+
     services.opencloud = {
       enable = true;
       address = "0.0.0.0";
       url = "https://100.100.0.4:9200";
       port = 9200;
-      stateDir = "/stuff/opencloud";
+      stateDir = "/persist/data/opencloud";
       environment = {
         OC_INSECURE = "true";
         IDM_ADMIN_PASSWORD = "password";
