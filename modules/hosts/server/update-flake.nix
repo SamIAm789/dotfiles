@@ -31,13 +31,13 @@
     users.groups.${deployUser} = {};
 
     systemd.tmpfiles.rules = [
-        # Directories
+      "d ${deployHome} 0755 ${deployUser} ${deployUser} -"
+      "d ${repoPath} 0755 ${deployUser} ${deployUser} -"
+    ] ++ [
       "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
 
-      # Copy the secrets deploy key (root can read it, then we chown + 0600)
       "C ${deployHome}/.ssh/github-secrets-deploy 0600 ${deployUser} ${deployUser} - ${config.sops.secrets.github-secrets-deploy-key.path}"
 
-      # Declarative SSH config for the deploy user
       "f ${deployHome}/.ssh/config 0600 ${deployUser} ${deployUser} - ${pkgs.writeText "deploy-ssh-config" ''
         Host github-secrets
           HostName github.com
@@ -63,11 +63,6 @@
       IdentitiesOnly yes
       StrictHostKeyChecking accept-new
     '';
-
-    systemd.tmpfiles.rules = [
-      "d ${deployHome} 0755 ${deployUser} ${deployUser} -"
-      "d ${repoPath} 0755 ${deployUser} ${deployUser} -"
-    ];
 
     systemd.services.flake-update = {
       description = "Nightly flake.lock update";
