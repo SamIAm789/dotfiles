@@ -30,6 +30,31 @@
 
     users.groups.${deployUser} = {};
 
+    systemd.tmpfiles.rules = [
+        # Directories
+      "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
+
+      # Copy the secrets deploy key (root can read it, then we chown + 0600)
+      "C ${deployHome}/.ssh/github-secrets-deploy 0600 ${deployUser} ${deployUser} - ${config.sops.secrets.github-secrets-deploy-key.path}"
+
+      # Declarative SSH config for the deploy user
+      "f ${deployHome}/.ssh/config 0600 ${deployUser} ${deployUser} - ${pkgs.writeText "deploy-ssh-config" ''
+        Host github-secrets
+          HostName github.com
+          User git
+          IdentityFile ~/.ssh/github-secrets-deploy
+          IdentitiesOnly yes
+          StrictHostKeyChecking accept-new
+
+        Host github-config
+          HostName github.com
+          User git
+          IdentityFile ${config.sops.secrets.github-bot-key.path}
+          IdentitiesOnly yes
+          StrictHostKeyChecking accept-new
+      ''}"
+    ];
+
     programs.ssh.extraConfig = ''
       Host github-config
       HostName github.com
@@ -46,15 +71,12 @@
 
     systemd.services.flake-update = {
       description = "Nightly flake.lock update";
-
       path = [ pkgs.git pkgs.nix pkgs.openssh pkgs.coreutils ];
-
       serviceConfig = {
         Type = "oneshot";
         User = deployUser;
         WorkingDirectory = repoPath;
       };
-
       environment = {
         HOME = deployHome;
       };
