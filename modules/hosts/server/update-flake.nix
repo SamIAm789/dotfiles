@@ -38,7 +38,7 @@
 
       "C ${deployHome}/.ssh/github-secrets-deploy 0600 ${deployUser} ${deployUser} - ${config.sops.secrets.github-secrets-deploy-key.path}"
 
-      "C ${deployHome}/.ssh/config 0600 ${deployUser} ${deployUser} - ${pkgs.writeText "deploy-ssh-config" ''
+      "L+ ${deployHome}/.ssh/config 0600 ${deployUser} ${deployUser} - ${pkgs.writeText "deploy-ssh-config" ''
         Host github-secrets
           HostName github.com
           User git
