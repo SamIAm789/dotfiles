@@ -11,7 +11,7 @@
     services.opencloud = {
       enable = true;
       address = "0.0.0.0";
-      url = "http://100.100.0.4";
+      url = "https://100.100.0.4:9200";
       port = 9200;
       stateDir = "/persist/data/opencloud";
       environment = {
