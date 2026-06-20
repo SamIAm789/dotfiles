@@ -1,7 +1,7 @@
 {
   flake.modules.nixos.backup =
     let
-      src = "backup@100.100.0.4:stuff/";
+      src = "backup@100.100.0.4:";
       tgt = "backup/";
     in
 
@@ -14,39 +14,41 @@
           "--no-sync-snap"
         ];
         commands = {
-          immich = {
-            source = "${src}immich";
-            target = "${tgt}immich";
+          haos = {
+            source = "${src}stuff/haos";
+            target = "${tgt}haos";
             recursive = true;
           };
-          ocis = {
-            source = "${src}ocis";
-            target = "${tgt}ocis";
+          owncloud = {
+            source = "${src}stuff/owncloud";
+            target = "${tgt}owncloud";
             recursive = true;
           };
           paperless = {
-            source = "${src}paperless";
+            source = "${src}stuff/paperless";
             target = "${tgt}paperless";
             recursive = true;
           };
           photos = {
-            source = "${src}photos";
+            source = "${src}stuff/photos";
             target = "${tgt}photos";
             recursive = true;
           };
+          haos-vm = {
+            source = "${src}vmstore/haos";
+            target = "${tgt}haos-vm";
+          };
         };
       };
-    }
+    };
 
     # create user backup in source machine (10.25.0.24)
 
     # create ssh key for syncoid on source and add public key to target
 
     # setup zfs delegation permissions on source for user "backup"
-    # zfs allow backup snapshot stuff/<dataset>
+    # zfs allow bacSkup snapshot stuff/<dataset>
     # zfs allow backup send stuff/<dataset>
     # zfs allow backup hold stuff/<dataset>
 
-
-  };
 }
