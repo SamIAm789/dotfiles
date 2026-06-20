@@ -118,7 +118,7 @@
 
             "--cpus" "boot=2"
 
-            "--memory" "size=4G"
+            "--memory" "size=4G,shared=on"
 
             "--console" "tty"
 
