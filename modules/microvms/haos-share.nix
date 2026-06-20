@@ -26,7 +26,7 @@
           --shared-dir=${dataShareDir} \
           --cache=never \
           --thread-pool-size=4
-          --sandbox none
+        #  --sandbox none
         '';
 
         RuntimeDirectory = "virtiofsd-${vmName}";
@@ -36,12 +36,9 @@
         Restart = "on-failure";
 
         User = "root";
-        AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
-        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ReadWritePaths = [ dataShareDir ];
         ProtectSystem = "full";
         NoNewPrivileges = false;
-        SecureBits = "keep-caps";
       };
     };
   };
