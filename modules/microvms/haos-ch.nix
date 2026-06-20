@@ -8,7 +8,9 @@
       haosDir = "/persist/microvms/haos";
       diskPath = "${haosDir}/haos.qcow2";
       firmwarePath = "${haosDir}/CLOUDHV.fd";
-
+      dataShareDir = "/persist/microvms/haos/data";
+      virtiofsSocket = "/run/virtiofs-${vmName}-data.sock";
+      fsTag = "ha-data";
       tapName = "vm-${vmName}";
       bridgeName = "microbr";
       socketPath = "/run/cloud-hypervisor-${vmName}.sock";
@@ -36,6 +38,8 @@
     in
     {
 
+      environment.systemPackages = [ pkgs.virtiofsd ];
+
       systemd.network.enable = true;
 
       systemd.network.netdevs = {
@@ -56,6 +60,32 @@
           };
 
           linkConfig.RequiredForOnline = "no";
+        };
+      };
+
+      systemd.services."virtiofsd-${vmName}-data" = {
+        description = "virtiofsd for ${vmName} data share";
+        wantedBy = [ "multi-user.target" ];
+        before = [ "${vmName}-vm.service" ];
+        serviceConfig = {
+          Type = "notify";
+          ExecStart = lib.concatStringsSep " " [
+            "${pkgs.virtiofsd}/bin/virtiofsd"
+            "--socket-path=${virtiofsSocket}"
+            "--shared-dir=${dataShareDir}"
+            "--cache=never"           # Recommended for Cloud Hypervisor
+            "--thread-pool-size=4"    # Adjust based on your needs
+            "--log-level=info"
+          ];
+          ExecStop = "${pkgs.coreutils}/bin/rm -f ${virtiofsSocket}";
+          Restart = "on-failure";
+          User = "root";
+          Group = "root";
+          AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+          CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
+          PrivateDevices = false;
+          ProtectSystem = "strict";
+          ReadWritePaths = [ dataShareDir ];
         };
       };
 
@@ -95,6 +125,8 @@
             "--serial" "tty"
 
             "--net" "tap=${tapName},mac=${macAddress}"
+            
+            "--fs" "tag=\( {fsTag},socket= \){virtiofsSocket},num_queues=4"
 
             "--api-socket" socketPath
           ];
