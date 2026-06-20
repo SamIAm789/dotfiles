@@ -5,7 +5,7 @@
         useTemplate = [ "production" ];
       };
       "vmstore/haos" = {
-        use template = [ "productions ];
+        useTemplate = [ "productions ];
       };
     };
   };
