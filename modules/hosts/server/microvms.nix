@@ -8,7 +8,7 @@
 
     imports = [
       (self.factory.nebulaSecrets { vm = "immich"; })
-      inputs.self.modules.nixos.haos-ch
+      inputs.self.modules.nixos.haos-ch-working
     ];
 
     microvm.autostart = [
