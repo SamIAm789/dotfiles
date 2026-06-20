@@ -64,30 +64,30 @@
       };
 
       systemd.services."virtiofsd-${vmName}-data" = {
-        description = "virtiofsd for ${vmName} data share";
-        wantedBy = [ "multi-user.target" ];
-        before = [ "${vmName}-vm.service" ];
-        serviceConfig = {
-          Type = "notify";
-          ExecStart = lib.concatStringsSep " " [
-            "${pkgs.virtiofsd}/bin/virtiofsd"
-            "--socket-path=${virtiofsSocket}"
-            "--shared-dir=${dataShareDir}"
-            "--cache=never"           # Recommended for Cloud Hypervisor
-            "--thread-pool-size=4"    # Adjust based on your needs
-            "--log-level=info"
-          ];
-          ExecStop = "${pkgs.coreutils}/bin/rm -f ${virtiofsSocket}";
-          Restart = "on-failure";
-          User = "root";
-          Group = "root";
-          AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
-          CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
-          PrivateDevices = false;
-          ProtectSystem = "strict";
-          ReadWritePaths = [ dataShareDir ];
-        };
-      };
+    description = "virtiofsd for ${vmName} data share";
+    wantedBy = [ "multi-user.target" ];
+    before = [ "${vmName}-vm.service" ];
+
+    serviceConfig = {
+      Type = "notify";  # or "simple" if notify doesn't work
+      ExecStart = "\( {pkgs.virtiofsd}/bin/virtiofsd --socket-path= \){virtiofsSocket} --shared-dir=${dataShareDir} --cache=never --thread-pool-size=4";
+      
+      # Fix PID file issue
+      RuntimeDirectory = "virtiofsd-${vmName}";   # creates /run/virtiofsd-haos writable
+      RuntimeDirectoryPreserve = "yes";
+      
+      ExecStop = "${pkgs.coreutils}/bin/rm -f ${virtiofsSocket}";
+      Restart = "on-failure";
+      
+      User = "root";
+      AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+      CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
+      
+      ReadWritePaths = [ dataShareDir ];
+      ProtectSystem = "strict";
+      ProtectHome = "read-only";  # optional tightening
+    };
+  };
 
       #####################################################################
       # VM runtime
