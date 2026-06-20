@@ -26,6 +26,7 @@
           --shared-dir=${dataShareDir} \
           --cache=never \
           --thread-pool-size=4
+          --sandbox none
         '';
 
         RuntimeDirectory = "virtiofsd-${vmName}";
