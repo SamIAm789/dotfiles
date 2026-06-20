@@ -69,23 +69,20 @@
     before = [ "${vmName}-vm.service" ];
 
     serviceConfig = {
-      Type = "notify";  # or "simple" if notify doesn't work
+      Type = "notify";
       ExecStart = "\( {pkgs.virtiofsd}/bin/virtiofsd --socket-path= \){virtiofsSocket} --shared-dir=${dataShareDir} --cache=never --thread-pool-size=4";
-      
-      # Fix PID file issue
-      RuntimeDirectory = "virtiofsd-${vmName}";   # creates /run/virtiofsd-haos writable
+
+      RuntimeDirectory = "virtiofsd-${vmName}";
       RuntimeDirectoryPreserve = "yes";
-      
+
       ExecStop = "${pkgs.coreutils}/bin/rm -f ${virtiofsSocket}";
       Restart = "on-failure";
-      
+
       User = "root";
       AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
       CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
-      
       ReadWritePaths = [ dataShareDir ];
       ProtectSystem = "strict";
-      ProtectHome = "read-only";  # optional tightening
     };
   };
 
@@ -108,30 +105,18 @@
           Type = "simple";
           Restart = "on-failure";
           RestartSec = "5s";
-
-          ExecStart = lib.concatStringsSep " " [
-            "${pkgs.cloud-hypervisor}/bin/cloud-hypervisor"
-
-            "--firmware" firmwarePath
-
-            "--disk" "path=${diskPath},image_type=qcow2"
-
-            "--cpus" "boot=2"
-
-            "--memory" "size=4G,shared=on"
-
-            "--console" "tty"
-
-            "--serial" "tty"
-
-            "--net" "tap=${tapName},mac=${macAddress}"
-            
-            "--fs" "tag=\( {fsTag},socket= \){virtiofsSocket},num_queues=4"
-
-
-
-            "--api-socket" socketPath
-          ];
+          ExecStart = ''
+        ${pkgs.cloud-hypervisor}/bin/cloud-hypervisor \
+          --firmware ${firmwarePath} \
+          --disk path=${diskPath},image_type=qcow2 \
+          --cpus boot=2 \
+          --memory size=4G,shared=on \
+          --console tty \
+          --serial tty \
+          --net tap=\( {tapName},mac= \){macAddress} \
+          --fs tag=\( {fsTag},socket= \){virtiofsSocket},num_queues=4 \
+          --api-socket ${socketPath}
+      '';
 
           ExecStop = "${pkgs.coreutils}/bin/true";
 
