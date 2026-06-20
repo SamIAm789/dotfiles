@@ -2,68 +2,43 @@
   flake.modules.nixos.haos-ch =
     { config, pkgs, lib, ... }:
 
+let
+  vmName = "haos";
+
+  haosDir = "/persist/microvms/haos";
+  diskPath = "${haosDir}/haos.qcow2";
+  firmwarePath = "${haosDir}/CLOUDHV.fd";
+
+  dataShareDir = "/persist/microvms/haos/data";
+  virtiofsSocket = "/run/virtiofs-${vmName}-data.sock";
+  fsTag = "ha-data";
+
+  tapName = "vm-${vmName}";
+  bridgeName = "microbr";
+  socketPath = "/run/cloud-hypervisor-${vmName}.sock";
+
+  mkMac = name:
     let
-      vmName = "haos";
-
-      haosDir = "/persist/microvms/haos";
-      diskPath = "${haosDir}/haos.qcow2";
-      firmwarePath = "${haosDir}/CLOUDHV.fd";
-      dataShareDir = "/persist/microvms/haos/data";
-      virtiofsSocket = "/run/virtiofs-${vmName}-data.sock";
-      fsTag = "ha-data";
-      tapName = "vm-${vmName}";
-      bridgeName = "microbr";
-      socketPath = "/run/cloud-hypervisor-${vmName}.sock";
-
-      mkMac = name:
-        let
-          hash = builtins.hashString "sha256" name;
-        in
-          "02:"
-          + builtins.substring 0 2 hash + ":"
-          + builtins.substring 2 2 hash + ":"
-          + builtins.substring 4 2 hash + ":"
-          + builtins.substring 6 2 hash + ":"
-          + builtins.substring 8 2 hash;
-
-      macAddress = mkMac vmName;
-
-      # download cloud-hypervisor firmware
-      # wget https://github.com/cloud-hypervisor/edk2/releases/latest/download/CLOUDHV.fd
-
-      # to migrate to another server
-      # zfs snapshot -r pool/persist/microvms/haos@send1
-      # zfs send -R pool/persist/microvms/haos@send1 | ssh user@newhost zfs recv -F pool/persist/microvms/haos
-
+      hash = builtins.hashString "sha256" name;
     in
-    {
+      "02:"
+      + builtins.substring 0 2 hash + ":"
+      + builtins.substring 2 2 hash + ":"
+      + builtins.substring 4 2 hash + ":"
+      + builtins.substring 6 2 hash + ":"
+      + builtins.substring 8 2 hash;
 
-      environment.systemPackages = [ pkgs.virtiofsd ];
+  macAddress = mkMac vmName;
+in
+{
+  environment.systemPackages = [ pkgs.virtiofsd ];
 
-      systemd.network.enable = true;
+  systemd.tmpfiles.rules = [
+    "d ${dataShareDir} 0755 root root -"
+  ];
 
-      systemd.network.netdevs = {
-        "20-${tapName}" = {
-          netdevConfig = {
-            Name = tapName;
-            Kind = "tap";
-          };
-        };
-      };
-
-      systemd.network.networks = {
-        "30-${tapName}" = {
-          matchConfig.Name = tapName;
-
-          networkConfig = {
-            Bridge = bridgeName;
-          };
-
-          linkConfig.RequiredForOnline = "no";
-        };
-      };
-
-      systemd.services."virtiofsd-${vmName}-data" = {
+  # === virtiofsd service ===
+  systemd.services."virtiofsd-${vmName}-data" = {
     description = "virtiofsd for ${vmName} data share";
     wantedBy = [ "multi-user.target" ];
     before = [ "${vmName}-vm.service" ];
@@ -86,26 +61,27 @@
     };
   };
 
-      #####################################################################
-      # VM runtime
-      #####################################################################
-      systemd.services."${vmName}-vm" = {
-        description = "Home Assistant OS VM (Cloud Hypervisor)";
-        wantedBy = [ "multi-user.target" ];
+  # === VM service ===
+  systemd.services."${vmName}-vm" = {
+    description = "Home Assistant OS VM (Cloud Hypervisor)";
+    wantedBy = [ "multi-user.target" ];
 
-        after = [
-          "systemd-networkd-wait-online.service"
-        ];
+    after = [
+      "systemd-networkd-wait-online.service"
+      "virtiofsd-${vmName}-data.service"
+    ];
 
-        wants = [
-          "systemd-networkd-wait-online.service"
-        ];
+    wants = [
+      "systemd-networkd-wait-online.service"
+      "virtiofsd-${vmName}-data.service"
+    ];
 
-        serviceConfig = {
-          Type = "simple";
-          Restart = "on-failure";
-          RestartSec = "5s";
-          ExecStart = ''
+    serviceConfig = {
+      Type = "simple";
+      Restart = "on-failure";
+      RestartSec = "5s";
+
+      ExecStart = ''
         ${pkgs.cloud-hypervisor}/bin/cloud-hypervisor \
           --firmware ${firmwarePath} \
           --disk path=${diskPath},image_type=qcow2 \
@@ -118,35 +94,31 @@
           --api-socket ${socketPath}
       '';
 
-          ExecStop = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.coreutils}/bin/true";
+      ExecStopPost = "${pkgs.coreutils}/bin/rm -f ${socketPath}";
 
-          ExecStopPost =
-            "${pkgs.coreutils}/bin/rm -f ${socketPath}";
+      User = "root";
+      Group = "root";
 
+      PrivateDevices = false;
+      DevicePolicy = "auto";
 
-          User = "root";
-          Group = "root";
+      DeviceAllow = [
+        "/dev/kvm rw"
+        "/dev/net/tun rw"
+      ];
 
-          PrivateDevices = false;
-          DevicePolicy = "auto";
+      AmbientCapabilities = [
+        "CAP_NET_ADMIN"
+        "CAP_SYS_ADMIN"
+      ];
 
-          DeviceAllow = [
-            "/dev/kvm rw"
-            "/dev/net/tun rw"
-          ];
+      CapabilityBoundingSet = [
+        "CAP_NET_ADMIN"
+        "CAP_SYS_ADMIN"
+      ];
 
-          AmbientCapabilities = [
-            "CAP_NET_ADMIN"
-            "CAP_SYS_ADMIN"
-          ];
-
-          CapabilityBoundingSet = [
-            "CAP_NET_ADMIN"
-            "CAP_SYS_ADMIN"
-          ];
-
-          NoNewPrivileges = false;
-        };
-      };
+      NoNewPrivileges = false;
     };
+  };
 }
