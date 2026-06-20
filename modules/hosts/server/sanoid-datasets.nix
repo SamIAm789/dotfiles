@@ -7,6 +7,9 @@
       "vmstore/haos" = {
         useTemplate = [ "production" ];
       };
+      "vmstore/haos/data" = {
+        useTemplate = [ "production" ];
+      };
     };
   };
 }
