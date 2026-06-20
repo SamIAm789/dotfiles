@@ -19,7 +19,7 @@
       before = [ "${vmName}-vm.service" ];
 
       serviceConfig = {
-        Type = "notify";
+        Type = "simple";
         ExecStart = ''
           ${pkgs.virtiofsd}/bin/virtiofsd \
           --socket-path=${virtiofsSocket} \
