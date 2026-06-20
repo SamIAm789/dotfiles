@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.haos-ch-working =
+  flake.modules.nixos.haos-ch-share =
     { config, pkgs, lib, ... }:
 
     let
@@ -59,19 +59,21 @@
         };
       };
 
-      #####################################################################
-      # VM runtime
-      #####################################################################
       systemd.services."${vmName}-vm" = {
         description = "Home Assistant OS VM (Cloud Hypervisor)";
         wantedBy = [ "multi-user.target" ];
 
         after = [
           "systemd-networkd-wait-online.service"
+          "virtiofsd-haos-data.service"
+        ];
+        requires = [
+          "virtiofsd-haos-data.service"
         ];
 
         wants = [
-          "systemd-networkd-wait-online.service"
+         "systemd-networkd-wait-online.service"
+          "virtiofsd-haos-data.service"
         ];
 
         serviceConfig = {
@@ -88,7 +90,9 @@
 
             "--cpus" "boot=2"
 
-            "--memory" "size=4G"
+            "--memory" "size=4G,shared=on"
+
+            "--fs" "tag=ha-data,socket=/run/virtiofs-haos-data.sock"
 
             "--console" "tty"
 

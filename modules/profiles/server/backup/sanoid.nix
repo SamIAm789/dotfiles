@@ -14,11 +14,11 @@
         };
         backup = {
           autoprune = true;
-                 frequently = 0;
-                 hourly = 30;
-                 daily = 90;
-                 monthly = 12;
-                 yearly = 0;
+          frequently = 0;
+          hourly = 30;
+          daily = 90;
+          monthly = 12;
+          yearly = 0;
           autosnap = false;
         };
       };

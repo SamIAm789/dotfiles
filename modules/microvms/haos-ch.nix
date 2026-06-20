@@ -58,22 +58,20 @@
           linkConfig.RequiredForOnline = "no";
         };
       };
-      
+
+      #####################################################################
+      # VM runtime
+      #####################################################################
       systemd.services."${vmName}-vm" = {
         description = "Home Assistant OS VM (Cloud Hypervisor)";
         wantedBy = [ "multi-user.target" ];
 
         after = [
           "systemd-networkd-wait-online.service"
-          "virtiofsd-haos-data.service"
-        ];
-        requires = [
-          "virtiofsd-haos-data.service"
         ];
 
         wants = [
-         "systemd-networkd-wait-online.service"
-          "virtiofsd-haos-data.service"
+          "systemd-networkd-wait-online.service"
         ];
 
         serviceConfig = {
@@ -90,9 +88,7 @@
 
             "--cpus" "boot=2"
 
-            "--memory" "size=4G,shared=on"
-
-            "--fs" "tag=ha-data,socket=/run/virtiofs-haos-data.sock"
+            "--memory" "size=4G"
 
             "--console" "tty"
 
@@ -130,7 +126,7 @@
             "CAP_SYS_ADMIN"
           ];
 
-          NoNewPrivileges = false;
+          NoNewPrivileges = true;
         };
       };
     };
