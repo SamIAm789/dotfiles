@@ -38,7 +38,7 @@
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
         CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ReadWritePaths = [ dataShareDir ];
-        ProtectSystem = "strict";
+        ProtectSystem = "full";
       };
     };
   };
