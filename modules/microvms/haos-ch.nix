@@ -121,4 +121,5 @@ in
       NoNewPrivileges = false;
     };
   };
+};
 }
