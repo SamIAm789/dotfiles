@@ -20,7 +20,13 @@
 
       serviceConfig = {
         Type = "notify";
-        ExecStart = "\( {pkgs.virtiofsd}/bin/virtiofsd --socket-path= \){virtiofsSocket} --shared-dir=${dataShareDir} --cache=never --thread-pool-size=4";
+        ExecStart = ''
+          ${pkgs.virtiofsd}/bin/virtiofsd \
+          --socket-path=${virtiofsSocket} \
+          --shared-dir=${dataShareDir} \
+          --cache=never \
+          --thread-pool-size=4
+        '';
 
         RuntimeDirectory = "virtiofsd-${vmName}";
         RuntimeDirectoryPreserve = "yes";
