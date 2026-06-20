@@ -40,6 +40,8 @@
         CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ReadWritePaths = [ dataShareDir ];
         ProtectSystem = "full";
+        NoNewPrivileges = false;
+        SecureBits = "keep-caps";
       };
     };
   };
