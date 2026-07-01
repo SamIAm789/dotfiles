@@ -13,7 +13,7 @@
   }:
   {
     imports = with inputs.self.modules.nixos; [
-      deploy-key-framework
+      #deploy-key-framework
       framework-hardware
       base
       laptop

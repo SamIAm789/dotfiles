@@ -12,10 +12,10 @@
         position = "Top";
         modules = {
           left = [ "Workspaces" ];
-          center = [ "Clock" ];
+          center = [ "Tempo" ];
           right = [ "Settings" ];
         };
-        clock = {
+        tempo = {
           format = "%d %b %R";
         };
         appearance = {
