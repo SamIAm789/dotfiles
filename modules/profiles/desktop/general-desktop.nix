@@ -22,6 +22,8 @@
 
     environment.systemPackages = with pkgs; [
       libreoffice-fresh
+      hunspell
+      hunspellDicts.en-gb-large
     ];
 
     home-manager.sharedModules = with inputs.self.modules.homeManager; [
