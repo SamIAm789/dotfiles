@@ -31,10 +31,5 @@
         IdentityFile /home/sam/.ssh/github-personal
         IdentitiesOnly yes
     '';
-
-    programs.ssh.knownHosts.github = {
-      hostNames = [ "github.com" ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMjv8L5XpTuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU";
-    };
   };
 }
