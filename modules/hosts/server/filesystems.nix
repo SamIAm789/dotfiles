@@ -57,6 +57,11 @@
       fsType = "zfs";
     };
 
+    fileSystems."/stuff/opencloud" = {
+      device = "stuff/opencloud";
+      fsType = "zfs";
+    };
+
     fileSystems."/stuff/paperless" = {
       device = "stuff/paperless";
       fsType = "zfs";

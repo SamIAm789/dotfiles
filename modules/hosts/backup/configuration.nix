@@ -8,7 +8,6 @@
   flake.modules.nixos.backup = {
 
     imports = with inputs.self.modules.nixos; [
-      disko
       sam
       server-profile
       backup-hardware
