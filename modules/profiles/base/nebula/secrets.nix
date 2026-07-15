@@ -22,6 +22,7 @@
         owner = nebulaUser;
         group = nebulaGroup;
         mode = "0400";
+        restartUnits = [ "nebula@pertaka.service" ];
       };
 
       "nebula.${host}.crt" = {

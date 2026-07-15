@@ -12,10 +12,12 @@
             inInitrd = true;
           }
 
-          # sops-nix host AGE keys
-          "/var/lib/sops-nix"
+          {
+            directory = "/var/lib/sops-nix";   
+            inInitrd = true;                    
+          }
      
-          "secrets/nebula"
+      #    "secrets/nebula"
 
         ];
 
