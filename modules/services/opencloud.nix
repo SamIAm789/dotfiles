@@ -21,5 +21,13 @@
     };
 
     networking.firewall.allowedTCPPorts = [ 9200 ];
+
+    preservation = {
+      preserveAt."/persist" = {
+        directories = [
+          "/etc/opencloud"
+        ];
+      };
+    };
   };
 }
