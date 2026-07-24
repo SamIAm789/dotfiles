@@ -1,7 +1,11 @@
 {
 
-  flake.modules.nixos.opencloud = {
-
+  flake.modules.nixos.opencloud =
+  {
+    config,
+    ...
+  }:
+  {
 
     fileSystems."/persist/data/opencloud" = {
       device = "stuff/opencloud";
@@ -16,7 +20,7 @@
       stateDir = "/persist/data/opencloud";
       environment = {
         OC_INSECURE = "true";
-        IDM_ADMIN_PASSWORD = "password";
+        IDM_ADMIN_PASSWORD = config.sops.secrets.opencloud.path;
       };
     };
 
@@ -25,5 +29,11 @@
     preservation.preserveAt."/persist".directories = [
       "/etc/opencloud"
     ];
+
+    sops.secrets.opencloud = {
+      owner = "opencloud";
+      group = "opencloud";
+      mode = "0400";
+    };
   };
 }
