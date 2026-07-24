@@ -16,9 +16,10 @@
             directory = "/var/lib/sops-nix";   
             inInitrd = true;                    
           }
-     
-      #    "secrets/nebula"
-
+          { 
+            directory = "/etc/ssh"; 
+            inInitrd = true;
+          }
         ];
 
         files = [
