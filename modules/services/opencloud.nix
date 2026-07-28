@@ -20,8 +20,8 @@
       stateDir = "/persist/data/opencloud";
       environment = {
         OC_INSECURE = "true";
-        IDM_ADMIN_PASSWORD_FILE = config.sops.secrets.opencloud.path;
       };
+      environmentFile = config.sops.secrets.opencloud.path;
     };
 
     networking.firewall.allowedTCPPorts = [ 9200 ];
