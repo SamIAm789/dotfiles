@@ -10,11 +10,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    secrets = {
-     # url = "git+ssh://git@github.com/SamIAm789/secrets";
-      url = "git+ssh://git@github-secrets/SamIAm789/secrets";
-      flake = false;
-    };
   };
 
   flake.modules.nixos.sops = {
@@ -33,7 +28,7 @@
         generateKey = true;
       };
 
-      defaultSopsFile = inputs.secrets + "/secrets/secrets.yaml";
+      defaultSopsFile = "./secrets/secrets.yaml";
       defaultSopsFormat = "yaml";
     };
   };
