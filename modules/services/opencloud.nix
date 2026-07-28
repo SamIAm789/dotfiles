@@ -20,7 +20,7 @@
       stateDir = "/persist/data/opencloud";
       environment = {
         OC_INSECURE = "true";
-        IDM_ADMIN_PASSWORD = config.sops.secrets.opencloud.path;
+        IDM_ADMIN_PASSWORD_FILE = config.sops.secrets.opencloud.path;
       };
     };
 
