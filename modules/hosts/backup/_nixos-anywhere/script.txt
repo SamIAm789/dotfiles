@@ -2,3 +2,8 @@ nix run github:nix-community/nixos-anywhere -- \
   --flake .#backup \
   --extra-files /home/sam/backup-server/extra-files \
   --target-host root@100.100.0.5
+
+SSH_AUTH_SOCK=$SSH_AUTH_SOCK nix run github:nix-community/nixos-anywhere -- \
+  --extra-files /home/sam/backup-server/extra \
+  --flake /home/sam/dotfiles/#server \
+  root@100.100.0.5
