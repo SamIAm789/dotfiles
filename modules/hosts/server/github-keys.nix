@@ -4,7 +4,7 @@
 }:
 
 {
-  flake.modules.nixos.server = let
+  flake.modules.nixos.server99 = let
     deployKeySopsFile = "${self}/secrets/secrets.yaml";
   in {
 
