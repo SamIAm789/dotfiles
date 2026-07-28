@@ -35,7 +35,7 @@
                 size = "100%";
                 content = {
                   type = "zfs";
-                  pool = "rpool-backup";
+                  pool = "rpool";
                 };
               };
             };
@@ -51,7 +51,7 @@
                 size = "100%";
                 content = {
                   type = "zfs";
-                  pool = "vmstore-backup";
+                  pool = "vmstore";
                 };
               };
             };
