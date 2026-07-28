@@ -26,7 +26,7 @@
         sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
 
-      defaultSopsFile = "${self}/secrets/secrets.yaml;
+      defaultSopsFile = "${self}/secrets/secrets.yaml";
       defaultSopsFormat = "yaml";
     };
   };
