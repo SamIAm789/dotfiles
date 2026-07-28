@@ -10,7 +10,7 @@
   }:
   let
     host = config.networking.hostName;
-    sopsFile = "${inputs.secrets}/secrets/nebula.yaml";
+    sopsFile = /secrets/nebula.yaml;
     nebulaUser = "nebula-pertaka";
     nebulaGroup = "nebula-pertaka";
   in
