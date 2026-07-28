@@ -7,7 +7,7 @@
     { vm, storageDir ? "/persist/secrets/nebula/${vm}" }:
     { config, lib, ... }:
     let
-      sopsFile = "${inputs.secrets}/secrets/nebula.yaml";
+      sopsFile = /secrets/nebula.yaml;
     in
     {
       # SOPS secrets (decrypted to /run/secrets)
