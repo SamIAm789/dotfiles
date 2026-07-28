@@ -1,5 +1,5 @@
 {
-  inputs,
+  self,
   ...
 }:
 {
@@ -18,7 +18,7 @@
     ];
 
     sops.secrets.skylite = {
-      sopsFile = "${inputs.secrets}/secrets/containers.yaml";
+      sopsFile = "${self}/secrets/containers.yaml";
       key = "skylite";
       owner = "containers";
     };

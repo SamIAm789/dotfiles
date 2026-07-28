@@ -1,5 +1,5 @@
 {
-  inputs,
+  self
   ...
 }:
 {
@@ -15,7 +15,7 @@
     {
 
       sops.secrets."openrouter-norish-key" = {
-        sopsFile = "${inputs.secrets}/secrets/secrets.yaml";
+        sopsFile = "${self}/secrets/secrets.yaml";
         owner = "sam";
         group = "users";
         mode = "0400";

@@ -23,7 +23,6 @@
           { file = "/var/lib/systemd/random-seed"; }
         ];
 
-
         users.sam = {
           directories = [
             ".ssh"

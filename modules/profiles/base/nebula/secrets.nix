@@ -1,5 +1,5 @@
 {
-  inputs,
+  self,
   ...
 }:
 {
@@ -10,7 +10,7 @@
   }:
   let
     host = config.networking.hostName;
-    sopsFile = /secrets/nebula.yaml;
+    sopsFile = "${self}/secrets/nebula.yaml";
     nebulaUser = "nebula-pertaka";
     nebulaGroup = "nebula-pertaka";
   in
