@@ -27,10 +27,6 @@
     nixpkgs-lib.follows = "nixpkgs";
     preservation.url = "github:nix-community/preservation";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
-    secrets = {
-      url = "git+ssh://git@github-secrets/SamIAm789/secrets";
-      flake = false;
-    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
