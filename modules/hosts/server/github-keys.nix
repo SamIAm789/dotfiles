@@ -5,7 +5,7 @@
 
 {
   flake.modules.nixos.server = let
-    deployKeySopsFile = "${inputs.secrets}/secrets/secrets.yaml";
+    deployKeySopsFile = /secrets/secrets.yaml;
   in {
 
     # sops-managed SSH key (user-owned, not system-owned)
