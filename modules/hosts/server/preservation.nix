@@ -11,13 +11,8 @@
             directory = "/var/lib/nixos";
             inInitrd = true;
           }
-
           {
-            directory = "/var/lib/sops-nix";   
-            inInitrd = true;                    
-          }
-          { 
-            directory = "/etc/ssh"; 
+            directory = "/etc/ssh";
             inInitrd = true;
           }
         ];
@@ -25,8 +20,6 @@
         files = [
           { file = "/etc/machine-id"; }
           { file = "/etc/ssh/ssh_host_ed25519_key"; how = "symlink"; configureParent = true; }
-          { file = "/etc/ssh/keys/secret-deploy"; how = "symlink"; configureParent = true; }
-          { file = "etc/ssh/keys/config-deploy"; how = "symlink"; configureParent = true; }
           { file = "/var/lib/systemd/random-seed"; }
         ];
 
@@ -37,9 +30,6 @@
             ".config/systemd/user"
             ".config/containers"
             ".local/share/containers"
-          ];
-          files = [
-            "/home/sam/.config/sops/age/keys.txt"
           ];
         };
       };
