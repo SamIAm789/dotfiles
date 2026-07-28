@@ -1,0 +1,4 @@
+nix run github:nix-community/nixos-anywhere -- \
+  --flake .#backup \
+  --extra-files /home/sam/backup-server/extra-files \
+  --target-host root@100.100.0.5
