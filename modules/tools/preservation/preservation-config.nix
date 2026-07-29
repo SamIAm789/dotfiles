@@ -34,6 +34,6 @@
         };
       };
     };
-    systemd.services.systemd-machine-id-commit.enable = false;
+    #systemd.services.systemd-machine-id-commit.enable = false;
   };
 }
