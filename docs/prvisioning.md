@@ -8,6 +8,10 @@
 
 `nix run nixpkgs#ssh-to-age < /tmp/<host name>/extra-files/etc/ssh/ssh_host_ed25519_key.pub`
 
+## copy the actual key not the symlink
+
+`cp -L ssh_host_ed25519_key /mnt/persist/etc/ssh/ssh_host_ed25519_key`
+
 ### Add age ket to sops
 
 Create a new host in .sops.yaml.
@@ -23,3 +27,4 @@ nix run github:nix-community/nixos-anywhere -- \
   --extra-files /home/sam/backup-server/extra-files \
   --target-host root@100.100.0.5
 ```
+
