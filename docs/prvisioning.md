@@ -14,10 +14,8 @@ Convert the SSH public key to an age identity:
 
 Add the resulting age recipient to .sops.yaml.
 
-`cp -L ssh_host_ed25519_key /mnt/persist/etc/ssh/ssh_host_ed25519_key`
-
 Update keys for secrets files.
-`nix run nixpkgs#sops updatekets secrets/secrets.yaml`
+`nix run nixpkgs#sops updatekeys secrets/secrets.yaml`
 (repeat for each sops file)
 
 Check key is working before install
@@ -28,44 +26,49 @@ Pass the generated host key using `--extra-files`.
 
 ```
 nix run github:nix-community/nixos-anywhere -- \
-  --flake github.com/SamIAm789/dotfiles#<host name> \
+  --flake github.com:SamIAm789/dotfiles#<host name> \
   --extra-files /tmp/<host name>/extra-files \
   --target-host root@<target host>
 ```
 
 After installation, verify that the installed system has a real host key:
 `ls -l /etc/ssh/ssh_host_ed25519_key`
-It should be a normal file:
-`-rw------- root root ssh_host_ed25519_key`
+It should eventually point to the preserved file:
+`/etc/ssh/ssh_host_ed25519_key -> /persist/etc/ssh/ssh_host_ed25519_key`
 The persisted key should also be a real file:
+`ls -l /persist/etc/ssh/ssh_host_ed25519_key`
+Expected:
 `-rw------- root root ssh_host_ed25519_key`
 
 ## Recovery using the installer
-If using nixos-enter, mount the datasets first:
+Import and mount ZFS:
 ```
-zpool import -R /mnt -N -f rpool
+sudo zpool import -R /mnt -N -f rpool
 
-zfs mount rpool/local/root
-zfs mount rpool/local/nix
-zfs mount rpool/local/persist
+sudo zfs mount rpool/local/root
+sudo zfs mount rpool/local/nix
+sudo zfs mount rpool/local/persist
 ```
 Then bind system directories:
 ```
-mount --bind /dev /mnt/dev
-mount --bind /proc /mnt/proc
-mount --bind /sys /mnt/sys
-mount --bind /run /mnt/run
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+sudo mount --bind /run /mnt/run
 ```
-Before rebooting from the installer
+Enter:
+`nixos-enter --root /mnt`
+Before rebooting. Leave the chroot:
+`exit`
 
 Remove bind mounts:
 ```
-umount /mnt/dev
-umount /mnt/proc
-umount /mnt/sys
-umount /mnt/run
+sudo umount /mnt/dev
+sudo umount /mnt/proc
+sudo umount /mnt/sys
+sudo umount /mnt/run
 ```
 Unmount ZFS:
-`zfs unmount -a`
+`sudo zfs unmount -a`
 Export the pool:
-`zpool export rpool`
+`sudo zpool export rpool`
