@@ -10,6 +10,9 @@
       "stuff/haos" = {
         useTemplate = [ "production" ];
       };
+      "stuff/opencloud" = {
+        useTemplate = [ "production" ];
+      };
     };
   };
 }
