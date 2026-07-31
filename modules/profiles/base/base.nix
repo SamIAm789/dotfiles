@@ -24,6 +24,7 @@
         ssh-auth-keys
         sops
         timezone
+        userborn
       ];
 
       environment.systemPackages = with pkgs; [
