@@ -1,14 +1,28 @@
 {
+  self,
+  ...
+}:
+{
   flake.modules.nixos.backup =
     let
       src = "backup@100.100.0.4:";
       tgt = "backup/";
     in
-
     {
+      config,
+      ...
+    }:
+    {
+      sops.secrets."syncoid" = {
+        sopsFile = "${self}/secrets/ssh.yaml";
+        owner = config.users.users.syncoid.name;
+        group = config.users.users.syncoid.group;
+        mode = "0400";
+      };
+
       services.syncoid = {
         enable = true;
-        sshKey = "/var/lib/syncoid/id_syncoid";
+        sshKey = config.sops.secrets."syncoid".path;
         interval = "11:00";
         commonArgs = [
           "--no-sync-snap"
@@ -40,6 +54,9 @@
           };
         };
       };
+        #preservation.preserveAt."/persist".files = [
+        #  { file = "/var/lib/syncoid/id_syncoid"; }
+        #];
     };
 
     # create user backup in source machine (10.25.0.24)
