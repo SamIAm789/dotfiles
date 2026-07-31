@@ -21,6 +21,7 @@
 
     users.users.${deployUser} = {
       isSystemUser = true;
+      uid = 999;
       group = deployUser;
       home = deployHome;
       createHome = true;
@@ -28,7 +29,9 @@
       description = "github automation user";
     };
 
-    users.groups.${deployUser} = {};
+    users.groups.${deployUser} = {
+      gid = 999;
+    };
 
     systemd.tmpfiles.rules = [
       "d ${deployHome} 0755 ${deployUser} ${deployUser} -"
