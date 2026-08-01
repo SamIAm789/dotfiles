@@ -10,6 +10,9 @@
       "stuff/haos" = {
         useTemplate = [ "production" ];
       };
+      "vmstore/microvms/immich" = {
+        useTemplate = [ "production" ];
+      };
     };
   };
 }

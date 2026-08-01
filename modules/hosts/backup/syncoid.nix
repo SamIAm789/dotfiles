@@ -52,6 +52,10 @@
             source = "${src}vmstore/haos";
             target = "${tgt}haos-vm";
           };
+          immich = {
+            source = "${src}vmstore/immich";
+            target = "${tgt}immich-vm";
+          }
         };
       };
         #preservation.preserveAt."/persist".files = [
