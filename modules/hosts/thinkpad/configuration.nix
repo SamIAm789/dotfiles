@@ -9,7 +9,7 @@
 
     imports = with inputs.self.modules.nixos; [
       sam
-      rich
+      richardr
       base
       ntfy
       autoupdate
