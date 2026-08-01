@@ -13,6 +13,9 @@
       "vmstore/microvms/immich" = {
         useTemplate = [ "production" ];
       };
+      "stuff/opencloud" = {
+        useTemplate = [ "production" ];
+      };
     };
   };
 }
