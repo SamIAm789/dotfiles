@@ -55,7 +55,7 @@
           immich = {
             source = "${src}vmstore/immich";
             target = "${tgt}immich-vm";
-          }
+          };
         };
       };
         #preservation.preserveAt."/persist".files = [
