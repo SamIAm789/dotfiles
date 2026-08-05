@@ -34,8 +34,8 @@
             recursive = true;
           };
           owncloud = {
-            source = "${src}stuff/owncloud";
-            target = "${tgt}owncloud";
+            source = "${src}stuff/opencloud";
+            target = "${tgt}opencloud";
             recursive = true;
           };
           paperless = {
