@@ -20,6 +20,10 @@
         mode = "0400";
       };
 
+      systemd.tmpfiles.rules = [
+        "d /mnt/backup 0755 root root -"
+      ];
+
       services.syncoid = {
         enable = true;
         sshKey = config.sops.secrets."syncoid".path;
