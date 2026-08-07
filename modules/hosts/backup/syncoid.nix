@@ -33,7 +33,7 @@
             target = "${tgt}haos";
             recursive = true;
           };
-          owncloud = {
+          opencloud = {
             source = "${src}stuff/opencloud";
             target = "${tgt}opencloud";
             recursive = true;
