@@ -20,12 +20,17 @@
         mode = "0400";
       };
 
+      systemd.tmpfiles.rules = [
+        "d /mnt/backup 0755 root root -"
+      ];
+
       services.syncoid = {
         enable = true;
         sshKey = config.sops.secrets."syncoid".path;
         interval = "11:00";
         commonArgs = [
           "--no-sync-snap"
+          "--compress=zstd-fast"
         ];
         commands = {
           haos = {
@@ -35,9 +40,9 @@
             sendOptions = "";
             recvOptions = "";
           };
-          owncloud = {
-            source = "${src}stuff/owncloud";
-            target = "${tgt}owncloud";
+          opencloud = {
+            source = "${src}stuff/opencloud";
+            target = "${tgt}opencloud";
             recursive = true;
             sendOptions = "";
             recvOptions = "";
