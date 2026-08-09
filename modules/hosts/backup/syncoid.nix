@@ -32,29 +32,41 @@
             source = "${src}stuff/haos";
             target = "${tgt}haos";
             recursive = true;
+            sendOptions = "";
+            recvOptions = "";
           };
           owncloud = {
             source = "${src}stuff/owncloud";
             target = "${tgt}owncloud";
             recursive = true;
+            sendOptions = "";
+            recvOptions = "";
           };
           paperless = {
             source = "${src}stuff/paperless";
             target = "${tgt}paperless";
             recursive = true;
+            sendOptions = "";
+            recvOptions = "";
           };
           photos = {
             source = "${src}stuff/photos";
             target = "${tgt}photos";
             recursive = true;
+            sendOptions = "";
+            recvOptions = "";
           };
           haos-vm = {
             source = "${src}vmstore/haos";
             target = "${tgt}haos-vm";
+            sendOptions = "";
+            recvOptions = "";
           };
           immich = {
             source = "${src}vmstore/immich";
             target = "${tgt}immich-vm";
+            sendOptions = "";
+            recvOptions = "";
           };
         };
       };
