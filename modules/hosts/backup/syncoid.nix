@@ -30,6 +30,7 @@
         interval = "11:00";
         commonArgs = [
           "--no-sync-snap"
+          "--compress=zstd-fast"
         ];
         commands = {
           haos = {
