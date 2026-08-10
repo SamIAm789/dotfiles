@@ -31,7 +31,6 @@
         commonArgs = [
           "--no-sync-snap"
           "--compress=zstd-fast"
-          "--no-privilege-elevation"
         ];
         localTargetAllow = [
           "create"
