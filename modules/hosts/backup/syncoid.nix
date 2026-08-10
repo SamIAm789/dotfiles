@@ -48,41 +48,41 @@
             source = "${src}stuff/haos";
             target = "${tgt}haos";
             recursive = true;
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
           opencloud = {
             source = "${src}stuff/opencloud";
             target = "${tgt}opencloud";
             recursive = true;
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
           paperless = {
             source = "${src}stuff/paperless";
             target = "${tgt}paperless";
             recursive = true;
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
           photos = {
             source = "${src}stuff/photos";
             target = "${tgt}photos";
             recursive = true;
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
           haos-vm = {
             source = "${src}vmstore/haos";
             target = "${tgt}haos-vm";
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
           immich = {
             source = "${src}vmstore/immich";
             target = "${tgt}immich-vm";
-            sendOptions = "";
-            recvOptions = "";
+            sendOptions = " ";
+            recvOptions = " ";
           };
         };
       };
