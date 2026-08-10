@@ -34,6 +34,7 @@
         ];
         localTargetAllow = [
           "create"
+          "compression"
           "destroy"
           "mount"
           "mountpoint"
