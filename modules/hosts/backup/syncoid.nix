@@ -50,8 +50,6 @@
             source = "${src}stuff/haos";
             target = "${tgt}haos";
             recursive = true;
-            sendOptions = "p";
-            recvOptions = "u";
           };
           opencloud = {
             source = "${src}stuff/opencloud";
