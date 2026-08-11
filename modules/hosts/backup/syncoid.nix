@@ -32,19 +32,19 @@
           "--no-sync-snap"
           "--compress=zstd-fast"
         ];
-        localTargetAllow = [
-          "acltype"
-          "create"
-          "compression"
-          "destroy"
-          "mount"
-          "mountpoint"
-          "receive"
-          "rollback"
-          "hold"
-          "snapshot"
-          "userprop"
-        ];
+        #localTargetAllow = [
+        #  "acltype"
+        #  "create"
+        #  "compression"
+        #  "destroy"
+        #  "mount"
+        #  "mountpoint"
+        #  "receive"
+        #  "rollback"
+        #  "hold"
+        #  "snapshot"
+        #  "userprop"
+        #];
         commands = {
           haos = {
             source = "${src}stuff/haos";
