@@ -33,6 +33,7 @@
           "--compress=zstd-fast"
         ];
         localTargetAllow = [
+          "acltype"
           "create"
           "compression"
           "destroy"
