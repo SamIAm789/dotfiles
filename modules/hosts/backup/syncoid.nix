@@ -24,8 +24,8 @@
         "d /mnt/backup 0755 root root -"
       ];
 
-      preservation.preserveAt."/persist".files = [
-        { file = "/var/lib/syncoid/.ssh/known_hosts"; configureParent = true; }
+      preservation.preserveAt."/persist".users.syncoid.directories = [
+        { directory = ".ssh"; mode = "0700"; }
       ];
 
       services.syncoid = {
