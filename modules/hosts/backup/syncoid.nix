@@ -80,9 +80,6 @@
           };
         };
       };
-        #preservation.preserveAt."/persist".files = [
-        #  { file = "/var/lib/syncoid/id_syncoid"; }
-        #];
     };
 
     # create user backup in source machine (10.25.0.24)
