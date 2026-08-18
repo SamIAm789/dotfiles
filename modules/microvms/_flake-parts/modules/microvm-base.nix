@@ -22,7 +22,6 @@
         tag = "ro-store";
         source = "/nix/store";
         mountPoint = "/nix/.ro-store";
-        socket = "/run/microvm-${config.networking.hostName}-ro-store.socket";
       }];
 
       interfaces = [{
