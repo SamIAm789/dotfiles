@@ -1,8 +1,17 @@
 {
   flake.modules.nixos.server = {
-    users.users.sam = {
-      subUidRanges = [{ start = 100000; count = 65536; }];
-      subGidRanges = [{ start = 100000; count = 65536; }];
+    environment.etc."subuid" = {
+      text = ''
+        sam:100000:65536
+      '';
+      mode = "0444";
+    };
+
+    environment.etc."subgid" = {
+      text = ''
+        sam:100000:65536
+      '';
+      mode = "0444";
     };
   };
 }
