@@ -35,7 +35,6 @@ in
           "wheel"
           "networkmanager"
         ];
-        autoSubUidGidRange = true;
         hashedPasswordFile = config.sops.secrets.sam.path;
        # initialHashedPassword = lib.mkDefault "$y$j9T$isUS3neJEEFmJTYteyeHx1$RG2NFoIf.eBb0rELDl1aTCP0c4aC/33GpIKzFkCIKm2";
       };
