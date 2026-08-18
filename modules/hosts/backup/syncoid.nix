@@ -36,19 +36,11 @@
           "--no-sync-snap"
           "--compress=zstd-fast"
         ];
-        #localTargetAllow = [
-        #  "acltype"
-        #  "create"
-        #  "compression"
-        #  "destroy"
-        #  "mount"
-        #  "mountpoint"
-        #  "receive"
-        #  "rollback"
-        #  "hold"
-        #  "snapshot"
-        #  "userprop"
-        #];
+        service = {
+          BindReadOnlyPaths = [
+            "/persist/userborn"
+          ];
+        };
         commands = {
           haos = {
             source = "${src}stuff/haos";
