@@ -14,4 +14,5 @@
       mode = "0444";
     };
   };
+  # needed due to userborn not passing user.user.sam.autosubuidgid along
 }
