@@ -14,7 +14,6 @@
 
     microvm = {
       hypervisor = "cloud-hypervisor";
-      socket = "/run/microvm-immich.sock";
       vcpu = 2;
       mem = 2048;
       hotplugMem = 4096;
@@ -35,7 +34,7 @@
           tag = "photos";
           source = "/stuff/photos";
           mountPoint = "/stuff/photos";
-          socket = "/run/microvm-immich-photos.socket";
+          socket = "photos.socket";
         }
       ];
     };
