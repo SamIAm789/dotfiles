@@ -23,6 +23,7 @@
         source = "/persist/secrets/nebula/${config.networking.hostName}";
         mountPoint = "/var/lib/nebula";
         readOnly = true;
+        socket = "/run/microvm-${config.networking.hostName}-nebula-secrets.socket";
       }
     ];
 
