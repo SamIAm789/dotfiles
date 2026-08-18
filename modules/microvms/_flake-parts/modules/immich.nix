@@ -34,7 +34,7 @@
           tag = "photos";
           source = "/stuff/photos";
           mountPoint = "/stuff/photos";
-          socket = "photos.socket";
+          socket = "photos.sock";
         }
       ];
     };
