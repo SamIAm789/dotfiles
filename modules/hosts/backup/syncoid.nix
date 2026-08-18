@@ -36,7 +36,7 @@
           "--no-sync-snap"
           "--compress=zstd-fast"
         ];
-        service = {
+        service.serviceConfig = {
           BindReadOnlyPaths = [
             "/persist/userborn"
           ];
