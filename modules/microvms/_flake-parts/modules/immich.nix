@@ -14,13 +14,13 @@
 
     microvm = {
       hypervisor = "cloud-hypervisor";
+      socket = "/run/microvm-immich.sock";
       vcpu = 2;
       mem = 2048;
       hotplugMem = 4096;
 
       vsock.cid = 100;
 
-      # Persistent root disk (Very Important!)
       volumes = [{
         image = "/persist/microvms/immich/root.img";
         mountPoint = "/";
@@ -35,7 +35,7 @@
           tag = "photos";
           source = "/stuff/photos";
           mountPoint = "/stuff/photos";
-          socket = "photos.socket";
+          socket = "/run/microvm-immich-photos.socket";
         }
       ];
     };
