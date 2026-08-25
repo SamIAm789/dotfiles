@@ -104,6 +104,8 @@
 
         nix flake update
 
+        nix flake check -L
+
         git add -A flake.lock
 
         if git diff --cached --quiet; then
