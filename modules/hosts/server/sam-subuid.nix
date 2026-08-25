@@ -4,7 +4,7 @@
       text = ''
         sam:100000:65536
       '';
-      mode = "0444";
+      mode = "0644";
     };
 
     environment.etc."subgid" = {
