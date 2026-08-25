@@ -11,7 +11,7 @@
       text = ''
         sam:100000:65536
       '';
-      mode = "0444";
+      mode = "0644";
     };
   };
   # needed due to userborn not passing user.user.sam.autosubuidgid along
