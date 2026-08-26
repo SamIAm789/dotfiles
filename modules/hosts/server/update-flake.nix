@@ -74,6 +74,7 @@
         Type = "oneshot";
         User = deployUser;
         WorkingDirectory = repoPath;
+        TimeoutStartSec = "2h";
       };
       environment = {
         HOME = deployHome;
