@@ -14,6 +14,7 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINHl0zA061dpCTG2lDEFiAd0IfXZ+GF/Cun9l7/WcD6B syncoid"
         ];
         shell = pkgs.bashInteractive;
+        autoSubUidGidRange = false;
       };
 
       users.groups.backup = {};
