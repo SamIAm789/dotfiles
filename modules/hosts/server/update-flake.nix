@@ -9,7 +9,7 @@
     deployUser = "deploy";
     deployHome = "/var/lib/deploy";
     repoPath = "${deployHome}/dotfiles";
-    githubRepo = "git@github-config:SamIAm789/dotfiles.git";
+    githubRepo = "git@github:SamIAm789/dotfiles.git";
   in
   {
 
@@ -39,33 +39,14 @@
     ] ++ [
       "d ${deployHome}/.ssh 0700 ${deployUser} ${deployUser} -"
 
-      "C ${deployHome}/.ssh/github-secrets-deploy 0600 ${deployUser} ${deployUser} - ${config.sops.secrets.github-secrets-deploy-key.path}"
-
       "L+ ${deployHome}/.ssh/config 0600 ${deployUser} ${deployUser} - ${pkgs.writeText "deploy-ssh-config" ''
-        Host github-secrets
-          HostName github.com
-          User git
-          IdentityFile ~/.ssh/github-secrets-deploy
-          IdentitiesOnly yes
-          StrictHostKeyChecking accept-new
-
-        Host github-config
-          HostName github.com
+        Host github.com
           User git
           IdentityFile ${config.sops.secrets.github-bot-key.path}
           IdentitiesOnly yes
           StrictHostKeyChecking accept-new
       ''}"
     ];
-
-    programs.ssh.extraConfig = ''
-      Host github-config
-      HostName github.com
-      User git
-      IdentityFile ${config.sops.secrets.github-bot-key.path}
-      IdentitiesOnly yes
-      StrictHostKeyChecking accept-new
-    '';
 
     systemd.services.flake-update = {
       description = "Nightly flake.lock update";
