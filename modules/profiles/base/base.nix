@@ -19,7 +19,6 @@
         nebula-secrets
         nix
         sam
-        secrets-deploy-key
         ssh-agent
         ssh-auth-keys
         sops
