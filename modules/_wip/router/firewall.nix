@@ -2,7 +2,8 @@
   flake.modules.nixos.router = {
 
     networking.firewall = {
-      enable = true; 
+      enable = true;
+      checkReversePath = true;
       filterForward = true;
       trustedInterfaces = [ ${lanIF} ];
       allowed
