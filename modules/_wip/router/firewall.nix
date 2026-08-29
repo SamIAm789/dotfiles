@@ -9,8 +9,14 @@
       filterForward = true;
       trustedInterfaces = [ ${lanIF} ];
       extraInputRules = ''
-        iifname "${cfg.wanIF}" ip saddr \
-        { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 }
+        iifname "${cfg.wanIF}" ip saddr {
+    0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8,
+    169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24,
+    192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24
+  } drop
+  iifname "${cfg.wanIF}" ip6 saddr {
+    ::/128, ::1/128, fc00::/7, fe80::/10
+  } drop
       '';
       extraForwardRules = ''
         iifname "\( ${lanIF}" oifname " \)${wanIF}" accept
