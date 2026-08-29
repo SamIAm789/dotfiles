@@ -31,6 +31,7 @@
 
     networking.firewall = {
       enable = true;
+      allowPing = false;
       checkReversePath = true;
       filterForward = true;
       trustedInterfaces = [ lanIF ];
