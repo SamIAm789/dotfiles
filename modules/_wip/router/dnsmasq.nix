@@ -39,7 +39,7 @@ in
       no-hosts = true;
 
       # Everything else → unbound
-      server = [ "127.0.0.1" ];
+      server = [ "127.0.0.1#5353" ];
 
       cache-size = 1000;
     };
