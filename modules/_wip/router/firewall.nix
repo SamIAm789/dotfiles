@@ -33,13 +33,13 @@
       enable = true;
       checkReversePath = true;
       filterForward = true;
-      trustedInterfaces = [ ${lanIF} ];
+      trustedInterfaces = [ lanIF ];
       extraInputRules = ''
-        iifname "${wanIF}" ip saddr ${mkNftSet bogons4} drop
-        iifname "${wanIF}" ip6 saddr ${mkNftSet bogons6} drop
+        iifname wanIF ip saddr ${mkNftSet bogons4} drop
+        iifname wanIF ip6 saddr ${mkNftSet bogons6} drop
       '';
       extraForwardRules = ''
-        iifname "\( ${lanIF}" oifname " \)${wanIF}" accept
+        iifname "\( lanIF oifname " \)wanIF accept
       '';
     };
   };
