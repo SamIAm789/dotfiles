@@ -1,6 +1,8 @@
 {
   flake.modules.nixos.router = {
 
+    networking.nftables.enable = true;
+
     networking.firewall = {
       enable = true;
       checkReversePath = true;
