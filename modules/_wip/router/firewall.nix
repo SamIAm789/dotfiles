@@ -8,7 +8,10 @@
       checkReversePath = true;
       filterForward = true;
       trustedInterfaces = [ ${lanIF} ];
-      allowed
+      extraInputRules = ''
+        iifname "${cfg.wanIF}" ip saddr \
+        { 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 }
+      '';
       extraForwardRules = ''
         iifname "\( ${lanIF}" oifname " \)${wanIF}" accept
       '';
