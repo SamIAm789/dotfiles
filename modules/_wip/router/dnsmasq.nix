@@ -1,5 +1,15 @@
 {
-  flake.modules.nixos.router = {
+  flake.modules.nixos.router =
+  let
+    lanIF   = "br-lan";          # change to your LAN interface / bridge
+    wanIF   = "eth0";            # change to your WAN interface
+
+    lanNet  = "10.25.0";
+    router  = "${lanNet}.1";
+    domain  = "lan";
+in
+};
+  {
 
     services.dnsmasq = {
     enable = true;
