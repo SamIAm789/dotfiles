@@ -32,7 +32,7 @@
     networking.firewall = {
       enable = true;
       allowPing = false;
-      checkReversePath = true;
+      checkReversePath = "loose";
       filterForward = true;
       trustedInterfaces = [ lanIF ];
       extraInputRules = ''
