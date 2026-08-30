@@ -2,7 +2,6 @@
   flake.modules.nixos.router =
 
   let
-    wanIF = "eth0";
   # Upload / download in kbit/s (leave a little headroom)
   # Example: 100/20 Mbps → 95000 / 19000
     download  = 95000;

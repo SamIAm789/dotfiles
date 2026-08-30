@@ -1,6 +1,10 @@
 {
-  flake.modules.nixos router = {
-
+  flake.modules.nixos.router =
+  {
+    pkgs,
+    ...
+  }:
+  {
     services.unbound = {
       enable = true;
       settings = {
