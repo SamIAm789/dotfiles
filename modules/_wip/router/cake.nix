@@ -14,7 +14,7 @@
   in
   {
   # Enable CAKE on the WAN interface
-    networking.interfaces."${cfg.wanIF}".cake = {
+    networking.interfaces.${cfg.wanIF}.cake = {
       enable = true;
 
       # Bandwidth limits (kbit/s)
