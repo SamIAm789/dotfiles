@@ -10,7 +10,7 @@
   {
     networking = {
       useDHCP = false;
-      interfaces."${cfg.wanIF}".useDHCP = true;
+      interfaces.${cfg.wanIF}.useDHCP = true;
       networkmanager.enable = lib.mkForce false;
     };
 
