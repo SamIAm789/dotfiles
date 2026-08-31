@@ -14,7 +14,7 @@
       resolveLocalQueries = true;
 
       settings = {
-        interface = [ "cfg.lanIF" "lo" ];
+        interface = [ cfg.lanIF "lo" ];
         bind-interfaces = true;
         except-interface = [ cfg.wanIF ];
 
