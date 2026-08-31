@@ -16,7 +16,7 @@
       settings = {
         interface = [ "${cfg.lanIF}" "lo" ];
         bind-interfaces = true;
-        except-interface = [ wanIF ];
+        except-interface = [ cfg.wanIF ];
 
         # DHCP
         dhcp-authoritative = true;
