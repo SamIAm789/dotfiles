@@ -1,15 +1,20 @@
 {
   flake.modules.nixos.router =
-
+  {
+    config,
+    ...
+  }:
   let
   # Upload / download in kbit/s (leave a little headroom)
   # Example: 100/20 Mbps → 95000 / 19000
     download  = 95000;
     upload    = 19000;
+
+    cfg = config.router;
   in
   {
   # Enable CAKE on the WAN interface
-    networking.interfaces.${wanIF}.cake = {
+    networking.interfaces."${cfg.wanIF}".cake = {
       enable = true;
 
       # Bandwidth limits (kbit/s)
