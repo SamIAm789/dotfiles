@@ -11,7 +11,7 @@
     networking.nat = {
       enable = true;
       externalInterface = cfg.wanIF;
-      internalInterfaces = [ "${cfg.lanIF}" ];
+      internalInterfaces = [ ${cfg.lanIF} ];
     };
   };
 }
