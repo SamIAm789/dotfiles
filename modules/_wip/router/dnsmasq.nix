@@ -1,27 +1,35 @@
 {
-  flake.modules.nixos.router = {
+  flake.modules.nixos.router =
+  {
+    config,
+    ...
+  }:
+  let
+    cfg = config.router;
+  in
+  {
 
     services.dnsmasq = {
       enable = true;
       resolveLocalQueries = true;
 
       settings = {
-        interface = [ lanIF "lo" ];
+        interface = [ "${cfg.lanIF}" "lo" ];
         bind-interfaces = true;
         except-interface = [ wanIF ];
 
         # DHCP
         dhcp-authoritative = true;
-        dhcp-range = [ "\( {lanNet}.100, \){lanNet}.200,12h" ];
+        dhcp-range = [ "${cfg.dhcpStart},${cfg.dhcpEnd}" ];
         dhcp-option = [
-          "option:router,${router}"
-          "option:dns-server,${router}"
-          "option:domain-search,${domain}"
+          "option:router,${cfg.routerIP}"
+          "option:dns-server,${cfg.routerIP}"
+          "option:domain-search,${cfg.domain}"
         ];
 
         # Local DNS
-        domain = domain;
-        local = "/${domain}/";
+        domain = cfg.domain;
+        local = "/${cfg.domain}/";
         expand-hosts = true;
         domain-needed = true;
         bogus-priv = true;

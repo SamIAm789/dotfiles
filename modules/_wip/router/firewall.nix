@@ -1,7 +1,11 @@
 {
   flake.modules.nixos.router =
+  {
+    config,
+    ...
+  }:
   let
-  
+
   # Private / reserved ranges that should never appear as source on WAN
     bogons4 = [
       "0.0.0.0/8"
@@ -24,6 +28,8 @@
       "fc00::/7"
       "fe80::/10"
     ];
+
+    cfg = config.router;
   in
   {
 
@@ -34,13 +40,13 @@
       allowPing = false;
       checkReversePath = "loose";
       filterForward = true;
-      trustedInterfaces = [ lanIF ];
+      trustedInterfaces = [ cfg.lanIF ];
       extraInputRules = ''
         iifname wanIF ip saddr ${mkNftSet bogons4} drop
         iifname wanIF ip6 saddr ${mkNftSet bogons6} drop
       '';
       extraForwardRules = ''
-        iifname "\( lanIF oifname " \)wanIF accept
+        iifname "\( ${cfg.lanIF} oifname " \)${cfg.wanIF} accept
       '';
     };
   };

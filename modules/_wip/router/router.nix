@@ -1,9 +1,16 @@
 {
-  flake.modules.nixos.router = {
-
+  flake.modules.nixos.router =
+  {
+    config,
+    ...
+  }:
+  let
+    cfg = config.router;
+  in
+  {
     networking = {
       useDHCP = false;
-      interfaces.wanIF.useDHCP = true;
+      interfaces."${cfg.wanIF}".useDHCP = true;
       networkmanager.enable = lib.mkForce false;
     };
 
