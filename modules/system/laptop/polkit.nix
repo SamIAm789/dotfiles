@@ -11,6 +11,12 @@
       ];
       # autostart with systemctl --user enable --now hyprpolkitagent.service
 
-      security.polkit.enable = true;
+      security = {
+        polkit.enable = true;
+        pam.services.login.enableGnomeKeyring = true;
+      };
+
+      services.gnome.gnome-keyring.enable = true;
+
     };
 }

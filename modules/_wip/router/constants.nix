@@ -16,7 +16,7 @@
     {
       options.router = lib.mapAttrs
         (_: default: lib.mkOption {
-          type = lib.types.str;
+          type = lib.types.attrsOf lib.types.str;
           inherit default;
         })
         defaults;
