@@ -16,7 +16,9 @@
       hardware
       kdeconnect
       pipewire
+      polkit
       power-management
+      secret-service
       wifi
     ];
 
@@ -28,6 +30,7 @@
 
     home-manager.sharedModules = with inputs.self.modules.homeManager; [
       zed
+      secret-service
     ];
   };
 }
