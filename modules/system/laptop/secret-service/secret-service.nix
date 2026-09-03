@@ -9,4 +9,5 @@
       enable = true;
       components = [ "secrets" ];
     };
+  };
 }
