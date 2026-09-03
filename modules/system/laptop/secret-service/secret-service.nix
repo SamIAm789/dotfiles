@@ -9,5 +9,6 @@
       enable = true;
       components = [ "secrets" ];
     };
+    gcr-ssh-agent.enable = false;
   };
 }
