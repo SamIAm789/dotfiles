@@ -15,6 +15,8 @@
         ];
         shell = pkgs.bashInteractive;
         autoSubUidGidRange = false;
+        subUidRanges = [ ];
+        subGidRanges = [ ];
       };
 
       users.groups.backup = {};
