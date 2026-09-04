@@ -23,7 +23,7 @@
     ];
 
     environment.systemPackages = with pkgs; [
-      libreoffice-fresh
+      libreoffice-stable
       hunspell
       hunspellDicts.en-gb-large
     ];
