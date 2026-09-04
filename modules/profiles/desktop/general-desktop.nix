@@ -30,7 +30,6 @@
 
     home-manager.sharedModules = with inputs.self.modules.homeManager; [
       zed
-      secret-service
     ];
   };
 }
