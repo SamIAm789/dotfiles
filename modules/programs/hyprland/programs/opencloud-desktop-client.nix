@@ -20,6 +20,7 @@
         ExecStart = "${pkgs.opencloud-desktop}/bin/opencloud";
         Restart = "on-failure";
         RestartSec = 5;
+        Slice = "app-graphical.slice";
       };
 
       Install = {
