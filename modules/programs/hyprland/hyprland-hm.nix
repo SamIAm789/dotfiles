@@ -10,6 +10,7 @@
       fuzzel
       hypridle
       hyprlock
+      opencloud-desktop
       wpaperd
     ];
   };
