@@ -6,11 +6,4 @@
       gcr-ssh-agent.enable = false;
     };
   };
-
-  flake.modules.homeManager.secret-service= {
-    services.gnome-keyring = {
-      enable = true;
-      components = [ "secrets" ];
-    };
-  };
 }
