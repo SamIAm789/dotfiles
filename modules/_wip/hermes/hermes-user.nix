@@ -1,12 +1,16 @@
-users.groups.hermes = {};
+{
+  flake.modules.nixos.hermes-user = {
 
-users.users.hermes = {
-  isSystemUser = true;
-  group = "hermes";
-  home = "/var/lib/hermes";
-  createHome = true;
+    users.groups.hermes = {};
 
-  openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAA... hermes@hermes"
-  ];
-};
+    users.users.hermes = {
+      isSystemUser = true;
+      group = "hermes";
+      home = "/var/lib/hermes";
+      createHome = true;
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAA... hermes@hermes"
+    ];
+  };
+}
