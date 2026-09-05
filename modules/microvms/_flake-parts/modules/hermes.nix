@@ -37,8 +37,18 @@
         addToSystemPackages = true;
 
         settings = {
-          model.default = "qwen/qwen3.5-flash-02-23";
 
+          model = {
+            provider = "openrouter";
+            default = "nvidia/nemotron-3-ultra-550b-a55b:free";
+          };
+
+          fallback_providers = [
+            {
+              provider = "openrouter";
+              model = "qwen/qwen3.5-flash-02-23";
+            }
+          ];
           toolsets = [
             "terminal"
             "file"
