@@ -40,15 +40,20 @@
 
           model = {
             provider = "openrouter";
-            default = "nvidia/nemotron-3-ultra-550b-a55b:free";
+            default = "minimax/minimax-m3-20260531:free";
           };
 
           fallback_providers = [
             {
               provider = "openrouter";
+              model = "nvidia/nemotron-3-ultra-550b-a55b:free";
+            }
+            {
+              provider = "openrouter";
               model = "qwen/qwen3.5-flash-02-23";
             }
           ];
+
           toolsets = [
             "terminal"
             "file"
