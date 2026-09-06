@@ -23,9 +23,10 @@
     ];
 
     environment.systemPackages = with pkgs; [
-      libreoffice-stable
       hunspell
       hunspellDicts.en-gb-large
+      libreoffice-stable
+      micro
     ];
 
     home-manager.sharedModules = with inputs.self.modules.homeManager; [
