@@ -12,7 +12,7 @@
   }:
   {
 
-    imports = [ hermes-agent.nixosModules.default ];
+    imports = [ inputs.hermes-agent.nixosModules.default ];
 
     sops = {
       defaultSopsFile = ./secrets/hermes.yaml;
