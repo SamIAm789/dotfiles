@@ -16,5 +16,5 @@
       addToSystemPackages = true;
       extraDependencyGroups = [ "messaging" ];
     };
-  }:
+  };
 }
