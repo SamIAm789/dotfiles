@@ -10,8 +10,7 @@
       secrets."hermes-env" = { format = "yaml"; };
      };
 
-    services.hermes-agent.environmentFiles = [
-      config.sops.secrets."hermes-env".path
+     config.sops.secrets."hermes-env".path
     ];
 
     services.hermes-agent = {
