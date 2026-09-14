@@ -27,7 +27,7 @@
 
     environment.systemPackages = with pkgs; [
       gnomeExtensions.dash-to-dock
-      libreoffice-fresh
+      libreoffice-stable
     ];
   };
 }
