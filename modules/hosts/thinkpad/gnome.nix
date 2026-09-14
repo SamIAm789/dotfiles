@@ -26,7 +26,6 @@
     programs.firefox.enable = true;
 
     environment.systemPackages = with pkgs; [
-      google-chrome
       gnomeExtensions.dash-to-dock
       libreoffice-fresh
     ];
