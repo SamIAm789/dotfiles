@@ -30,6 +30,15 @@
             autoCreate = true;
           }
         ];
+
+          shares = [
+            {
+              source = "/persist/microvms/hermes/data";
+              mountPoint = "/var/lib/hermes";
+              tag = "hermes-data";
+              proto = "virtiofs";
+            }
+          ];
       };
 
       services.hermes-agent = {
