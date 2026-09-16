@@ -10,6 +10,7 @@
       joplin-desktop
       kitty
       swaynotificationcenter
+      micro
       nautilus
       bluetuith
     ];

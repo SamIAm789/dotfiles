@@ -1,5 +1,6 @@
 {
   inputs,
+  self,
   ...
 }:
 {
@@ -12,12 +13,15 @@
   }:
   {
 
-    imports = [ inputs.hermes-agent.nixosModules.default ];
+    imports = [
+      inputs.hermes-agent.nixosModules.default
+      self.modules.nixos.sops
+    ];
 
-    sops = {
-      defaultSopsFile = ./secrets/hermes.yaml;
-      secrets."hermes-env" = { format = "yaml"; };
-     };
+    sops.secrets."hermes-env" = {
+      sopsFile = "${self}/secrets/hermes.yaml";
+      format = "yaml";
+    };
 
     services.hermes-agent = {
       enable = true;
