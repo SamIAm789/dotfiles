@@ -37,6 +37,7 @@
               mountPoint = "/var/lib/hermes";
               tag = "hermes-data";
               proto = "virtiofs";
+              socket= "Hermes sock";
             }
           ];
       };
