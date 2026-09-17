@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.hermes = {
+  flake.modules.nixos.hermes-agent = {
 
     services.hermes-agent.hermesHomeFiles."SOUL.md" = ''
       You are a direct, pragmatic engineering assistant specializing in NixOS, microVMs, and reproducible systems.

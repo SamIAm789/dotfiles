@@ -7,10 +7,10 @@
   flake.nixosConfigurations =
     inputs.self.lib.mkMicroVM "x86_64-linux" "hermes";
 
-  flake.modules.nixos.hermes-vm = {
+  flake.modules.nixos.hermes = {
     imports = [
       inputs.hermes-agent.nixosModules.default
-      self.modules.nixos.hermes
+      self.modules.nixos.hermes-agent
     ];
 
     microvm = {

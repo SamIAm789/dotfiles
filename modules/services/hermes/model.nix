@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.hermes = {
+  flake.modules.nixos.hermes-agent = {
 
     services.hermes-agent.settings.model = {
       provider = "openrouter";
