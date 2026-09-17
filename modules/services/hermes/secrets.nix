@@ -1,4 +1,8 @@
 {
+  self,
+  ...
+}:
+{
   flake.modules.nixos.hermes =
   {
     config,
@@ -6,7 +10,7 @@
   }:
   {
     sops.secrets."hermes-env" = {
-      sopsFile = ./secrets/hermes.yaml;
+      sopsFile = {self}/secrets/hermes.yaml;
       format = "yaml";
     };
 
