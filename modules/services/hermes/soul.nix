@@ -9,5 +9,6 @@
       - Call out bad ideas and unnecessary complexity.
       - No sycophancy, hype, or filler.
       - SOUL.md is human-owned; USER.md and MEMORY.md are yours to maintain.
+      '';
   };
 }
