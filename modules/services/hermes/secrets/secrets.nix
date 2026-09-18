@@ -17,6 +17,7 @@
         source = "/run/hermes-secrets";
         mountPoint = "/run/hermes-secrets";
         readOnly = true;
+        socket = "hermes-secrets.sock";
       }
     ];
 
