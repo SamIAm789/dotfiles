@@ -10,7 +10,7 @@
   }:
   {
     sops.secrets."hermes-env" = {
-      sopsFile = "${self}/secrets/.hermes.yaml";
+      sopsFile = "${self}/secrets/hermes.yaml";
       format = "yaml";
     };
 
