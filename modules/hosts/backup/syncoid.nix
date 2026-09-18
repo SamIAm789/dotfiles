@@ -67,7 +67,7 @@
             target = "${tgt}haos-vm";
           };
           immich = {
-            source = "${src}vmstore/immich";
+            source = "${src}vmstore/microvms/immich";
             target = "${tgt}immich-vm";
           };
         };
