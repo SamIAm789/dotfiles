@@ -21,5 +21,19 @@
 
       mode = "0400";
     };
+
+    microvm.shares = [
+    {
+      proto = "virtiofs";
+      tag = "hermes-secrets";
+      source = "/run/hermes-secrets";
+      mountPoint = "/run/hermes-secrets";
+      readOnly = true;
+    }
+  ];
+
+  services.hermes-agent.environmentFiles = [
+      "/run/hermes-secrets/hermes.env"
+    ];
   }:
 }
