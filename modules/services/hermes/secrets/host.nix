@@ -19,11 +19,5 @@
       content = config.sops.placeholder."hermes-env";
       mode = "0400";
     };
-
-    # make sure the file exists before the MicroVM starts
-    systemd.services."microvm@hermes" = {
-      after  = [ "sops-template-hermes.env.service" ];
-      wants  = [ "sops-template-hermes.env.service" ];
-    };
   };
 }
