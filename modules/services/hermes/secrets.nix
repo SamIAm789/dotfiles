@@ -33,5 +33,5 @@
     services.hermes-agent.environmentFiles = [
       "/run/hermes-secrets/hermes.env"
     ];
-  }:
+  };
 }
