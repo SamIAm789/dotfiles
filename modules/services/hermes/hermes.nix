@@ -6,12 +6,7 @@
 {
   flake-file.inputs.hermes-agent.url = "github:NousResearch/hermes-agent";
 
-  flake.modules.nixos.hermes-agent =
-  {
-    config,
-    ...
-  }:
-  {
+  flake.modules.nixos.hermes-agent = {
 
     imports = [
       inputs.hermes-agent.nixosModules.default
