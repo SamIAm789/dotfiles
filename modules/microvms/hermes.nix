@@ -9,7 +9,6 @@
 
   flake.modules.nixos.hermes = {
     imports = [
-      inputs.hermes-agent.nixosModules.default
       self.modules.nixos.hermes-agent
     ];
 
