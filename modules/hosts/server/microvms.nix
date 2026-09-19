@@ -14,6 +14,7 @@
 
     microvm.autostart = [
       "immich"
+      "hermes"
     ];
   };
 }
