@@ -16,7 +16,10 @@
       hypervisor = "cloud-hypervisor";
       vcpu = 2;
       mem = 4096;
-      vsock.cid = 102;
+      vsock = {
+        cid = 102;
+        ssh.enable = true;
+      };
       volumes = [
         {
           image = "/persist/microvms/hermes/root/root.img";
