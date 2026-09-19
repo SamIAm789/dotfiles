@@ -6,6 +6,7 @@
   flake.modules.nixos.hermes-vm-host =
   {
     config,
+    pkgs,
     ...
   }:
   {
