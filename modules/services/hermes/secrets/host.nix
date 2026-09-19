@@ -5,7 +5,7 @@
 {
   flake.modules.nixos.hermes-vm-host =
   {
-    config, 
+    config,
     ...
   }:
   {
@@ -22,8 +22,8 @@
       path = "/run/hermes-secrets/hermes.env";
       content = config.sops.placeholder."hermes-env";
       mode = "0440";
-      # owner = "root";
-      # group = "microvm";
+      owner = "root";
+      group = "microvm";
     };
   };
 }
