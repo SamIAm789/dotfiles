@@ -10,6 +10,7 @@
   flake.modules.nixos.hermes = {
     imports = [
       self.modules.nixos.hermes-agent
+      self.modules.nixos.sops
     ];
 
     microvm = {
@@ -29,21 +30,28 @@
           autoCreate = true;
         }
       ];
-      shares = [
-        {
-          source = "/persist/microvms/hermes/data";
-          mountPoint = "/var/lib/hermes";
-          tag = "hermes-data";
-          proto = "virtiofs";
-          socket= "hermes-data.sock";
-        }
-      ];
+        shares = [
+          {
+            source = "/persist/microvms/hermes/data";
+            mountPoint = "/var/lib/hermes";
+            tag = "hermes-data";
+            proto = "virtiofs";
+            socket= "hermes-data.sock";
+          }
+          {
+            proto = "virtiofs";
+            tag = "hermes-identity";
+            source = "/run/hermes-identity";
+            mountPoint = "/run/hermes-identity";
+            socket = "hermes-identity.sock";
+            readOnly = true;
+          }
+        ];
     };
 
-    systemd.services.hermes-agent = {
-      requires = [ "run-hermes\\x2dsecrets.mount" ];
-      after = [ "run-hermes\\x2dsecrets.mount" ];
-    };
+    sops.age.sshKeyPaths = [
+      "/run/hermes-identity/hermes-ssh-key"
+    ];
 
     system.stateVersion = "26.05";
   };
