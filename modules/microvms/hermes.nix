@@ -39,6 +39,12 @@
         }
       ];
     };
+
+    systemd.services.hermes-agent = {
+      requires = [ "run-hermes\\x2dsecrets.mount" ];
+      after = [ "run-hermes\\x2dsecrets.mount" ];
+    };
+
     system.stateVersion = "26.05";
   };
 }
