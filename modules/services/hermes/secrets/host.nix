@@ -17,6 +17,12 @@
       mode = "0440";
     };
 
+    sops.templates."hermes.env" = {
+      path = "/run/hermes-secrets/hermes.env";
+      content = config.sops.placeholder."hermes-env";
+      mode = "0440";
+    };
+
     systemd.tmpfiles.rules = [
       "d /run/hermes-secrets 0750 root microvm -"
     ];
