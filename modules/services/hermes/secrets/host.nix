@@ -41,8 +41,8 @@
 
         rm -f "$dst"
         cp -- "$src" "$dst"
-        chmod 0440 "$dst"
-        chown root:kvm "$dst"
+        chmod 0400 "$dst"
+        chown 999:999 "$dst"
         '';
       };
     };
