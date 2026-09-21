@@ -13,7 +13,5 @@
     environment.systemPackages = with pkgs; [
       micro
     ];
-  }
-
-  }
+  };
 }
