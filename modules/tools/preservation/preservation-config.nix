@@ -37,6 +37,7 @@
         };
       };
     };
-    #systemd.services.systemd-machine-id-commit.enable = false;
+
+    systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
   };
 }
