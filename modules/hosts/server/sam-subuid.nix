@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.server = {
+  flake.modules.nixos.server-depreciated = {
     environment.etc."subuid" = {
       text = ''
         sam:100000:65536
