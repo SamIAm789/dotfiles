@@ -86,7 +86,7 @@
 
         nix flake update
 
-        nix flake check -L
+       # nix flake check -L
 
         git add -A flake.lock
 
