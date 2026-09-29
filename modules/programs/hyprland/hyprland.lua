@@ -168,6 +168,12 @@ hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
+-- Swap windows
+hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.swapwindow("l"))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.swapwindow("r"))
+hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.swapwindow("u"))
+hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.swapwindow("d"))
+
 -- Workspaces
 for i = 1, 10 do
     local key = i % 10
