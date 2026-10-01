@@ -10,9 +10,10 @@
     programs.zed-editor = {
       enable = true;
       extensions = [
+        "docker-compose"
+        "lua"
         "nix"
         "toml"
-        "docker-compose"
         "yaml"
       ];
     };
