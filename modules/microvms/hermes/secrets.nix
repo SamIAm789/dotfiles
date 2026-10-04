@@ -12,7 +12,7 @@
 
     sops.secrets."hermes-env" = {
       sopsFile = "${self}/secrets/hermes.yaml";
-      neededForUsers = true;
+     # neededForUsers = true;
     };
 
     services.hermes-agent.environmentFiles = [

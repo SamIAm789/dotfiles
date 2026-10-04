@@ -7,7 +7,12 @@
   flake.nixosConfigurations =
     inputs.self.lib.mkMicroVM "x86_64-linux" "hermes";
 
-  flake.modules.nixos.hermes = {
+  flake.modules.nixos.hermes =
+  {
+    lib,
+    ...
+  }:
+  {
     imports = [
       self.modules.nixos.hermes-agent
       self.modules.nixos.sops
@@ -49,7 +54,7 @@
         ];
     };
 
-    sops.age.sshKeyPaths = [
+    sops.age.sshKeyPaths = lib.mkForce [
       "/run/hermes-identity/hermes-ssh-key"
     ];
 
