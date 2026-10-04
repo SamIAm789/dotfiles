@@ -5,7 +5,7 @@
     ...
   }:
   {
-    environment.variables = {
+    environment.sessionVariables = {
       EDITOR = "micro";
       VISUAL = "micro";
     };
