@@ -7,6 +7,10 @@
       ...
     }:
 
+    # Todo
+    # change framework address
+    # add certificate for google 
+
     let
       host = config.networking.hostName;
 
