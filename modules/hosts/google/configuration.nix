@@ -25,7 +25,15 @@
   };
 
   # Optional: silence the EFI variable setting from base
-  boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+    boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
+
+    boot.tmp.cleanOnBoot = true;
+
+    zramSwap = {
+      enable = true;
+      algorithm = "zstd";
+      memoryPercent = 50;
+    };
 
 
     system.stateVersion = "26.05";
