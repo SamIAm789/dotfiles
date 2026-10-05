@@ -10,6 +10,8 @@
     imports = with inputs.self.modules.nixos; [
       base
       crowdsec
+      firewall-vps
+      openssh-vps
     ];
 
     boot.loader = {
