@@ -10,21 +10,17 @@
     let
       host = config.networking.hostName;
 
-      # Treat both machines as lighthouses
       lighthouseHosts = [ "oracle" "google" ];
       isLighthouse = lib.elem host lighthouseHosts;
 
-      # Nebula overlay IPs of the lighthouses (adjust to your actual cert IPs)
-      # Example assuming:
-      #   oracle → 100.100.0.1
-      #   google → 100.100.0.2
-      lighthouseNebulaIPs = [ "100.100.0.1" "100.100.0.2" ];
+      lighthouseNebulaIPs = [ 
+        "100.100.0.1" #oracle
+        "100.100.0.10" #google
+      ];
 
-      # Public endpoints (host:port) for static_host_map
-      # Replace with the real public IPs / DNS names of oracle and google
       lighthousePublicEndpoints = {
-        "100.100.0.1" = [ "PUBLIC_IP_OR_DNS_OF_ORACLE:4242" ];
-        "100.100.0.2" = [ "PUBLIC_IP_OR_DNS_OF_GOOGLE:4242" ];
+        "100.100.0.1" = [ "161.33.225.147:4242" ];
+        "100.100.0.2" = [ "35.209.173.73 :4242" ];
       };
 
     in
@@ -58,7 +54,6 @@
           ];
         };
 
-        # Optional: also treat them as relays (same pattern)
         relays = lib.mkIf (!isLighthouse) lighthouseNebulaIPs;
       };
 
