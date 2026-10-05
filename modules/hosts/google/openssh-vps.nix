@@ -3,7 +3,7 @@
 
      services.openssh = {
        enable = true;
-      openFirewall = false;         # we manage the firewall ourselves
+      openFirewall = false;
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
