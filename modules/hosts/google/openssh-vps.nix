@@ -11,5 +11,6 @@
         MaxAuthTries = 3;
       };
     };
+      networking.firewall.interfaces."nebula.pertaka".allowedTCPPorts = [ 22 ];
   };
 }
