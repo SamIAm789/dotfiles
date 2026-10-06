@@ -5,7 +5,12 @@
 {
   flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "google";
 
-  flake.modules.nixos.google = {
+  flake.modules.nixos.google =
+  {
+    lib,
+    ...
+  }:
+  {
 
     imports = with inputs.self.modules.nixos; [
       base
