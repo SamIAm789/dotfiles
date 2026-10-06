@@ -39,6 +39,5 @@
     };
 
     users.users.crowdsec.extraGroups = [ "systemd-journal" ];
-    };
   };
 }
