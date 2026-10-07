@@ -9,8 +9,8 @@
 
     imports = with inputs.self.modules.nixos; [
       disko
-      depoly-rs
-      depoly-rs-source
+      deploy-rs
+      deploy-rs-source
       nfs
       opencloud
       sam
