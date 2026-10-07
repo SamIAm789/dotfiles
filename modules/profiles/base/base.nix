@@ -12,6 +12,7 @@
     {
       imports = with inputs.self.modules.nixos; [
         boot
+        deploy-rs
         firmware
         fish
         home-manager

@@ -13,9 +13,9 @@
   }:
   {
     imports = with inputs.self.modules.nixos; [
-      #deploy-key-framework
-      framework-hardware
       base
+      deploy-rs-source
+      framework-hardware
       laptop
       sam
       esphome

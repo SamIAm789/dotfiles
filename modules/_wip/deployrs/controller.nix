@@ -19,8 +19,10 @@ in
 
   # SSH key the controller uses to talk to the other hosts
   # Prefer sops-nix for the private key
-  sops.secrets."deploy-controller-key" = {
+  sops.secrets."deploy" = {
+    sopsFile = "${self}/secrets/ssh.yaml";
     owner = deployUser;
+    mode = "0600";
     path = "${deployHome}/.ssh/id_ed25519";
   };
 

@@ -25,11 +25,15 @@
         }
       ];
 
-      settings.general = {
-        api.server = {
-          enable = true;
-          listen_uri = "127.0.0.1:8080";
+      settings = {
+        general = {
+          api.server = {
+            enable = true;
+            listen_uri = "127.0.0.1:8080";
+          };
         };
+        lapi.credentialsFile = "/var/lib/crowdsec/state/local_api_credentials.yaml";
+        capi.credentialsFile = "/var/lib/crowdsec/state/online_api_credentials.yaml";
       };
     };
     services.crowdsec-firewall-bouncer = {

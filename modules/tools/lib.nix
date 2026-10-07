@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  config,
   ...
 }:
 {
@@ -47,9 +48,9 @@
     mkDeployNode = system: name: {
       ${name} = {
         hostname = name;
+        sshUser = "deploy";
+        user = "root";
         profiles.system = {
-          user = "root";
-          sshUser = "deploy";
           path = inputs.deploy-rs.lib.${system}.activate.nixos
             inputs.self.nixosConfigurations.${name};
         };
