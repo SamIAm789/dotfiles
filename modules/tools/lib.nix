@@ -48,7 +48,7 @@
     mkDeployNode = system: name: {
       ${name} = {
         hostname = name;
-        sshUser = "deploy";
+        sshUser = "deploy-rs";
         user = "root";
         profiles.system = {
           path = inputs.deploy-rs.lib.${system}.activate.nixos
