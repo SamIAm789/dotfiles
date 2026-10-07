@@ -23,7 +23,7 @@
       systemd-boot.enable = lib.mkForce false;
       efi = {
         canTouchEfiVariables = lib.mkForce false;
-        efiSysMountPoint = "/boot/efi";
+        efiSysMountPoint = lib.mkForce "/boot/efi";
       };
       grub = {
         enable = true;
