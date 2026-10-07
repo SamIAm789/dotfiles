@@ -12,19 +12,19 @@
   {
     sops.secrets."deploy" = {
       sopsFile = "${self}/secrets/ssh.yaml";
-      owner = "deploy";
-      group = "deploy";
+      owner = "deploy-rs";
+      group = "deploy-rs";
       mode = "0400";
     };
 
-    users.users.deploy = {
-      home = "/var/lib/deploy";
+    users.users.deploy-rs = {
+      home = "/var/lib/deploy-rs";
       createHome = true;
       shell = pkgs.bash;
     };
 
     programs.ssh.extraConfig = ''
-      Match User deploy
+      Match User deploy-rs
         IdentityFile ${config.sops.secrets.deploy.path}
         IdentitiesOnly yes
     '';
@@ -34,8 +34,8 @@
     };
 
     systemd.tmpfiles.rules = [
-      "d /var/lib/deploy 0750 deploy deploy -"
-      "d /var/lib/deploy/.cache 0750 deploy deploy -"
+      "d /var/lib/deploy 0750 deploy-rs deploy-rs -"
+      "d /var/lib/deploy/.cache 0750 deploy-rs deploy-rs -"
     ];
   };
 }
