@@ -21,7 +21,10 @@
 
     boot.loader = {
       systemd-boot.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = lib.mkForce false;
+      efi = {
+        canTouchEfiVariables = lib.mkForce false;
+        efiSysMountPoint = "/boot/efi";
+      };
       grub = {
         enable = true;
         device = "nodev";
