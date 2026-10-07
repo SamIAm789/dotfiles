@@ -9,11 +9,12 @@ keys:
     - &host_server_new age1vk35vw3rngexeqqdast8jvpmesf8ttpmcl6fqcg9c68a68wqn9hsr2cv5n
     - &host_server age19efdl5tlu0nk6l7x43hrnu6tf4w5s92565gz6yfa25hwy7uwruhssvys74
     - &host_thinkpad age19rnfkm92axavs9c98qryne6r9jpplv5khvdvkakflau6z72pxgaq7yk06p
+    - &host_google age1m2v6zphz5jl5mt4lke53ak0shzv8n9z0ap47jxl0nmw24rl854uq4rt60y
   microvms:
     - &microvm_hermes  age16wn9de6cg4tz5x0a3sh6q5jzwwmupal4khvfrw7wm4m8ge6kxa5q6ramp6
 
 creation_rules:
-  - path_regex: ^secrets/(nebula|hermes)\.yaml$
+  - path_regex: ^secrets/hermes\.yaml$
     key_groups:
       - age:
           - *microvm_hermes
@@ -30,3 +31,4 @@ creation_rules:
           - *host_nixos_anywhere
           - *host_server_new
           - *host_thinkpad
+          - *host_google

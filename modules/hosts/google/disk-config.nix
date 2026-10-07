@@ -3,17 +3,17 @@
   ...
 }:
 {
-  flake.modules.nixos.google = {
+  flake.modules.nixos.google-disko = {
 
     imports = [ inputs.disko.nixosModules.disko ];
 
     disko.devices.disk.main = {
       type = "disk";
       device = "/dev/sda";
- 
+
       content = {
         type = "gpt";
- 
+
         partitions = {
           ESP = {
             size = "512M";
