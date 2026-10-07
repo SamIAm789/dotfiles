@@ -23,7 +23,7 @@
       shell = pkgs.bash;
     };
 
-    environment.etc."ssh/ssh_config.d/60-deploy-key.conf".text = ''
+    programs.ssh.extraConfig = ''
       Match User deploy
         IdentityFile ${config.sops.secrets.deploy.path}
         IdentitiesOnly yes
