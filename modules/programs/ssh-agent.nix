@@ -15,6 +15,9 @@
           HostName github.com
           IdentityFile home/sam/.ssh/id_ed25519
 
+        Host google
+          HostName 35.209.173.73
+
         Host server
           User sam
           HostName 10.25.0.24
