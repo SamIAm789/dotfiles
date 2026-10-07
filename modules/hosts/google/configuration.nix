@@ -41,8 +41,6 @@
       memoryPercent = 50;
     };
 
-
     system.stateVersion = "26.05";
-
   };
 }
