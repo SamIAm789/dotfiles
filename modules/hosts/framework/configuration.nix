@@ -14,6 +14,7 @@
   {
     imports = with inputs.self.modules.nixos; [
       base
+      deploy-rs
       deploy-rs-source
       framework-hardware
       laptop
