@@ -71,7 +71,8 @@ let
   StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
 };
 
-systemd.tmpfiles.rules = [
+    systemd.tmpfiles.rules = [
+  "d /var/lib/crowdsec-firewall-bouncer-register 0755 crowdsec crowdsec - -"
   "f /var/lib/crowdsec/state/online_api_credentials.yaml 0600 crowdsec crowdsec - -"
 ];
 
