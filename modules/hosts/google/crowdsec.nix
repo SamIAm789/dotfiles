@@ -52,11 +52,7 @@
   PrivateUsers = lib.mkForce false;
 };
 
-systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
-  DynamicUser = lib.mkForce false;
-  StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
-};
-    systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
+ systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
   DynamicUser = lib.mkForce false;
   StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
 };
