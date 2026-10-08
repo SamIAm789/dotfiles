@@ -47,8 +47,15 @@
       settings.api_url = "http://127.0.0.1:8080";
     };
 
-    systemd.services.crowdsec.serviceConfig.PrivateUsers = lib.mkForce false;
+    systemd.services.crowdsec.serviceConfig = {
+  DynamicUser = lib.mkForce false;
+  PrivateUsers = lib.mkForce false;
+};
 
+systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
+  DynamicUser = lib.mkForce false;
+  StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
+};
     systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
   DynamicUser = lib.mkForce false;
   StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
