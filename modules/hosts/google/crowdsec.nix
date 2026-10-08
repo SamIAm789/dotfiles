@@ -4,6 +4,15 @@
     lib,
     ...
   }:
+let
+    crowdsecExecStart =
+      builtins.elemAt config.systemd.services.crowdsec.serviceConfig.ExecStart 1;
+
+    crowdsecConfig =
+      builtins.elemAt
+        (builtins.match ".* -c ([^ ]+) .*" crowdsecExecStart)
+        0;
+  in
   {
 
     services.crowdsec = {
