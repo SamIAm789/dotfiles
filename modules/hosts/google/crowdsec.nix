@@ -1,5 +1,10 @@
 {
-  flake.modules.nixos.crowdsec = {
+  flake.modules.nixos.crowdsec =
+  {
+    lib,
+    ...
+  }:
+  {
 
     services.crowdsec = {
       enable = true;
