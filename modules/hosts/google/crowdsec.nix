@@ -66,6 +66,8 @@ let
 
  systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
   DynamicUser = lib.mkForce false;
+  User = lib.mkForce "crowdsec";
+  Group = lib.mkForce "crowdsec";
   StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
 };
 
