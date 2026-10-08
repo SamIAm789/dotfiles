@@ -29,10 +29,6 @@
         IdentitiesOnly yes
     '';
 
-    environment.variables = {
-      XDG_CACHE_HOME = "/var/lib/deploy-rs/.cache";
-    };
-
     systemd.tmpfiles.rules = [
       "d /var/lib/deploy-rs 0750 deploy-rs deploy-rs -"
       "d /var/lib/deploy-rs/.cache 0750 deploy-rs deploy-rs -"
