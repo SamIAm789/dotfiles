@@ -1,6 +1,7 @@
 {
   flake.modules.nixos.crowdsec =
   {
+    config,
     lib,
     ...
   }:
@@ -14,6 +15,8 @@ let
         0;
   in
   {
+
+    environment.etc."crowdsec/config.yaml".source = crowdsecConfig;
 
     services.crowdsec = {
       enable = true;
