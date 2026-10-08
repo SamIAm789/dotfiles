@@ -32,6 +32,7 @@
       environment.systemPackages = [ pkgs.nebula ];
 
       services.nebula.networks.pertaka = {
+        listen.port = 4242;
         # Only non-lighthouses need the static map and lighthouse list
         staticHostMap = lib.mkIf (!isLighthouse) lighthousePublicEndpoints;
 
