@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.nebula2 =
+  flake.modules.nixos.nebula =
     {
       config,
       lib,
@@ -7,24 +7,24 @@
       ...
     }:
 
-    # Todo
-    # change framework address
-    # add certificate for google 
-
     let
       host = config.networking.hostName;
 
-      lighthouseHosts = [ "oracle" "google" ];
+      lighthouseHosts = [
+        "oracle"
+        "google"
+      ];
+
       isLighthouse = lib.elem host lighthouseHosts;
 
-      lighthouseNebulaIPs = [ 
+      lighthouseNebulaIPs = [
         "100.100.0.1" #oracle
-        "100.100.0.10" #google
+        "100.100.0.2" #google
       ];
 
       lighthousePublicEndpoints = {
         "100.100.0.1" = [ "161.33.225.147:4242" ];
-        "100.100.0.2" = [ "35.209.173.73 :4242" ];
+        "100.100.0.2" = [ "35.209.173.73:4242" ];
       };
 
     in
