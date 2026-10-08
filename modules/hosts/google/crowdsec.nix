@@ -42,6 +42,8 @@
       settings.api_url = "http://127.0.0.1:8080";
     };
 
+    systemd.services.crowdsec.serviceConfig.PrivateUsers = lib.mkForce false;
+
     users.users.crowdsec.extraGroups = [ "systemd-journal" ];
   };
 }
