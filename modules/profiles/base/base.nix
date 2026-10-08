@@ -30,6 +30,8 @@
       environment.systemPackages = with pkgs; [
         fzf
         git
+        jq
+        ripgrep
       ];
     };
 }
