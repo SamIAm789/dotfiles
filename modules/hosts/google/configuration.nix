@@ -39,7 +39,8 @@
     zramSwap = {
       enable = true;
       algorithm = "zstd";
-      memoryPercent = 50;
+      memoryPercent = 150;
+      priority = 10;
     };
 
     system.stateVersion = "26.05";
