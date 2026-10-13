@@ -2,15 +2,20 @@
   flake.modules.nixos.nebula =
     {
       config,
-      lib,
       pkgs,
       ...
     }:
 
     let
       host = config.networking.hostName;
-      isLighthouse = host == "lighthouse";
-      lighthouseIP = "161.33.225.147:4242";
+      lighthouseEndpoints = {
+        "100.100.0.1" = [ "161.33.225.147:4242" ];
+        "100.100.0.2" = [ "35.209.173.73:4242" ];
+      };
+      lighthouseIPs = [
+        "100.100.0.1"
+        "100.100.0.2"
+      ];
 
     in
     {
@@ -19,15 +24,13 @@
 
       services.nebula.networks.pertaka = {
 
-        staticHostMap = lib.mkIf (!isLighthouse) {
-          "100.100.0.1" = [ lighthouseIP ];
-        };
+        staticHostMap =  lighthouseEndpoints;
 
-        lighthouses = lib.mkIf (!isLighthouse) [ "100.100.0.1" ];
+        lighthouses = lighthouseIPs;
 
         settings = {
           lighthouse = {
-            am_lighthouse = isLighthouse;
+            am_lighthouse = false;
             interval = 60;
           };
 
@@ -46,7 +49,7 @@
           ];
         };
 
-        relays = lib.mkIf (!isLighthouse) [ "100.100.0.1" ];
+        relays = lighthouseIPs;
       };
 
       users.users.nebula-pertaka = {

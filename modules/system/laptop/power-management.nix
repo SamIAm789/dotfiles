@@ -8,6 +8,7 @@
         # one of "ignore", "poweroff", "reboot", "halt", "kexec", "suspend", "hibernate", "hybrid-sleep", "suspend-then-hibernate", "lock"
       };
       thermald.enable = true; # only for intel CPUs
+      power-profiles-daemon.enable = false;
       tlp = {
         enable = true;
         pd.enable = true;
