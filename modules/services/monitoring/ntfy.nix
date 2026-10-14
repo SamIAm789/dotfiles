@@ -20,7 +20,7 @@
             webhook_configs = [
               {
                 # Replace this with your actual self-hosted ntfy URL.
-                url = "http://100.100.0.4:9080/monitoring-alerts?template=alertmanager";
+                url = "http://100.100.0.4:8090/monitoring-alerts?template=alertmanager";
                 send_resolved = true;
               }
             ];
