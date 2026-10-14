@@ -13,6 +13,7 @@
         enable = true;
         pd.enable = true;
         settings = {
+          TLP_AUTO_SWITCH = 1;
           TLP_PROFILE_AC = "performance";
           TLP_PROFILE_BAT = "power-saver";
           CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
