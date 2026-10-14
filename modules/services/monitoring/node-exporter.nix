@@ -3,7 +3,7 @@
 
     services.prometheus.exporters.node = {
       enable = true;
-      port = 9100;
+      port = 9101;
       listenAddress = "0.0.0.0";
       openFirewall = true;
 
