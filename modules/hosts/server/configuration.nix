@@ -13,6 +13,7 @@
       deploy-rs-source
       nfs
       opencloud
+      prometheus-server
       sam
       server-profile
       server-filesystems

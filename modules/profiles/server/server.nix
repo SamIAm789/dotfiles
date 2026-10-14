@@ -12,6 +12,7 @@
       ntfy
       openssh
       preservation
+      prometheus-exporter
       quadlet
       sanoid
       zfs
