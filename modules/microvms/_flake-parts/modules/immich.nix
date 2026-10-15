@@ -9,6 +9,7 @@
 
     imports = [
       inputs.dotfiles.modules.nixos.nebula
+      inputs.dotfiles.modules.nixos.prometheus-exporter
       inputs.self.modules.nixos.nebula
     ];
 
