@@ -17,5 +17,7 @@
       addToSystemPackages = true;
       extraDependencyGroups = [ "messaging" ];
     };
+
+    users.users.sam.extraGroups = [ "hermes" ];
   };
 }
