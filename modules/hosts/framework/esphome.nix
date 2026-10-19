@@ -1,23 +1,29 @@
+
 {
-  flake.modules.nixos.esphome = {
-    services.esphome = {
-      enable = true;
-      allowedDevices = [
-        "char-ttyUSB"
-        "char-ttyS"
-      ];
-    };
-    programs.firefox = {
-      policies = {
-        DefaultSerialGuardSetting = 3; # Allows the API usage
-        Preferences = {
-          "dom.webserial.enabled" = true;
+  flake.modules.nixos.esphome =
+    { lib, pkgs, ... }:
+    {
+      services.esphome = {
+        enable = true;
+        allowedDevices = [
+          "char-ttyUSB"
+          "char-ttyS"
+        ];
+      };
+
+      systemd.services.esphome.serviceConfig.ExecStart =
+        lib.mkForce
+          "${pkgs.esphome-device-builder}/bin/esphome-device-builder --host 127.0.0.1 /var/lib/esphome";
+
+      programs.firefox = {
+        policies = {
+          DefaultSerialGuardSetting = 3;
+          Preferences = {
+            "dom.webserial.enabled" = true;
+          };
         };
       };
-    };
 
-    users.users.sam = {
-      extraGroups = [ "dialout" ];
+      users.users.sam.extraGroups = [ "dialout" ];
     };
-  };
 }
