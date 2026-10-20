@@ -1,24 +1,47 @@
+
 {
   flake.modules.nixos.oracle =
-  {
-    config,
-    lib,
-    pkgs,
-    modulesPath,
-    ...
-  }:
-  {
-    boot.initrd.availableKernelModules = [
-      "virtio_scsi"
-      "sd_mod"
-    ];
+    {
+      config,
+      lib,
+      pkgs,
+      modulesPath,
+      ...
+    }:
+    {
+      imports = [
+        (modulesPath + "/profiles/qemu-guest.nix")
+      ];
 
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ ];
-    boot.extraModulePackages = [ ];
+      boot.loader.grub = {
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+        device = "nodev";
+      };
 
-    swapDevices = [ ];
+      fileSystems."/boot/efi" = {
+        device = "/dev/disk/by-uuid/349D-B205";
+        fsType = "vfat";
+      };
 
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  };
+      fileSystems."/" = {
+        device = "/dev/mapper/ocivolume-root";
+        fsType = "xfs";
+      };
+
+      boot.initrd.availableKernelModules = [
+        "ata_piix"
+        "uhci_hcd"
+        "xen_blkfront"
+        "vmw_pvscsi"
+      ];
+
+      boot.initrd.kernelModules = [ "nvme" ];
+      boot.kernelModules = [ ];
+      boot.extraModulePackages = [ ];
+
+      swapDevices = [ ];
+
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    };
 }

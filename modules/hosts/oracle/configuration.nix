@@ -16,7 +16,6 @@
       base
       crowdsec
       firewall-vps
-      oracle-disko
       openssh-vps
       vps
     ];
@@ -24,7 +23,7 @@
     boot.loader = {
       efi = {
         canTouchEfiVariables = lib.mkForce false;
-        efiSysMountPoint = lib.mkForce "/boot";
+        efiSysMountPoint = lib.mkForce "/boot/efi";
       };
     };
 

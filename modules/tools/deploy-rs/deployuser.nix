@@ -5,7 +5,7 @@
       isSystemUser = true;
       group = "deploy-rs";
       openssh.authorizedKeys.keys = [
-        ''SHA256:lGEYkZEJ8LP40VxPDSXQ/dh+yh3NESOEz2dwNIZ7JaM deploy-rs''
+        ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMf0rG0nKfoYN0EFRfpFJBnXPSAxq1MoT/bK+m9h1qWP deploy-rs''
       ];
       extraGroups = [ ];
     };
