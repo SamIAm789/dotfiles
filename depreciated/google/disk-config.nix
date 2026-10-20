@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.modules.nixos.google-disko = {
+  flake.modules.nixos.oracle-disko = {
 
     imports = [ inputs.disko.nixosModules.disko ];
 

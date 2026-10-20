@@ -6,7 +6,10 @@
   }:
   {
     environment.systemPackages = with pkgs; [
-      citrix_workspace
+      citrix-workspace
+    ];
+    nixpkgs.config.permittedInsecurePackages = [
+      "libsoup-2.74.3"
     ];
   };
 }

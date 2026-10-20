@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.google =
+  flake.modules.nixos.oracle =
   {
     config,
     lib,

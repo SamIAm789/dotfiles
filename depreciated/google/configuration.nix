@@ -3,9 +3,9 @@
   ...
 }:
 {
-  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "google";
+  flake.nixosConfigurations = inputs.self.lib.mkNixos "x86_64-linux" "oracle";
 
-  flake.modules.nixos.google =
+  flake.modules.nixos.oracle =
   {
     lib,
     ...
@@ -18,19 +18,13 @@
       firewall-vps
       google-disko
       openssh-vps
+      vps
     ];
 
     boot.loader = {
-      systemd-boot.enable = lib.mkForce false;
       efi = {
         canTouchEfiVariables = lib.mkForce false;
-        efiSysMountPoint = lib.mkForce "/boot/efi";
-      };
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-        efiInstallAsRemovable = true;
+        efiSysMountPoint = lib.mkForce "/boot";
       };
     };
 
@@ -40,7 +34,7 @@
       enable = true;
       algorithm = "zstd";
       memoryPercent = 150;
-      priority = 10;
+      priority = 100;
     };
 
     system.stateVersion = "26.05";
