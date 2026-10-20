@@ -16,7 +16,7 @@
       base
       crowdsec
       firewall-vps
-      google-disko
+      oracle-disko
       openssh-vps
       vps
     ];
