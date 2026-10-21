@@ -8,6 +8,9 @@
     inputs.nixpkgs.lib.recursiveUpdate
       (inputs.self.lib.mkDeployNode "x86_64-linux" "oracle")
       {
-        oracle.hostname = "161.33.231.180";
+        oracle = {
+          hostname = "161.33.231.180";
+          sshUser = "sam";
+        };
       };
 }
