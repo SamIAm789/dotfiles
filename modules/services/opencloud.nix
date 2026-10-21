@@ -3,6 +3,7 @@
   flake.modules.nixos.opencloud =
   {
     config,
+    pkgs,
     ...
   }:
   {
@@ -14,6 +15,7 @@
 
     services.opencloud = {
       enable = true;
+      package = pkgs.opencloud;
       address = "0.0.0.0";
       url = "https://100.100.0.4:9200";
       port = 9200;
