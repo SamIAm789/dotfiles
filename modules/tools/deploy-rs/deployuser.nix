@@ -26,5 +26,10 @@
         options = [ "NOPASSWD" ];
       }];
     }];
+
+    nix.settings.trusted-users = [
+      "root"
+      "deploy-rs"
+    ];
   };
 }
