@@ -6,7 +6,6 @@
   flake.modules.nixos.deploy-rs-source =
   {
     config,
-    pkgs,
     ...
   }:
   {
