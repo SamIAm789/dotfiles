@@ -10,7 +10,6 @@
       {
         oracle = {
           hostname = "161.33.231.180";
-          sshUser = "opc";
         };
       };
 }
