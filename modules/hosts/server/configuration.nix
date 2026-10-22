@@ -9,7 +9,6 @@
 
     imports = with inputs.self.modules.nixos; [
       disko
-      deploy-rs
       deploy-rs-source
       nfs
       opencloud
