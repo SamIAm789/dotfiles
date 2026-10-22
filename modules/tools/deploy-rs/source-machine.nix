@@ -17,12 +17,6 @@
       mode = "0400";
     };
 
-    users.users.deploy-rs = {
-      home = "/var/lib/deploy-rs";
-      createHome = true;
-      shell = pkgs.bash;
-    };
-
     programs.ssh.extraConfig = ''
       Match User deploy-rs
         IdentityFile ${config.sops.secrets.deploy.path}
