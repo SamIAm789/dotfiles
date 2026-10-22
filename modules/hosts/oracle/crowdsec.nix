@@ -37,11 +37,10 @@
           listen_uri = "127.0.0.1:8080";
         };
 
-        config.api.client.credentials_path =
-          "/var/lib/crowdsec/state/local_api_credentials.yaml";
-
-        config.api.server.online_client.credentials_path =
-          "/var/lib/crowdsec/state/online_api_credentials.yaml";
+        lapi.credentialsFile =
+  "/var/lib/crowdsec/data/.local_api_credentials.yaml";
+        capi.credentialsFile =
+  "/var/lib/crowdsec/data/online_api_credentials.yaml";
       };
     };
     services.crowdsec-firewall-bouncer = {
@@ -49,23 +48,6 @@
       settings.mode = "nftables";
       settings.api_url = "http://127.0.0.1:8080";
     };
-
-    systemd.services.crowdsec.serviceConfig = {
-  DynamicUser = lib.mkForce false;
-  PrivateUsers = lib.mkForce false;
-};
-
- systemd.services.crowdsec-firewall-bouncer-register.serviceConfig = {
-  DynamicUser = lib.mkForce false;
-  User = lib.mkForce "crowdsec";
-  Group = lib.mkForce "crowdsec";
-  StateDirectory = lib.mkForce "crowdsec-firewall-bouncer-register";
-};
-
-    systemd.tmpfiles.rules = [
-  "d /var/lib/crowdsec-firewall-bouncer-register 0755 crowdsec crowdsec - -"
-  "f /var/lib/crowdsec/state/online_api_credentials.yaml 0600 crowdsec crowdsec - -"
-];
 
     users.users.crowdsec.extraGroups = [ "systemd-journal" ];
   };
