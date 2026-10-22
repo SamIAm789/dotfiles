@@ -13,7 +13,6 @@
   }:
   {
     imports = with inputs.self.modules.nixos; [
-      base
       deploy-rs-source
       framework-hardware
       laptop
