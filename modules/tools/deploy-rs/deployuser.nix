@@ -1,6 +1,10 @@
 {
-  flake.modules.nixos.deploy-rs = {
-
+  flake.modules.nixos.deploy-rs =
+  {
+    pkgs,
+    ...
+  }:
+  {
     users.users.deploy-rs = {
       isSystemUser = true;
       group = "deploy-rs";
