@@ -4,6 +4,9 @@
     users.users.deploy-rs = {
       isSystemUser = true;
       group = "deploy-rs";
+      home = "/var/lib/deploy-rs";
+      createHome = true;
+      shell = pkgs.bash;
       openssh.authorizedKeys.keys = [
         ''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMf0rG0nKfoYN0EFRfpFJBnXPSAxq1MoT/bK+m9h1qWP deploy-rs''
       ];
