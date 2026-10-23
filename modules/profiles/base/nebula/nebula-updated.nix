@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.nebula1 =
+  flake.modules.nixos.nebula =
     {
       config,
       lib,
@@ -12,7 +12,6 @@
 
       lighthouseHosts = [
         "oracle"
-        "google"
       ];
 
       isLighthouse = lib.elem host lighthouseHosts;
@@ -20,11 +19,13 @@
       lighthouseNebulaIPs = [
         "100.100.0.1" #oracle
         "100.100.0.2" #google
+        "100.100.0.3" #oracle-nixos
       ];
 
       lighthousePublicEndpoints = {
         "100.100.0.1" = [ "161.33.225.147:4242" ];
         "100.100.0.2" = [ "35.209.173.73:4242" ];
+        "100.100.0.3" = [ "161.33.231.180:4242" ];
       };
 
     in
@@ -37,6 +38,10 @@
         staticHostMap = lib.mkIf (!isLighthouse) lighthousePublicEndpoints;
 
         lighthouses = lib.mkIf (!isLighthouse) lighthouseNebulaIPs;
+
+        isRelay = isLighthouse;
+
+        relays = lib.mkIf (!isLighthouse) lighthouseNebulaIPs;
 
         settings = {
           lighthouse = {
@@ -58,8 +63,6 @@
             { host = "any"; port = "any"; proto = "any"; }
           ];
         };
-
-        relays = lib.mkIf (!isLighthouse) lighthouseNebulaIPs;
       };
 
       users.users.nebula-pertaka = {
