@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.nebula =
+  flake.modules.nixos.nebula1 =
     {
       config,
       lib,
