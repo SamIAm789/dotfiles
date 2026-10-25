@@ -8,7 +8,7 @@
 
     services.nebula.networks.pertaka = {
       isRelay = lib.mkForce true;
-      isLighthous = lib.mkForce true;
+      isLighthouse = lib.mkForce true;
       lighthouses = lib.mkForce [ ];
     };
   };
