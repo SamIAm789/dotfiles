@@ -766,7 +766,8 @@
         ],
         "preservation": "preservation",
         "quadlet-nix": "quadlet-nix",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "stcng-fix": "stcng-fix"
       }
     },
     "sops-nix": {
@@ -803,6 +804,23 @@
       "original": {
         "type": "git",
         "url": "https://spectrum-os.org/git/spectrum"
+      }
+    },
+    "stcng-fix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790981690,
+        "narHash": "sha256-Mvqb3QFq8Ix+9fOdSQ3JOZzub4t1au4jrm9v7Xwjy1Q=",
+        "ref": "refs/heads/master",
+        "rev": "f66ae6aabc3da2cd292b791de1a3cd4a73ce3c73",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://tangled.org/r0chd.pl/switch-to-configuration-ng"
+      },
+      "original": {
+        "rev": "f66ae6aabc3da2cd292b791de1a3cd4a73ce3c73",
+        "type": "git",
+        "url": "https://tangled.org/r0chd.pl/switch-to-configuration-ng"
       }
     },
     "systems": {
