@@ -1,5 +1,5 @@
 {
-  flake.module.nixos.oracle =
+  flake.modules.nixos.oracle =
   {
     lib,
     ...
