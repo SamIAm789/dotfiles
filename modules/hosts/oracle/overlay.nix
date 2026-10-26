@@ -14,7 +14,11 @@
           switch-to-configuration-ng =
             prev.switch-to-configuration-ng.overrideAttrs (old: {
               src = inputs.stcng-fix;
-              cargoHash = "";
+
+              cargoDeps = old.cargoDeps.overrideAttrs (_: {
+                src = inputs.stcng-fix;
+                outputHash = prev.lib.fakeHash;
+              });
             });
         })
       ];
