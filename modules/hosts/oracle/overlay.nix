@@ -9,12 +9,13 @@
     { inputs, ... }:
     {
       nixpkgs.overlays = [
+  
         (final: prev: {
           switch-to-configuration-ng =
-            prev.switch-to-configuration-ng.overrideAttrs (old: {
-              src = inputs.stcng-fix;
-              cargoLock.lockFile = "${inputs.stcng-fix}/Cargo.lock";
-            });
+                prev.switch-to-configuration-ng.overrideAttrs (old: {
+          src = inputs.stcng-fix;
+       });
+
         })
       ];
     };
