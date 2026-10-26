@@ -18,6 +18,7 @@
       firewall-vps
       openssh-vps
       vps
+      stcng-fix
     ];
 
     boot.loader = {
