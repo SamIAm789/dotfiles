@@ -18,8 +18,8 @@
      };
 
      efi = {
-       canTouchEfiVariables = true;
-       efiSysMountPoint = "/boot/efi"; # keep your existing mount
+       canTouchEfiVariables = lib.mkForce false;
+       efiSysMountPoint = "/boot/efi";
      };
    };
  };
