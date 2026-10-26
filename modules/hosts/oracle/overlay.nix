@@ -1,4 +1,3 @@
-
 { inputs, ... }:
 
 {
@@ -22,9 +21,14 @@
 
               cargoHash = null;
 
-              # Avoid treating the fork's Clippy warnings as build failures.
+              # The fork's Clippy warnings currently fail the upstream checks.
               doCheck = false;
               preCheck = "";
+
+              # The fork installs bin/switch-to-configuration-ng.
+              meta = (old.meta or { }) // {
+                mainProgram = "switch-to-configuration-ng";
+              };
             });
         })
       ];
