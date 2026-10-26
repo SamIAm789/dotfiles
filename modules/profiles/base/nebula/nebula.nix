@@ -42,10 +42,19 @@
 
         firewall = {
           outbound = [
-            { host = "any"; port = "any"; proto = "any"; }
+            {
+              host = "any";
+              port = "any";
+              proto = "any";
+            }
           ];
           inbound = [
-            { host = "any"; port = "any"; proto = "any"; }
+            { 
+              host = "any"; 
+              port = "any"; 
+              proto = "any";
+              local_cidr = "10.25.0.0/24";
+            }
           ];
         };
 
