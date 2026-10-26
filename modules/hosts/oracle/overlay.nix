@@ -1,4 +1,5 @@
-flake.modules.nixos.stcng-fix =
+{
+  flake.modules.nixos.stcng-fix =
   { ... }:
   {
     nixpkgs.overlays = [
@@ -21,3 +22,4 @@ flake.modules.nixos.stcng-fix =
       })
     ];
   };
+}
