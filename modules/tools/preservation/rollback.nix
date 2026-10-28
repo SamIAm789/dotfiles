@@ -7,7 +7,6 @@
     {
 
       boot.initrd = {
-        systemd.enable = true;
         supportedFilesystems = [ "zfs" ];
       };
 
