@@ -55,7 +55,7 @@
               host = "any"; 
               port = "any"; 
               proto = "any";
-              local_cidr = "10.25.0.0/24";
+             # local_cidr = "10.25.0.0/24";
             }
           ];
         };
