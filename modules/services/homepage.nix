@@ -2,7 +2,7 @@
   flake.modules.nixos.homepage = {
     services.homepage-dashboard = {
       enable = true;
-      allowedHosts = "10.25.0.24:8083,100.100.0.4:8083";
+      allowedHosts = "10.25.0.24:8083,100.100.0.10:8083";
       listenPort = 8083;
       openFirewall = true;
       settings = {
@@ -33,7 +33,7 @@
           "Networking" = [
             {
               "ExtremeCloud" = {
-                href = "https://sso.extremecloudiq.com";  
+                href = "https://sso.extremecloudiq.com";
               };
             }
             {
@@ -117,36 +117,36 @@
             {
               "Immich" = {
                 description = "Photo album";
-                href = "http://100.100.0.4:2284";
+                href = "http://100.100.0.10:2284";
               };
             }
             {
               "KitchenOwl" = {
                 description = "Recipes and shopping lists";
-                href = "http://100.100.0.4:8082";
+                href = "http://100.100.0.10:8082";
               };
             }
             {
               "Own Cloud" = {
                 description = "File sharing";
-                href = "https://100.100.0.4:9200";
+                href = "https://100.100.0.10:9200";
               };
             }
             {
               "Paperless" = {
                 description = "Document management";
-                href = "http://100.100.0.4:28981";
+                href = "http://100.100.0.10:28981";
               };
             }
             {
               "Stirling PDF Editor" = {
-                href = "http://100.100.0.4:8080";
+                href = "http://100.100.0.10:8080";
               };
             }
             {
               "TWC Manager" = {
                 description = "Car charging";
-                href = "http://100.100.0.7:8080";
+                href = "http://100.100.0.10:8080";
               };
             }
             {
@@ -157,13 +157,13 @@
             {
               "Jellyfin" = {
                 description = "Media server";
-                href = "http://100.100.0.4:8096";
+                href = "http://100.100.0.10:8096";
               };
             }
             {
               "Pinchflat" = {
                 description = "YouTube download management";
-                href = "http://100.100.0.4:8945";
+                href = "http://100.100.0.10:8945";
               };
             }
           ];

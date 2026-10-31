@@ -40,7 +40,7 @@
               image = "docker.io/norishapp/norish:latest";
               pod = "norish.pod";
               environments = {
-                AUTH_URL =  "http://100.100.0.4:7000";
+                AUTH_URL =  "http://100.100.0.10:7000";
                 DATABASE_URL = "postgres://postgres:norish@localhost:5432/norish";
                 MASTER_KEY = "EUpSSTvMSV9lj8ISvAbQBh6WCv6XjhBUQfGimLz8jog=";
                 CHROME_WS_ENDPOINT = "ws://127.0.0.1:3001";

@@ -5,7 +5,7 @@
 {
   flake.modules.nixos.backup =
     let
-      src = "backup@100.100.0.4:";
+      src = "backup@100.100.0.10:";
       tgt = "backup/";
     in
     {

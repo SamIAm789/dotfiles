@@ -24,7 +24,7 @@
 
         Host server-nebula
           User sam
-          HostName 100.100.0.4
+          HostName 100.100.0.10
 
         Host twcmanager
           User sam

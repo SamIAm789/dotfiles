@@ -15,7 +15,7 @@
           static_configs = [
             {
               targets = [
-                "100.100.0.4:9101" #server
+                "100.100.0.10:9101" #server
                 "100.100.0.5:9101" #backup
                 "100.100.0.7:9101" #immich
                 "100.100.0.52:9101" #thinkpad

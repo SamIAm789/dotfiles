@@ -39,5 +39,5 @@
     #    host: "100.100.0.1"
     #    port: 53
     # static_host_map:
-    #  "pertaka.duckdns.org": ["100.100.0.4"]
+    #  "pertaka.duckdns.org": ["100.100.0.10"]
 }
