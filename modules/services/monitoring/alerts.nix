@@ -108,7 +108,7 @@
                       description: "{{ $labels.instance }} has less than 10% memory available."
 
                   - alert: NodeExporterDown
-                    expr: up{job="node"} == 0
+                    expr: up{job="node", instance!="100.100.0.52:9100"} == 0
                     for: 2m
                     labels:
                       severity: critical
