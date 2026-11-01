@@ -100,7 +100,7 @@
                       node_memory_MemAvailable_bytes
                       /
                       node_memory_MemTotal_bytes < 10
-                    for: 5m
+                    for: 10m
                     labels:
                       severity: warning
                     annotations:
