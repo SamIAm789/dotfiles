@@ -27,8 +27,13 @@
         '';
       };
     };
-    services.nebula.networks.pertaka.firewall.inbound = {
-      local_cidr = "10.25.0.0/24";
-    };
+    services.nebula.networks.pertaka.firewall.inbound = [
+      {
+        host = "any";
+        port = "any";
+        proto = "any";
+        local_cidr = "10.25.0.0/24";
+      }
+    ];
   };
 }
