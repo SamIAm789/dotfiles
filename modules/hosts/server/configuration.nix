@@ -10,8 +10,10 @@
     imports = with inputs.self.modules.nixos; [
       disko
       deploy-rs-source
+      jellyfin
       nfs
       opencloud
+      pinchflat
       prometheus-server
       sam
       server-profile
