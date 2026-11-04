@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.framework = {
+  flake.modules.nixos.framework1 = {
 
           services.nebula.networks.pertaka.settings = {
        tun.unsafe_routes = [
