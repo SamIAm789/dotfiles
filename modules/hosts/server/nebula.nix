@@ -27,5 +27,8 @@
         '';
       };
     };
+    services.nebula.networks.pertaka.firewall.inbound = {
+      local_cidr = "10.25.0.0/24";
+    };
   };
 }
