@@ -1,4 +1,8 @@
 {
+  self,
+  ...
+}:
+{
   flake.modules.nixos.caddy =
   {
     config,
@@ -33,6 +37,12 @@
         @jellyfin host jellyfin.${domain}
         reverse_proxy @jellyfin 127.0.0.1:8096
       '';
+    };
+
+    sops.secrets."duckdns-token" = {
+      sopsFile = "${self}/secrets/secrets.yaml";
+      key = "duckdns-token";
+      format = "yaml";
     };
 
     sops.templates."caddy.env" = {
