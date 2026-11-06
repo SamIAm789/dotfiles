@@ -5,7 +5,10 @@
     lib,
     pkgs, 
     ... 
-  }: 
+  }:
+  let
+    domain = "samiam-infra.duckdns.org"
+  in
   {
     services.caddy = {
       enable = true;
