@@ -22,15 +22,15 @@
 
       openFirewall = true;
 
-      virtualHosts."*.samiam-infra.duckdns.org".extraConfig = ''
+      virtualHosts."*.${domain}".extraConfig = ''
         tls {
           dns duckdns {env.DUCKDNS_API_TOKEN}
         }
 
-        @ha host ha.samiam-infra.duckdns.org
+        @ha host ha.${domain}
         reverse_proxy @ha 10.25.0.31:8123
 
-        @jellyfin host jellyfin.samiam-infra.duckdns.org
+        @jellyfin host jellyfin.${domain}
         reverse_proxy @jellyfin 127.0.0.1:8096
       '';
     };
