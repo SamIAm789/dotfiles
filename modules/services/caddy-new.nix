@@ -21,7 +21,7 @@
         plugins = [
         "github.com/caddy-dns/duckdns@v0.5.0"
         ];
-        hash = lib.fakeHash;
+        hash = "sha256-IJkUtJc9Gz9WnHyBmHXTjXI6K1wyHQoVRRP8l3A3na0=";
       };
 
       openFirewall = true;
