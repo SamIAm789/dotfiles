@@ -1,13 +1,13 @@
 {
   flake.modules.nixos.caddy =
-  { 
+  {
     config,
     lib,
-    pkgs, 
-    ... 
+    pkgs,
+    ...
   }:
   let
-    domain = "samiam-infra.duckdns.org"
+    domain = "pertaka.duckdns.org";
   in
   {
     services.caddy = {
