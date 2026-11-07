@@ -1,6 +1,7 @@
 {
   flake.modules.nixos.pinchflat =
   {
+    config,
     pkgs,
     ...
   }:
@@ -13,5 +14,9 @@
       mediaDir = "/stuff/pinchflat";
       selfhosted = true;
     };
+    services.caddy.virtualHosts."pinchflat.${config.constants.domain}".extraConfig =       ''
+      reverse_proxy 127.0.0.1:8945
+    '';
+        
   };
 }
