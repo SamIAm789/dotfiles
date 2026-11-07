@@ -10,7 +10,8 @@
       ...
     }:
     {
-      imports = with inputs.self.modules.nixos; [
+      imports =
+      (with inputs.self.modules.nixos; [
         boot
         deploy-rs
         firmware
@@ -25,10 +26,9 @@
         sops
         timezone
         userborn
-      ];
-
-      imports = [
-   inputs.self.modules.generic.constants;
+      ])
+      ++ [
+        inputs.self.modules.generic.constants;
       ];
 
       environment.systemPackages = with pkgs; [
