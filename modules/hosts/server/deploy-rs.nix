@@ -13,8 +13,8 @@
     deployCommands = pkgs.lib.concatMapStringsSep "\n"       (target: ''
   deploy ${target}
 '') deploymentTargets;
+  in
   {
-
     
      systemd.services.oracle-deploy = {
        description = "Deploy latest NixOS configuration to Oracle VPS";
