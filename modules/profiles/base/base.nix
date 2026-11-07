@@ -27,6 +27,10 @@
         userborn
       ];
 
+      imports = [
+   inputs.self.modules.generic.constants;
+      ];
+
       environment.systemPackages = with pkgs; [
         fzf
         git
