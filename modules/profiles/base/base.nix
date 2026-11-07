@@ -28,7 +28,7 @@
         userborn
       ])
       ++ [
-        inputs.self.modules.generic.constants;
+        inputs.self.modules.generic.constants
       ];
 
       environment.systemPackages = with pkgs; [
