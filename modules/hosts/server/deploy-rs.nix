@@ -1,5 +1,5 @@
 {
-  flake.module.nixos.deploy-to-targets =
+  flake.modules.nixos.server =
   {
     pkgs,
     ...
@@ -10,21 +10,20 @@
       "backup"
     ];
 
-    deployCommands = pkgs.lib.concatMapStringsSep "\n"       (target: ''
-  deploy ${target}
-'') deploymentTargets;
+    deployCommands = pkgs.lib.concatMapStringsSep "\n" (target: ''
+      deploy ${target}
+    '') deploymentTargets;
   in
   {
 
-     systemd.services.oracle-deploy = {
-       description = "Deploy latest NixOS configuration to Oracle VPS";
+    systemd.services.deploy-all = {
+       description = "Deploy latest NixOS configuration to targets";
 
        requires = [ "flake-update.service" ];
        after = [
         "network-online.target"
         "flake-update.service"
        ];
-
        wants = [ "network-online.target" ];
 
        path = [
@@ -47,7 +46,6 @@
          XDG_CACHE_HOME = "/var/lib/deploy-rs/.cache";
        };
 
-
        script = ''
          set -uo pipefail
 
@@ -55,11 +53,9 @@
 
          deploy() {
            local target="$1"
-
            echo   "========================================"
            echo "Deploying $target..."
            echo   "========================================"
-
            if nix run nixpkgs#deploy-rs -- \
              --skip-checks \
              "github:SamIAm789/dotfiles#$target" \
@@ -72,21 +68,28 @@
              failures=$((failures + 1))
            fi
          }
-
          ${deployCommands}
-
-         echo   "========================================"
+           echo   "========================================"
          echo "Deployment summary"
          echo   "========================================"
-
          if [ "$failures" -gt 0 ]; then
            echo "$failures deployment(s) failed."
            exit 1
          fi
-
          echo "All deployments completed successfully."
-       '';
+      '';
+    };
 
+    systemd.timers.deploy-all = {
+      description = "Daily NixOS deployment";
+
+      wantedBy = [ "timers.target" ];
+
+      timerConfig = {
+        OnCalendar = "12:00";
+        Persistent = true;
+        RandomizedDelaySec = "15m";
       };
     };
+  };
 }

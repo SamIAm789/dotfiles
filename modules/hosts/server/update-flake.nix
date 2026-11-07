@@ -49,7 +49,7 @@
     ];
 
     systemd.services.flake-update = {
-      description = "Nightly flake.lock update";
+      description = "Uopdate and push ditfiles flake.lock";
       path = [ pkgs.git pkgs.nix pkgs.openssh pkgs.coreutils ];
       serviceConfig = {
         Type = "oneshot";
@@ -86,7 +86,7 @@
 
         nix flake update
 
-       # nix flake check -L
+        nix flake check -L
 
         git add -A flake.lock
 
@@ -102,14 +102,6 @@
         git push origin HEAD:main
 
       '';
-    };
-
-    systemd.timers.flake-update = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-        Persistent = true;
-      };
     };
   };
 }
