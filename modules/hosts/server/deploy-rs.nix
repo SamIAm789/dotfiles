@@ -73,8 +73,7 @@
            fi
          }
 
-         deploy oracle
-         deploy backup
+         ${deployCommands}
 
          echo   "========================================"
          echo "Deployment summary"
