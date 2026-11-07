@@ -15,7 +15,7 @@
 '') deploymentTargets;
   in
   {
-    
+
      systemd.services.oracle-deploy = {
        description = "Deploy latest NixOS configuration to Oracle VPS";
 
@@ -47,7 +47,7 @@
          XDG_CACHE_HOME = "/var/lib/deploy-rs/.cache";
        };
 
-  
+
        script = ''
          set -uo pipefail
 
@@ -89,5 +89,4 @@
 
       };
     };
-  };
 }
