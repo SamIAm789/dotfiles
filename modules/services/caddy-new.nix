@@ -33,9 +33,6 @@
 
         @ha host ha.${domain}
         reverse_proxy @ha 10.25.0.31:8123
-
-        @jellyfin host jellyfin.${domain}
-        reverse_proxy @jellyfin 127.0.0.1:8096
       '';
     };
 
