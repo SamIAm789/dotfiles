@@ -49,7 +49,7 @@
     ];
 
     systemd.services.flake-update = {
-      description = "Uopdate and push ditfiles flake.lock";
+      description = "Uopdate and push dotfiles flake.lock";
       path = [ pkgs.git pkgs.nix pkgs.openssh pkgs.coreutils ];
       serviceConfig = {
         Type = "oneshot";
