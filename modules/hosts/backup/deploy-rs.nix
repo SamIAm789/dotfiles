@@ -6,7 +6,7 @@
 {
   flake.deploy.nodes =
     inputs.nixpkgs.lib.recursiveUpdate
-      (inputs.self.lib.mkDeployNode "x86_64-linux" "oracle")
+      (inputs.self.lib.mkDeployNode "x86_64-linux" "backup")
       {
         backup = {
           hostname = "100.100.0.5";
