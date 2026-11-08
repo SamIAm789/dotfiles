@@ -45,17 +45,25 @@
       };
     };
 
-    mkDeployNode = system: name: {
-      ${name} = {
-        hostname = name;
-        sshUser = "deploy-rs";
-        user = "root";
-        profiles.system = {
-          path = inputs.deploy-rs.lib.${system}.activate.nixos
-            inputs.self.nixosConfigurations.${name};
-        };
+    mkDeployNode = system: name: hostname: {
+      hostname = hostname;
+      sshUser = "deploy-rs";
+      user = "root";
+      profiles.system = {
+        path = inputs.deploy-rs.lib.${system}.activate.nixos
+          inputs.self.nixosConfigurations.${name};
       };
     };
+
+    mkDeployNodes = nodes:
+      builtins.listToAttrs (
+        map
+          (node: {
+            name = node.name;
+            value = config.flake.deployNodes.${node.name};
+          })
+          nodes
+      );
 
     mkMicroVM = system: name: {
       ${name} = inputs.nixpkgs.lib.nixosSystem {

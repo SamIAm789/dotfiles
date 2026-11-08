@@ -1,15 +1,13 @@
-
 {
   inputs,
   ...
 }:
 {
-  flake.deploy.nodes =
-    inputs.nixpkgs.lib.recursiveUpdate
-      (inputs.self.lib.mkDeployNode "x86_64-linux" "oracle")
-      {
-        oracle.hostname = "100.100.0.3";
-      };
+  flake.deployNodes.oracle =
+    inputs.self.lib.mkDeployNode
+      "x86_64-linux"
+      "oracle"
+      "100.100.0.3";
 
       # sudo -u deploy-rs env \
       #  HOME=/var/lib/deploy-rs \
