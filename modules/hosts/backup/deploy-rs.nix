@@ -4,14 +4,11 @@
   ...
 }:
 {
-  flake.deploy.nodes =
-    inputs.nixpkgs.lib.recursiveUpdate
-      (inputs.self.lib.mkDeployNode "x86_64-linux" "backup")
-      {
-        backup = {
-          hostname = "100.100.0.5";
-        };
-      };
+  flake.deployNodes.backup =
+    inputs.self.lib.mkDeployNode "x86_64-linux" "backup"
+    // {
+      backup.hostname = "100.100.0.5";
+    };
 
       # sudo -u deploy-rs env \
       #  HOME=/var/lib/deploy-rs \
