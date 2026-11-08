@@ -55,16 +55,6 @@
       };
     };
 
-    mkDeployNodes = nodes:
-      builtins.listToAttrs (
-        map
-          (node: {
-            name = node.name;
-            value = config.flake.deployNodes.${node.name};
-          })
-          nodes
-      );
-
     mkMicroVM = system: name: {
       ${name} = inputs.nixpkgs.lib.nixosSystem {
         modules = [
