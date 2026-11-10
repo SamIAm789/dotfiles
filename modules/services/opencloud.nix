@@ -13,6 +13,10 @@
       fsType = "zfs";
     };
 
+            services.caddy.virtualHosts."opencloud.${config.constants.domain}".extraConfig =       ''
+      reverse_proxy 127.0.0.1:9200
+    '';
+
     services.opencloud = {
       enable = true;
       package = pkgs.opencloud;
