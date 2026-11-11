@@ -5,7 +5,7 @@
 {
   flake.nixosConfigurations = inputs.self.lib.mkMicroVM "x86_64-linux" "immich";
 
-  flake.modules.nixos.immich1 = {
+  flake.modules.nixos.immich = {
 
     imports = with inputs.self.modules.nixos; [
       nebula
