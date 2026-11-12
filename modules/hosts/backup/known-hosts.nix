@@ -8,7 +8,7 @@
 
     programs.ssh.knownHosts.backup = {
       hostNames = [
-        "config.constants.nebula.backup"
+        config.constants.nebula.backup
         "backup"
       ];
 
