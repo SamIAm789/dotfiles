@@ -13,6 +13,7 @@
   }:
   {
     imports = with inputs.self.modules.nixos; [
+      avahi
       deploy-rs-source
       framework-hardware
       laptop
