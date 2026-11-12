@@ -1,9 +1,14 @@
 {
-  flake.modules.nixos.known-hosts = {
+  flake.modules.nixos.known-hosts =
+  {
+    config,
+    ...
+  }:
+  {
 
     programs.ssh.knownHosts.backup = {
       hostNames = [
-        "100.100.0.5"
+        "config.constants.nebula.backup"
         "backup"
       ];
 
