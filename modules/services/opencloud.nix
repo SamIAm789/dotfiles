@@ -21,7 +21,7 @@
       enable = true;
       package = pkgs.opencloud;
       address = "0.0.0.0";
-      url = "opencloud.${config.constants.domain}";
+      url = "https://opencloud.${config.constants.domain}";
       port = 9200;
       stateDir = "/persist/data/opencloud";
       environment = {
