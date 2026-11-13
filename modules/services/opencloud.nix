@@ -25,12 +25,10 @@
       port = 9200;
       stateDir = "/persist/data/opencloud";
       environment = {
-        OC_INSECURE = "true";
+        PROXY_TLS = "false";
       };
       environmentFile = config.sops.secrets.opencloud.path;
     };
-
-    networking.firewall.allowedTCPPorts = [ 9200 ];
 
     preservation.preserveAt."/persist".directories = [
       "/etc/opencloud"
