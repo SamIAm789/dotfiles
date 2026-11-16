@@ -7,6 +7,7 @@
     imports = with inputs.self.modules.nixos; [
       autoupdate
       base
+      known-hosts
       microvm-host
       network
       ntfy
