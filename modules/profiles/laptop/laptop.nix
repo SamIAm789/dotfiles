@@ -9,6 +9,7 @@
       general-desktop
       hardware
       hyprland
+      nebula-dns
     ];
   };
 }

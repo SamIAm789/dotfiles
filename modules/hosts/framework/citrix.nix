@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.framework-1 =
+  flake.modules.nixos.framework =
   {
     pkgs,
     ...
