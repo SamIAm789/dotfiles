@@ -174,11 +174,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1795053104,
-        "narHash": "sha256-a9eIBbd4U/Po8Dh7p3jxOVjbV7W0jbjUDXPlntH1Dg8=",
+        "lastModified": 1795130290,
+        "narHash": "sha256-4fRnt5Dh7bbuNR6XODpuhoXP/XOrZP0Fc5XqYuvj+/Y=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "3371c03df62106a4c93a545787a471e328883d08",
+        "rev": "9f47677483d1b4de4d1a88d37b3b7ca18b18b215",
         "type": "github"
       },
       "original": {
@@ -304,11 +304,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1795001954,
-        "narHash": "sha256-C1srpWv9UQeYq9yPUCYlCVjsyUXPKp81a91N/kHtFV4=",
+        "lastModified": 1795120146,
+        "narHash": "sha256-ryhzUfcWPTO5KsjQfHhx1C2tLI0ExjZfVK2RlDWGn3Y=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "5177d94ed31742849d9654da1d9d50e5ad05e26d",
+        "rev": "9927f2eb87beae7f2cc623567eeb0ffa56842aca",
         "type": "github"
       },
       "original": {
@@ -567,11 +567,11 @@
         "spectrum": "spectrum"
       },
       "locked": {
-        "lastModified": 1794529892,
-        "narHash": "sha256-m5iXk3ILiCuRpCgqYWNiGVFmu8YLh2FNxxaZj/Auc10=",
+        "lastModified": 1795106485,
+        "narHash": "sha256-cK+o/P3zE/1GW68p0URGGaI0mx8fAj2EAyG9CNmOII0=",
         "owner": "microvm-nix",
         "repo": "microvm.nix",
-        "rev": "194a254693f49af939a2b53d04982bd4b276fdb3",
+        "rev": "d70265960646e506757f8364e8585c17a06050e7",
         "type": "github"
       },
       "original": {
