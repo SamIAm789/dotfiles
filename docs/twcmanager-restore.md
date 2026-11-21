@@ -4,7 +4,7 @@ Backup location
 
 The verified backup is stored on the NixOS server:
 
-/stuff/backups/tesla-ble-complete-2026-11-21-151832.tar.gz
+/stuff/backups/twcmanager-teslable/tesla-ble-complete-2026-11-21-151832.tar.gz
 
 The archive contains private Tesla BLE keys. Keep it secure and maintain an additional copy on separate storage.
 
@@ -41,7 +41,7 @@ bluetoothctl show
 
 From the Raspberry Pi:
 
-scp sam@10.25.0.24:/stuff/backups/tesla-ble-complete-2026-11-21-151832.tar.gz ~/
+scp sam@10.25.0.24:/stuff/backups/twcmanage-teslable/tesla-ble-complete-2026-11-21-151832.tar.gz ~/
 
 Replace the server address or filename if either has changed.
 
