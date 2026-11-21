@@ -33,6 +33,9 @@
 
         @ha host ha.${domain}
         reverse_proxy @ha 10.25.0.31:8123
+
+        @twcmanager host twcmanager.${domain}
+        reverse_proxy @twcmanager 10.25.0.221:8080
       '';
     };
 
