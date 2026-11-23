@@ -14,7 +14,7 @@
     };
 
             services.caddy.virtualHosts."hermes.${config.constants.domain}".extraConfig =       ''
-      reverse_proxy 10.25.0.120:9120
+      reverse_proxy 10.25.0.33:9120
     '';
 
     systemd.tmpfiles.rules = [
