@@ -13,6 +13,10 @@
       sopsFile = "${self}/secrets/hermes.yaml";
     };
 
+            services.caddy.virtualHosts."hermes.${config.constants.domain}".extraConfig =       ''
+      reverse_proxy 10.25.0.120:9120
+    '';
+
     systemd.tmpfiles.rules = [
       "d /run/hermes-identity 0700 root root -"
     ];
