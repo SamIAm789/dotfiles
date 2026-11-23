@@ -1,9 +1,13 @@
+{
+  flake.modules.nixos.hermes-agent = {
 
 
-networking.routes = [
-  {
-    address = "100.100.0.0";
-    prefixLength = 22;
-    via = "10.25.0.24";
-  }
-];
+    networking.routes = [
+      {
+        address = "100.100.0.0";
+        prefixLength = 22;
+        via = "10.25.0.24";
+      }
+    ];
+  };
+}
