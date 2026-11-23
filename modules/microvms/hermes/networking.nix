@@ -1,12 +1,10 @@
+
 {
   flake.modules.nixos.hermes-agent = {
-
-
-    networking.routes = [
+    systemd.network.networks."20-lan".routes = [
       {
-        address = "100.100.0.0";
-        prefixLength = 22;
-        via = "10.25.0.24";
+        Destination = "100.100.0.0/22";
+        Gateway = "10.25.0.24";
       }
     ];
   };
