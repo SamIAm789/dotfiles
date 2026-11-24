@@ -18,6 +18,7 @@
 
       Service = {
         ExecStart = "${pkgs.opencloud-desktop}/bin/opencloud";
+        Environment = "LANG=C";
         Restart = "on-failure";
         RestartSec = 5;
         Slice = "app-graphical.slice";

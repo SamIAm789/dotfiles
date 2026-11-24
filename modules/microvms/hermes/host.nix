@@ -13,7 +13,7 @@
       sopsFile = "${self}/secrets/hermes.yaml";
     };
 
-            services.caddy.virtualHosts."hermes.${config.constants.domain}".extraConfig =       ''
+    services.caddy.virtualHosts."hermes.${config.constants.domain}".extraConfig =       ''
       reverse_proxy 10.25.0.33:9120
     '';
 

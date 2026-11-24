@@ -11,5 +11,9 @@
       hyprland
       nebula-dns
     ];
+
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.laptop
+    ];
   };
 }

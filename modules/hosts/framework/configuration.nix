@@ -21,6 +21,10 @@
       esphome
     ];
 
+    home-manager.sharedModules = with inputs.self.modules.homeManager; [
+      wluma-framework
+    ];
+
     services.fprintd.enable = true;
 
     environment.systemPackages = with pkgs; [

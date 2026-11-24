@@ -19,6 +19,7 @@
         home-manager
         nebula
         nebula-secrets
+        nh
         nix
         sam
         ssh-agent

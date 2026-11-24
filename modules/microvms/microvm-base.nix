@@ -1,4 +1,8 @@
 {
+  inputs,
+  ...
+}:
+{
   flake.modules.nixos.microvm-base =
   {
     config,
@@ -16,6 +20,10 @@
       + builtins.substring 8 2 hash;
   in
   {
+    imports = with inputs.self.modules.nixos; [
+      nix
+    ];
+
     microvm = {
       shares = [{
         proto = "virtiofs";
@@ -45,5 +53,6 @@
     };
 
     services.openssh.enable = true;
+
   };
 }
