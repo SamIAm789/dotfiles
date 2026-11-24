@@ -10,6 +10,8 @@
         public_url = "https://hermes.pertaka.duckdns.org";
       };
     };
+
+    networking.firewall.allowedTCPPorts = [ 9120 ];
   };
 }
 
