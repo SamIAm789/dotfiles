@@ -14,6 +14,7 @@
   {
     imports = with inputs.self.modules.nixos; [
       macbook-hardware
+      macbook-wifi
       laptop
       sam
     ];
