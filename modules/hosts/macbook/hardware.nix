@@ -16,7 +16,7 @@
           "$firmwareDir/brcmfmac4350-pcie.txt"
 
         install -m 0644 \
-          "${./_hardware/firmware/wifi}/brcmfmac4350-pcie.Apple Inc.-MacBookPro14,1.txt" \
+          "${./_hardware/firmware/wifi}/brcmfmac4350-pcie-Apple-MacBookPro14,1.txt" \
           "$firmwareDir/brcmfmac4350-pcie.Apple Inc.-MacBookPro14,1.txt"
 
         # Compatibility names used by newer brcmfmac kernel drivers
