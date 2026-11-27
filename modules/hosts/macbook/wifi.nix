@@ -14,7 +14,7 @@
 
       networking.networkmanager.wifi.powersave = false;
 
-    networking.wirelese.enable = lib.mkForce false;
+    networking.wireless.enable = lib.mkForce false;
 
     networking.networkmanager.wifi.backend = "iwd";
 # (this automatically enables iwd and disables wpa_supplicant)
